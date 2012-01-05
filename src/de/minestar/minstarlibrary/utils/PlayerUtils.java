@@ -59,8 +59,6 @@ public class PlayerUtils {
      * Searching for a player having the case insensitive name. If not found,
      * the first player that contains the name is returned.
      * 
-     * @param server
-     *            The server where the player is connected to
      * @param name
      *            The name of the player
      * @return Null if no player who contains the name or have the case
@@ -71,20 +69,23 @@ public class PlayerUtils {
         Player[] onlinePlayer = Bukkit.getOnlinePlayers();
 
         Player result = null;
-        int delta = -1;
+        int delta = Integer.MAX_VALUE;
+        int curDelta = Integer.MAX_VALUE;
         String tempName = "";
         name = name.toLowerCase();
 
         for (Player player : onlinePlayer) {
 
             tempName = player.getName().toLowerCase();
-            if (tempName.startsWith(name) && (delta > tempName.length() - name.length())) {
-                delta = tempName.length() - name.length();
+            curDelta = tempName.length() - name.length();
+            if (tempName.startsWith(name) && curDelta < delta) {
+                delta = curDelta;
                 result = player;
             } else {
                 tempName = player.getDisplayName().toLowerCase();
-                if (tempName.startsWith(name) && (delta > tempName.length() - name.length())) {
-                    delta = tempName.length() - name.length();
+                curDelta = tempName.length() - name.length();
+                if (tempName.startsWith(name) && curDelta < delta) {
+                    delta = curDelta;
                     result = player;
                 }
             }

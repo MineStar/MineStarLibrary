@@ -73,8 +73,7 @@ public class Localization {
                 throw new FileNotFoundException("Plugin.jar/res/default.txt");
 
             bReader = new BufferedReader(new InputStreamReader(in));
-        }
-        else
+        } else
             bReader = new BufferedReader(new FileReader(file));
 
         loadMeldanorFormat(bReader);

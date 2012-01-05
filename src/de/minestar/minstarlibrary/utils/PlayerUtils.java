@@ -24,6 +24,7 @@ import java.util.Comparator;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
+import org.bukkit.entity.Player;
 
 public class PlayerUtils {
 
@@ -31,8 +32,7 @@ public class PlayerUtils {
     private static Comparator<OfflinePlayer> c = new Comparator<OfflinePlayer>() {
         @Override
         public int compare(OfflinePlayer o1, OfflinePlayer o2) {
-            return o1.getName().toLowerCase()
-                    .compareTo(o2.getName().toLowerCase());
+            return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
         }
     };
 
@@ -53,5 +53,45 @@ public class PlayerUtils {
         // returns -1 when player is not found
         int i = Arrays.binarySearch(existingPlayer, target, c);
         return i >= 0 ? existingPlayer[i].getName() : null;
+    }
+
+    /**
+     * Searching for a player having the case insensitive name. If not found,
+     * the first player that contains the name is returned.
+     * 
+     * @param server
+     *            The server where the player is connected to
+     * @param name
+     *            The name of the player
+     * @return Null if no player who contains the name or have the case
+     *         insensitive name
+     */
+    public static Player getOnlinePlayer(String name) {
+
+        Player[] onlinePlayer = Bukkit.getOnlinePlayers();
+
+        Player result = null;
+        int delta = -1;
+        String tempName = "";
+        name = name.toLowerCase();
+
+        for (Player player : onlinePlayer) {
+
+            tempName = player.getName().toLowerCase();
+            if (tempName.startsWith(name) && (delta > tempName.length() - name.length())) {
+                delta = tempName.length() - name.length();
+                result = player;
+            } else {
+                tempName = player.getDisplayName().toLowerCase();
+                if (tempName.startsWith(name) && (delta > tempName.length() - name.length())) {
+                    delta = tempName.length() - name.length();
+                    result = player;
+                }
+            }
+            if (delta == 0)
+                return result;
+        }
+
+        return result;
     }
 }

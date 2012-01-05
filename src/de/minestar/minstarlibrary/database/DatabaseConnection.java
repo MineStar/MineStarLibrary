@@ -39,14 +39,11 @@ public class DatabaseConnection {
      * @param password
      *            Password for the user. It will deleted by this
      */
-    public DatabaseConnection(String host, int port, String database,
-            String userName, String password) {
+    public DatabaseConnection(String host, int port, String database, String userName, String password) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://" + host + ":"
-                    + port + "/" + database, userName, password);
-        }
-        catch (Exception e) {
+            con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, userName, password);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         userName = null;
@@ -68,10 +65,8 @@ public class DatabaseConnection {
     public DatabaseConnection(String folder, String databaseName) {
         try {
             Class.forName("org.sqlite.JDBC");
-            con = DriverManager.getConnection("jdbc:sqlite:" + folder + "/"
-                    + databaseName + ".db");
-        }
-        catch (Exception e) {
+            con = DriverManager.getConnection("jdbc:sqlite:" + folder + "/" + databaseName + ".db");
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -97,8 +92,7 @@ public class DatabaseConnection {
         try {
             con.close();
             con = null;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

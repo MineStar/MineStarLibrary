@@ -21,6 +21,7 @@ package de.minestar.minstarlibrary.commands;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import com.bukkit.gemo.utils.ChatUtils;
 import com.bukkit.gemo.utils.UtilPermissions;
 
 /**
@@ -36,7 +37,7 @@ import com.bukkit.gemo.utils.UtilPermissions;
  */
 public abstract class Command {
 
-    public final static String NO_RIGHT = "You musn't use this command!";
+    public final static String NO_RIGHT = "You are not allowed to use this command!";
 
     // Add this in every command to add an description
     protected String description = "";
@@ -46,6 +47,8 @@ public abstract class Command {
     private String arguments;
     // Example : contao.create
     protected String permissionNode;
+    // Example: "[Contao]";
+    protected String pluginName = "";
 
     private final int argumentCount;
 
@@ -67,6 +70,25 @@ public abstract class Command {
     }
 
     /**
+     * Just call super() in the inhertited classes. <br>
+     * 
+     * @param pluginName
+     *            The pluginName for the use of prefixes (Example: [Contao])
+     * @param syntax
+     *            Example : /warp create
+     * @param arguments
+     *            Example : <Name>
+     * @param node
+     *            Example : contao.create
+     */
+    public Command(String pluginName, String syntax, String arguments, String node) {
+        this(syntax, arguments, node);
+        if (pluginName != null) {
+            this.pluginName = pluginName;
+        }
+    }
+
+    /**
      * Call this command to run it functions. It checks at first whether the
      * player has enough rights to use this. Also it checks whether it uses the
      * correct snytax. If both is correct, the real function of the command is
@@ -79,12 +101,12 @@ public abstract class Command {
      */
     public void run(String[] args, Player player) {
         if (!hasRights(player)) {
-            player.sendMessage(NO_RIGHT);
+            ChatUtils.printError(player, pluginName, NO_RIGHT);
             return;
         }
 
         if (!hasCorrectSyntax(args)) {
-            player.sendMessage(getHelpMessage());
+            ChatUtils.printInfo(player, pluginName, ChatColor.GRAY, getHelpMessage());
             return;
         }
 
@@ -104,12 +126,11 @@ public abstract class Command {
     /**
      * @param player
      *            The command caller
-     * @return True when the player has enough rights to use the command Or the permissionnode is empty, so everybody can use it
+     * @return True when the player has enough rights to use the command Or the
+     *         permissionnode is empty, so everybody can use it
      */
     protected boolean hasRights(Player player) {
-        return permissionNode.length() == 0
-                || UtilPermissions.playerCanUseCommand(player,
-                        getPermissionNode());
+        return permissionNode.length() == 0 || UtilPermissions.playerCanUseCommand(player, getPermissionNode());
     }
 
     /**
@@ -135,8 +156,7 @@ public abstract class Command {
      * @return Syntax + Arguments + Description
      */
     public String getHelpMessage() {
-        return ChatColor.BLUE + getSyntax() + " " + getArguments() + " "
-                + getDescription();
+        return getSyntax() + " " + getArguments() + " : " + getDescription();
     }
 
     /**
@@ -146,7 +166,7 @@ public abstract class Command {
         return syntax;
     }
 
-    /**
+/**
      * @return The arguments in one string. Every argument is labeld in '<' and '>'
      */
     public String getArguments() {
@@ -167,7 +187,7 @@ public abstract class Command {
         return argumentCount;
     }
 
-    /**
+/**
      * @return The number of '<' in the argument String
      */
     private int countArguments() {

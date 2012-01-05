@@ -18,7 +18,10 @@
 
 package de.minestar.minstarlibrary.commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import com.bukkit.gemo.utils.ChatUtils;
 
 /**
  * Represents a command with a varible number of Arguments. The only difference
@@ -46,17 +49,33 @@ public abstract class ExtendedCommand extends Command {
         super(syntax, arguments, node);
     }
 
+/**
+     * Creates an ExtendedCommand, which can have more arguments than given
+     * 
+     * @param syntax 
+     *            When this is a subCommand, do not use a / . If not, use a / at
+     *            first
+     * @param arguments
+     *            The minimum count of arguments. Use "<" to start an argument
+     *            and ">" to finish it! Without that the plugin can't see how
+     *            many arguments are necessary!
+     * @param node The permission node to use this command. When empty, everyone can use the command!
+     */
+    public ExtendedCommand(String pluginName, String syntax, String arguments, String node) {
+        super(pluginName, syntax, arguments, node);
+    }
+
     public abstract void execute(String[] args, Player player);
 
     @Override
     public void run(String[] args, Player player) {
         if (!super.hasRights(player)) {
-            player.sendMessage(NO_RIGHT);
+            ChatUtils.printError(player, pluginName, NO_RIGHT);
             return;
         }
 
         if (!this.hasCorrectSyntax(args)) {
-            player.sendMessage(getHelpMessage());
+            ChatUtils.printInfo(player, pluginName, ChatColor.GRAY, getHelpMessage());
             return;
         }
 
@@ -65,7 +84,6 @@ public abstract class ExtendedCommand extends Command {
 
     @Override
     protected boolean hasCorrectSyntax(String[] args) {
-
         return args.length >= super.getArgumentCount();
     }
 

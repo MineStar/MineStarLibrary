@@ -23,6 +23,8 @@ import java.util.Arrays;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import com.bukkit.gemo.utils.ChatUtils;
+
 /**
  * Class to support commands with sub commands
  * 
@@ -33,16 +35,22 @@ public abstract class SuperCommand extends Command {
 
     private Command[] subCommands;
     private boolean hasFunction;
+    private String pluginName = "";
 
-    public SuperCommand(String syntax, String arguments, String node,
-            boolean hasFunction, Command... subCommands) {
+    public SuperCommand(String syntax, String arguments, String node, boolean hasFunction, Command... subCommands) {
         super(syntax, arguments, node);
         this.hasFunction = hasFunction;
         this.subCommands = subCommands;
     }
 
-    public SuperCommand(String syntax, String arguments, String node,
-            Command... subCommands) {
+    public SuperCommand(String pluginName, String syntax, String arguments, String node, boolean hasFunction, Command... subCommands) {
+        this(syntax, arguments, node, hasFunction, subCommands);
+        if (pluginName != null) {
+            this.pluginName = pluginName;
+        }
+    }
+
+    public SuperCommand(String syntax, String arguments, String node, Command... subCommands) {
         this(syntax, arguments, node, false, subCommands);
     }
 
@@ -54,7 +62,7 @@ public abstract class SuperCommand extends Command {
 
         if (args.length == 0) {
             if (hasFunction)
-                player.sendMessage(getHelpMessage());
+                ChatUtils.printInfo(player, pluginName, ChatColor.GRAY, getHelpMessage());
             else
                 printSubcommands(player);
             return;
@@ -66,10 +74,9 @@ public abstract class SuperCommand extends Command {
     }
 
     private void printSubcommands(Player player) {
-
-        player.sendMessage(ChatColor.GOLD + "Possible sub commands");
+        ChatUtils.printInfo(player, pluginName, ChatColor.GOLD, "Possible subcommands:");
         for (Command command : getSubCommands())
-            player.sendMessage(command.getHelpMessage());
+            ChatUtils.printLine(player, ChatColor.GRAY, command.getHelpMessage());
     }
 
     /**

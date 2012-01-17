@@ -19,10 +19,12 @@
 package de.minestar.minstarlibrary.commands;
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.bukkit.gemo.utils.ChatUtils;
 import com.bukkit.gemo.utils.UtilPermissions;
+
+import de.minestar.minstarlibrary.utils.ChatUtils;
 
 /**
  * Represents a command with a fixed number of arguments and no subcommands. If
@@ -90,27 +92,27 @@ public abstract class Command {
 
     /**
      * Call this command to run it functions. It checks at first whether the
-     * player has enough rights to use this. Also it checks whether it uses the
+     * sender has enough rights to use this. Also it checks whether it uses the
      * correct snytax. If both is correct, the real function of the command is
      * called
      * 
      * @param args
      *            The arguments of this command
-     * @param player
+     * @param sender
      *            The command caller
      */
-    public void run(String[] args, Player player) {
-        if (!hasRights(player)) {
-            ChatUtils.printError(player, pluginName, NO_RIGHT);
+    public void run(String[] args, CommandSender sender) {
+        if (!hasRights(sender)) {
+            ChatUtils.printError(sender, pluginName, NO_RIGHT);
             return;
         }
 
         if (!hasCorrectSyntax(args)) {
-            ChatUtils.printInfo(player, pluginName, ChatColor.GRAY, getHelpMessage());
+            ChatUtils.printInfo(sender, pluginName, ChatColor.GRAY, getHelpMessage());
             return;
         }
 
-        execute(args, player);
+        execute(args, sender);
     }
 
     /**
@@ -118,19 +120,22 @@ public abstract class Command {
      * 
      * @param args
      *            The arguments of the command
-     * @param player
+     * @param sender
      *            The command caller
      */
-    public abstract void execute(String[] args, Player player);
+    public abstract void execute(String[] args, CommandSender sender);
 
     /**
-     * @param player
+     * @param sender
      *            The command caller
-     * @return True when the player has enough rights to use the command Or the
+     * @return True when the sender has enough rights to use the command Or the
      *         permissionnode is empty, so everybody can use it
      */
-    protected boolean hasRights(Player player) {
-        return permissionNode.length() == 0 || UtilPermissions.playerCanUseCommand(player, getPermissionNode());
+    protected boolean hasRights(CommandSender sender) {
+        if (sender instanceof Player)
+            return permissionNode.length() == 0 || UtilPermissions.playerCanUseCommand((Player) sender, getPermissionNode());
+        else
+            return true;
     }
 
     /**

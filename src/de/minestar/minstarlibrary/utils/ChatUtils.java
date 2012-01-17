@@ -1,21 +1,28 @@
 package de.minestar.minstarlibrary.utils;
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class ChatUtils {
 
     /**
-     * Sends a simple uncolored message without plugin prefix to the player.
-     * Uses just player.sendMessage(msg) {@link org.bukkit.entity.Player Player}
+     * Sends a simple message without plugin prefix to the player
      * 
      * @param player
      *            The recipient
+     * @param color
+     *            Color of message, see {@link org.bukkit.ChatColor ChatColor}
+     *            for possible values
      * @param message
      *            The message
      */
-    public static void printDefaultLine(Player player, String message) {
-        player.sendMessage(message);
+    public static void printLine(CommandSender sender, String pluginName, ChatColor color, String message) {
+        if (sender instanceof Player) {
+            sender.sendMessage(ChatColor.AQUA + pluginName + (pluginName.length() > 0 ? " " : "") + color + message);
+        } else {
+            sender.sendMessage(pluginName + (pluginName.length() > 0 ? " " : "") + message);
+        }
     }
 
     /**
@@ -29,8 +36,28 @@ public class ChatUtils {
      * @param message
      *            The message
      */
-    public static void printLine(Player player, ChatColor color, String message) {
-        printDefaultLine(player, color + message);
+    public static void printLine(Player player, String pluginName, ChatColor color, String message) {
+        printLine((CommandSender) player, pluginName, color, message);
+    }
+
+    /**
+     * Sends a colored message with possible plugin prefix to the sender.
+     * 
+     * @param sender
+     *            The recipient
+     * @param pluginName
+     *            Name of the plugin sending the message to the sender. Ignored,
+     *            if empty <code>""</code> or <code>null</code>
+     * @param color
+     *            Color of message, see {@link org.bukkit.ChatColor ChatColor}
+     *            for possible values
+     * @param message
+     *            The message
+     * 
+     */
+    public static void printInfo(CommandSender sender, String pluginName, ChatColor color, String message) {
+        pluginName = pluginName != null ? pluginName : "";
+        printLine(sender, pluginName, color, message);
     }
 
     /**
@@ -39,7 +66,7 @@ public class ChatUtils {
      * @param player
      *            The recipient
      * @param pluginName
-     *            Name of the plugin sending the message to the player. Ignored,
+     *            Name of the plugin sending the message to the sender. Ignored,
      *            if empty <code>""</code> or <code>null</code>
      * @param color
      *            Color of message, see {@link org.bukkit.ChatColor ChatColor}
@@ -49,8 +76,23 @@ public class ChatUtils {
      * 
      */
     public static void printInfo(Player player, String pluginName, ChatColor color, String message) {
-        pluginName = pluginName != null ? pluginName : "";
-        printDefaultLine(player, ChatColor.AQUA + pluginName + (pluginName.length() > 0 ? " " : "") + color + message);
+        printInfo((CommandSender) player, pluginName, color, message);
+    }
+
+    /**
+     * Sends a red colored with possible plugin prefix to the sender.
+     * 
+     * @param sender
+     *            The recipient
+     * @param pluginName
+     *            Name of the plugin sending the message to the sender. Ignored,
+     *            if empty <code>""</code> or <code>null</code>
+     * @param message
+     *            The message
+     * @see #printInfo(Player, String, ChatColor, String)
+     */
+    public static void printError(CommandSender sender, String pluginName, String message) {
+        printInfo(sender, pluginName, ChatColor.RED, message);
     }
 
     /**
@@ -59,14 +101,30 @@ public class ChatUtils {
      * @param player
      *            The recipient
      * @param pluginName
-     *            Name of the plugin sending the message to the player. Ignored,
+     *            Name of the plugin sending the message to the sender. Ignored,
      *            if empty <code>""</code> or <code>null</code>
      * @param message
      *            The message
      * @see #printInfo(Player, String, ChatColor, String)
      */
     public static void printError(Player player, String pluginName, String message) {
-        printInfo(player, pluginName, ChatColor.RED, message);
+        printError((CommandSender) player, pluginName, message);
+    }
+
+    /**
+     * Sends a green colored with possible plugin prefix to the sender.
+     * 
+     * @param sender
+     *            The recipient
+     * @param pluginName
+     *            Name of the plugin sending the message to the sender. Ignored,
+     *            if empty <code>""</code> or <code>null</code>
+     * @param message
+     *            The message
+     * @see #printInfo(Player, String, ChatColor, String)
+     */
+    public static void printSuccess(CommandSender sender, String pluginName, String message) {
+        printInfo(sender, pluginName, ChatColor.GREEN, message);
     }
 
     /**
@@ -75,24 +133,52 @@ public class ChatUtils {
      * @param player
      *            The recipient
      * @param pluginName
-     *            Name of the plugin sending the message to the player. Ignored,
+     *            Name of the plugin sending the message to the sender. Ignored,
      *            if empty <code>""</code> or <code>null</code>
      * @param message
      *            The message
      * @see #printInfo(Player, String, ChatColor, String)
      */
     public static void printSuccess(Player player, String pluginName, String message) {
-        printInfo(player, pluginName, ChatColor.GREEN, message);
+        printSuccess((CommandSender) player, pluginName, message);
     }
 
     /**
      * Sends a list of dark red colored examples for commands with possible
      * pluginname to the player
      * 
-     * @param player
+     * @param sender
      *            The recipient
      * @param pluginName
-     *            Name of the plugin sending the message to the player. Ignored,
+     *            Name of the plugin sending the message to the sender. Ignored,
+     *            if empty <code>""</code> or <code>null</code>
+     * @param syntax
+     *            Syntax of the commands, beginns normally with a
+     *            <code>"/"</code>
+     * @param Examples
+     *            List of examples for the Command
+     * @see #printInfo(Player, String, ChatColor, String)
+     */
+    public static void printWrongSyntax(CommandSender sender, String pluginName, String Syntax, String[] Examples) {
+        ChatUtils.printError(sender, pluginName, "Wrong Syntax! Use: " + Syntax);
+
+        if (Examples.length == 1)
+            ChatUtils.printInfo(sender, pluginName, ChatColor.GRAY, "Example:");
+        else if (Examples.length > 1)
+            ChatUtils.printInfo(sender, pluginName, ChatColor.DARK_RED, "Examples:");
+
+        for (int i = 0; i < Examples.length; ++i)
+            printInfo(sender, pluginName, ChatColor.GRAY, Examples[i]);
+    }
+
+    /**
+     * Sends a list of dark red colored examples for commands with possible
+     * pluginname to the player
+     * 
+     * @param sender
+     *            The recipient
+     * @param pluginName
+     *            Name of the plugin sending the message to the sender. Ignored,
      *            if empty <code>""</code> or <code>null</code>
      * @param syntax
      *            Syntax of the commands, beginns normally with a
@@ -102,15 +188,7 @@ public class ChatUtils {
      * @see #printInfo(Player, String, ChatColor, String)
      */
     public static void printWrongSyntax(Player player, String pluginName, String Syntax, String[] Examples) {
-        ChatUtils.printError(player, pluginName, "Wrong Syntax! Use: " + Syntax);
-
-        if (Examples.length == 1)
-            ChatUtils.printInfo(player, pluginName, ChatColor.GRAY, "Example:");
-        else if (Examples.length > 1)
-            ChatUtils.printInfo(player, pluginName, ChatColor.DARK_RED, "Examples:");
-
-        for (int i = 0; i < Examples.length; ++i)
-            printInfo(player, pluginName, ChatColor.GRAY, Examples[i]);
+        printWrongSyntax((CommandSender) player, pluginName, Syntax, Examples);
     }
 
     /**

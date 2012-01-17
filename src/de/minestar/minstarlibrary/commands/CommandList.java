@@ -24,9 +24,8 @@ import java.util.Map.Entry;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
-import com.bukkit.gemo.utils.ChatUtils;
+import de.minestar.minstarlibrary.utils.ChatUtils;
 
 public class CommandList {
 
@@ -71,25 +70,20 @@ public class CommandList {
      * @param args
      */
     public void handleCommand(CommandSender sender, String label, String[] args) {
-        if (!(sender instanceof Player))
-            return;
-
-        Player player = (Player) sender;
-
         if (!label.startsWith("/"))
             label = "/" + label;
 
         // looking for
         Command cmd = commandList.get(label + "_" + args.length);
         if (cmd != null) {
-            cmd.run(args, player);
+            cmd.run(args, sender);
         } else {
             cmd = commandList.get(label);
             if (cmd != null) {
-                cmd.run(args, player);
+                cmd.run(args, sender);
             } else {
                 // COMMAND NOT FOUND
-                ChatUtils.printError(player, pluginName, "Command '" + label + "' not found.");
+                ChatUtils.printError(sender, pluginName, "Command '" + label + "' not found.");
 
                 // FIND RELATED COMMANDS
                 LinkedList<Command> cmdList = new LinkedList<Command>();
@@ -100,7 +94,7 @@ public class CommandList {
 
                 // PRINT SYNTAX
                 for (Command command : cmdList)
-                    ChatUtils.printInfo(player, pluginName, ChatColor.GRAY, command.getSyntax() + " " + command.getArguments());
+                    ChatUtils.printInfo(sender, pluginName, ChatColor.GRAY, command.getSyntax() + " " + command.getArguments());
             }
         }
     }

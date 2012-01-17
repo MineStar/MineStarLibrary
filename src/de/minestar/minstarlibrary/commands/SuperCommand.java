@@ -21,9 +21,9 @@ package de.minestar.minstarlibrary.commands;
 import java.util.Arrays;
 
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
-import com.bukkit.gemo.utils.ChatUtils;
+import de.minestar.minstarlibrary.utils.ChatUtils;
 
 /**
  * Class to support commands with sub commands
@@ -55,28 +55,27 @@ public abstract class SuperCommand extends Command {
     }
 
     @Override
-    public abstract void execute(String[] args, Player player);
+    public abstract void execute(String[] args, CommandSender sender);
 
     @Override
-    public void run(String[] args, Player player) {
-
+    public void run(String[] args, CommandSender sender) {
         if (args.length == 0) {
             if (hasFunction)
-                ChatUtils.printInfo(player, pluginName, ChatColor.GRAY, getHelpMessage());
+                ChatUtils.printInfo(sender, pluginName, ChatColor.GRAY, getHelpMessage());
             else
-                printSubcommands(player);
+                printSubcommands(sender);
             return;
         }
 
-        if (!runSubCommand(args, player))
-            super.run(args, player);
+        if (!runSubCommand(args, sender))
+            super.run(args, sender);
 
     }
 
-    private void printSubcommands(Player player) {
-        ChatUtils.printInfo(player, pluginName, ChatColor.GOLD, "Possible subcommands:");
+    private void printSubcommands(CommandSender sender) {
+        ChatUtils.printInfo(sender, pluginName, ChatColor.GOLD, "Possible subcommands:");
         for (Command command : getSubCommands())
-            ChatUtils.printLine(player, ChatColor.GRAY, command.getHelpMessage());
+            ChatUtils.printLine(sender, pluginName, ChatColor.GRAY, command.getHelpMessage());
     }
 
     /**
@@ -85,18 +84,17 @@ public abstract class SuperCommand extends Command {
      * 
      * @param args
      *            The arguments that may contains the syntax
-     * @param player
+     * @param sender
      *            The command caller
      * @return True when a sub command is found, false if not
      */
-    protected boolean runSubCommand(String[] args, Player player) {
-
+    protected boolean runSubCommand(String[] args, CommandSender sender) {
         if (args != null && args.length == 0)
             return false;
 
         for (Command com : subCommands) {
             if (com.getSyntax().equalsIgnoreCase(args[0])) {
-                com.run(Arrays.copyOfRange(args, 1, args.length), player);
+                com.run(Arrays.copyOfRange(args, 1, args.length), sender);
                 return true;
             }
         }

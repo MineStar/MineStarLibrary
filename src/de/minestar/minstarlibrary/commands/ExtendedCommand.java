@@ -19,9 +19,9 @@
 package de.minestar.minstarlibrary.commands;
 
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
-import com.bukkit.gemo.utils.ChatUtils;
+import de.minestar.minstarlibrary.utils.ChatUtils;
 
 /**
  * Represents a command with a varible number of Arguments. The only difference
@@ -65,21 +65,21 @@ public abstract class ExtendedCommand extends Command {
         super(pluginName, syntax, arguments, node);
     }
 
-    public abstract void execute(String[] args, Player player);
+    public abstract void execute(String[] args, CommandSender sender);
 
     @Override
-    public void run(String[] args, Player player) {
-        if (!super.hasRights(player)) {
-            ChatUtils.printError(player, pluginName, NO_RIGHT);
+    public void run(String[] args, CommandSender sender) {
+        if (!super.hasRights(sender)) {
+            ChatUtils.printError(sender, pluginName, NO_RIGHT);
             return;
         }
 
         if (!this.hasCorrectSyntax(args)) {
-            ChatUtils.printInfo(player, pluginName, ChatColor.GRAY, getHelpMessage());
+            ChatUtils.printInfo(sender, pluginName, ChatColor.GRAY, getHelpMessage());
             return;
         }
 
-        execute(args, player);
+        execute(args, sender);
     }
 
     @Override

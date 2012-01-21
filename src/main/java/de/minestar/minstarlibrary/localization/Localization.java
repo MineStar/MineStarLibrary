@@ -57,7 +57,7 @@ public class Localization {
      * Creates a Localization loading all data from a file. If this file is not
      * existing, it will try to load the defaults from the .jar/res/default.txt
      * 
-     * @param fileName
+     * @param file
      *            Localization file
      * @throws FileNotFoundException
      *             When the default.txt in .jar/res/ is not found! Please always

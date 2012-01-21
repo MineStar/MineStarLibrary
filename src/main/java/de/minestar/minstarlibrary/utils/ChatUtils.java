@@ -9,7 +9,7 @@ public class ChatUtils {
     /**
      * Sends a simple message without plugin prefix to the player
      * 
-     * @param player
+     * @param sender
      *            The recipient
      * @param color
      *            Color of message, see {@link org.bukkit.ChatColor ChatColor}
@@ -155,27 +155,27 @@ public class ChatUtils {
      * @param syntax
      *            Syntax of the commands, beginns normally with a
      *            <code>"/"</code>
-     * @param Examples
+     * @param examples
      *            List of examples for the Command
      * @see #printInfo(Player, String, ChatColor, String)
      */
-    public static void printWrongSyntax(CommandSender sender, String pluginName, String Syntax, String[] Examples) {
-        ChatUtils.printError(sender, pluginName, "Wrong Syntax! Use: " + Syntax);
+    public static void printWrongSyntax(CommandSender sender, String pluginName, String syntax, String[] examples) {
+        ChatUtils.printError(sender, pluginName, "Wrong Syntax! Use: " + syntax);
 
-        if (Examples.length == 1)
+        if (examples.length == 1)
             ChatUtils.printInfo(sender, pluginName, ChatColor.GRAY, "Example:");
-        else if (Examples.length > 1)
+        else if (examples.length > 1)
             ChatUtils.printInfo(sender, pluginName, ChatColor.DARK_RED, "Examples:");
 
-        for (int i = 0; i < Examples.length; ++i)
-            printInfo(sender, pluginName, ChatColor.GRAY, Examples[i]);
+        for (int i = 0; i < examples.length; ++i)
+            printInfo(sender, pluginName, ChatColor.GRAY, examples[i]);
     }
 
     /**
      * Sends a list of dark red colored examples for commands with possible
      * pluginname to the player
      * 
-     * @param sender
+     * @param player
      *            The recipient
      * @param pluginName
      *            Name of the plugin sending the message to the sender. Ignored,
@@ -183,12 +183,12 @@ public class ChatUtils {
      * @param syntax
      *            Syntax of the commands, beginns normally with a
      *            <code>"/"</code>
-     * @param Examples
+     * @param examples
      *            List of examples for the Command
      * @see #printInfo(Player, String, ChatColor, String)
      */
-    public static void printWrongSyntax(Player player, String pluginName, String Syntax, String[] Examples) {
-        printWrongSyntax((CommandSender) player, pluginName, Syntax, Examples);
+    public static void printWrongSyntax(Player player, String pluginName, String syntax, String[] examples) {
+        printWrongSyntax((CommandSender) player, pluginName, syntax, examples);
     }
 
     /**

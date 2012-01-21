@@ -18,11 +18,6 @@
 
 package de.minestar.minestarlibrary.commands;
 
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
-
-import de.minestar.minestarlibrary.utils.ChatUtils;
-
 /**
  * Represents a command with a varible number of Arguments. The only difference
  * to Command is, that the argumentcount given by the constructor is the
@@ -65,26 +60,8 @@ public abstract class ExtendedCommand extends Command {
         super(pluginName, syntax, arguments, node);
     }
 
-    public abstract void execute(String[] args, CommandSender sender);
-
-    @Override
-    public void run(String[] args, CommandSender sender) {
-        if (!super.hasRights(sender)) {
-            ChatUtils.printError(sender, pluginName, NO_RIGHT);
-            return;
-        }
-
-        if (!this.hasCorrectSyntax(args)) {
-            ChatUtils.printInfo(sender, pluginName, ChatColor.GRAY, getHelpMessage());
-            return;
-        }
-
-        execute(args, sender);
-    }
-
     @Override
     protected boolean hasCorrectSyntax(String[] args) {
         return args.length >= super.getArgumentCount();
     }
-
 }

@@ -20,6 +20,7 @@ package de.minestar.minestarlibrary.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import com.bukkit.gemo.utils.UtilPermissions;
@@ -112,7 +113,12 @@ public abstract class Command {
             return;
         }
 
-        execute(args, sender);
+        if (sender instanceof ConsoleCommandSender)
+            execute(args, (ConsoleCommandSender) sender);
+        else if (sender instanceof Player)
+            execute(args, (Player) sender);
+        else
+            ChatUtils.printConsoleError("Unknown command sender '" + sender.getName() + "'!", pluginName);
     }
 
     /**
@@ -120,10 +126,24 @@ public abstract class Command {
      * 
      * @param args
      *            The arguments of the command
-     * @param sender
+     * @param player
      *            The command caller
      */
-    public abstract void execute(String[] args, CommandSender sender);
+    public abstract void execute(String[] args, Player player);
+
+    /**
+     * Override this method to allow a command accessed by console. When this
+     * method is not override and console tries to execute the command, the
+     * command is canceled and an error message is sent
+     * 
+     * @param args
+     *            The arguments of the command
+     * @param console
+     *            The minecraft console
+     */
+    public void execute(String[] args, ConsoleCommandSender console) {
+        ChatUtils.printConsoleError("The command '" + getSyntax() + "' can't be executed by console!", pluginName);
+    }
 
     /**
      * @param sender

@@ -73,10 +73,11 @@ public class CommandList {
         if (!label.startsWith("/"))
             label = "/" + label;
 
-        // looking for
+        // looking for non extended and non super command
         Command cmd = commandList.get(label + "_" + args.length);
         if (cmd != null) {
             cmd.run(args, sender);
+            // look for extended commands and super commands
         } else {
             cmd = commandList.get(label);
             if (cmd != null) {

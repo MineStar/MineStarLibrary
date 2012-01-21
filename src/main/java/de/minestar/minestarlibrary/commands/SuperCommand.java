@@ -55,9 +55,6 @@ public abstract class SuperCommand extends Command {
     }
 
     @Override
-    public abstract void execute(String[] args, CommandSender sender);
-
-    @Override
     public void run(String[] args, CommandSender sender) {
         if (args.length == 0) {
             if (hasFunction)

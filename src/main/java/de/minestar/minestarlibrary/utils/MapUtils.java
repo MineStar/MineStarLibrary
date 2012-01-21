@@ -16,7 +16,7 @@
  * along with MineStarLibrary.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.minestar.minstarlibrary.utils;
+package de.minestar.minestarlibrary.utils;
 
 import org.bukkit.map.MapFont;
 

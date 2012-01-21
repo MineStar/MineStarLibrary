@@ -16,7 +16,7 @@
  * along with MineStarLibrary.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.minestar.minstarlibrary.database;
+package de.minestar.minestarlibrary.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

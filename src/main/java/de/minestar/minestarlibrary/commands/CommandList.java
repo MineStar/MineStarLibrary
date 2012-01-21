@@ -16,7 +16,7 @@
  * along with MineStarLibrary.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.minestar.minstarlibrary.commands;
+package de.minestar.minestarlibrary.commands;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import de.minestar.minstarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.ChatUtils;
 
 public class CommandList {
 

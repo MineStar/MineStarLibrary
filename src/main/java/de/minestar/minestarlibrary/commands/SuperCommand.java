@@ -16,14 +16,14 @@
  * along with MineStarLibrary.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.minestar.minstarlibrary.commands;
+package de.minestar.minestarlibrary.commands;
 
 import java.util.Arrays;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import de.minestar.minstarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.ChatUtils;
 
 /**
  * Class to support commands with sub commands

@@ -16,7 +16,7 @@
  * along with MineStarLibrary.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.minestar.minstarlibrary.commands;
+package de.minestar.minestarlibrary.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -24,7 +24,7 @@ import org.bukkit.entity.Player;
 
 import com.bukkit.gemo.utils.UtilPermissions;
 
-import de.minestar.minstarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.ChatUtils;
 
 /**
  * Represents a command with a fixed number of arguments and no subcommands. If

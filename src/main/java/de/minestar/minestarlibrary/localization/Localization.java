@@ -16,7 +16,7 @@
  * along with MineStarLibrary.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.minestar.minstarlibrary.localization;
+package de.minestar.minestarlibrary.localization;
 
 import java.io.BufferedReader;
 import java.io.File;

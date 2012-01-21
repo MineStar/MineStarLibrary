@@ -16,7 +16,7 @@
  * along with ContaoPlugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.minestar.minstarlibrary.utils;
+package de.minestar.minestarlibrary.utils;
 
 import java.util.Arrays;
 import java.util.Comparator;

@@ -50,6 +50,10 @@ public abstract class SuperCommand extends Command {
         }
     }
 
+    public SuperCommand(String pluginName, String syntax, String arguments, String node, Command... subCommands) {
+        this(pluginName, syntax, arguments, node, false, subCommands);
+    }
+
     public SuperCommand(String syntax, String arguments, String node, Command... subCommands) {
         this(syntax, arguments, node, false, subCommands);
     }

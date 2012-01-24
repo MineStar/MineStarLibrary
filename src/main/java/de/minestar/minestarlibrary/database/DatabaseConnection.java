@@ -39,7 +39,7 @@ public class DatabaseConnection {
      * @param password
      *            Password for the user. It will deleted by this
      */
-    public DatabaseConnection(String host, int port, String database, String userName, String password) {
+    public DatabaseConnection(String host, String port, String database, String userName, String password) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, userName, password);

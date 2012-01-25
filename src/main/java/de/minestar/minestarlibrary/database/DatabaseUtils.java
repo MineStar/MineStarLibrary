@@ -24,7 +24,8 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
-import java.sql.Statement;
+
+import de.minestar.minestarlibrary.utils.ChatUtils;
 
 public class DatabaseUtils {
 
@@ -39,21 +40,25 @@ public class DatabaseUtils {
      * @throws Exception
      *             When file cannot read or statement has wrong syntax
      */
-    private static void createStructure(BufferedReader bReader, Connection con) throws Exception {
-        Statement s = con.createStatement();
+    private static void createStructure(BufferedReader bReader, Connection con, String pluginName) throws Exception {
+        ChatUtils.printConsoleInfo("Start importing database structure", pluginName);
         String line = "";
         StringBuilder sBuilder = new StringBuilder(500);
         while ((line = bReader.readLine()) != null) {
+            // ignore empty lines and comments
+            if (line.startsWith("#") || line.startsWith("-") || line.isEmpty())
+                continue;
+
             sBuilder.append(line);
             if (line.endsWith(";")) {
-                s.execute(sBuilder.toString());
+                con.createStatement().execute(sBuilder.toString());
                 // reset the string builder
                 sBuilder.setLength(0);
             }
         }
         bReader.close();
+        ChatUtils.printConsoleInfo("Finished importing database structure", pluginName);
     }
-
     /**
      * Read a <code>*.sql</code> batch containing SQL statements. This methods
      * reading and executing them and creats a database structure.
@@ -67,9 +72,9 @@ public class DatabaseUtils {
      * @throws Exception
      *             When file cannot read or statement has wrong syntax
      */
-    public static void createStructure(InputStream ressource, Connection con) throws Exception {
+    public static void createStructure(InputStream ressource, Connection con, String pluginName) throws Exception {
         BufferedReader bReader = new BufferedReader(new InputStreamReader(ressource));
-        createStructure(bReader, con);
+        createStructure(bReader, con, pluginName);
     }
 
     /**
@@ -83,8 +88,8 @@ public class DatabaseUtils {
      * @throws Exception
      *             When file cannot read or statement has wrong syntax
      */
-    public static void createStructure(File file, Connection con) throws Exception {
-        createStructure(new BufferedReader(new FileReader(file)), con);
+    public static void createStructure(File file, Connection con, String pluginName) throws Exception {
+        createStructure(new BufferedReader(new FileReader(file)), con, pluginName);
     }
 
     /**
@@ -98,7 +103,7 @@ public class DatabaseUtils {
      * @throws Exception
      *             When file cannot read or statement has wrong syntax
      */
-    public static void createStructure(String filePath, Connection con) throws Exception {
-        createStructure(new File(filePath), con);
+    public static void createStructure(String filePath, Connection con, String pluginName) throws Exception {
+        createStructure(new File(filePath), con, pluginName);
     }
 }

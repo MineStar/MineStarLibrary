@@ -52,6 +52,35 @@ public class DatabaseConnection {
     }
 
     /**
+     * Deprecated: Use please the constructor
+     * <code>DatabaseConnection(String host, String port, String database, String userName, String password</code>
+     * Creates a connection to a MySQL Connection.
+     * 
+     * @param host
+     *            Hosting the MySQL Database
+     * @param port
+     *            Port for MySQL Client
+     * @param database
+     *            Name of the database
+     * @param userName
+     *            User with enough permission to access the database
+     * @param password
+     *            Password for the user. It will deleted by this
+     */
+    @Deprecated
+    public DatabaseConnection(String host, int port, String database, String userName, String password) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, userName, password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        userName = null;
+        password = null;
+        System.gc();
+    }
+
+    /**
      * Creates a connection to a SQLLite database. When the database is not
      * existing in moment of creating a connection to it, a new database will be
      * created

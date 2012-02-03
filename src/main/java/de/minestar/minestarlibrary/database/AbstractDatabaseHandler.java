@@ -95,4 +95,13 @@ public abstract class AbstractDatabaseHandler {
      * Method for initiating prepare statements
      */
     protected abstract void createStatements() throws Exception;
+
+    /**
+     * Close the connection to the database. Call this method in "onDisable"
+     * method
+     */
+    public void closeConnection() {
+        if (dbConnection != null)
+            dbConnection.closeConnection();
+    }
 }

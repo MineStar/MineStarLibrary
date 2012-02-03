@@ -19,6 +19,7 @@
 package de.minestar.minestarlibrary.database;
 
 import java.io.File;
+import java.sql.Connection;
 
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
@@ -70,8 +71,10 @@ public abstract class AbstractDatabaseHandler {
      */
     private void init(File dataFolder) throws Exception {
         dbConnection = createConnection(dataFolder);
-        createStructure();
-        createStatements();
+        if (dbConnection != null) {
+            createStructure(dbConnection.getConnection());
+            createStatements(dbConnection.getConnection());
+        }
 
     }
 
@@ -89,12 +92,12 @@ public abstract class AbstractDatabaseHandler {
     /**
      * Method for establishing a basis table structure of the database
      */
-    protected abstract void createStructure() throws Exception;
+    protected abstract void createStructure(Connection con) throws Exception;
 
     /**
      * Method for initiating prepare statements
      */
-    protected abstract void createStatements() throws Exception;
+    protected abstract void createStatements(Connection con) throws Exception;
 
     /**
      * Close the connection to the database. Call this method in "onDisable"

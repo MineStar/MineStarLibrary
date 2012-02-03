@@ -68,7 +68,10 @@ public class DatabaseUtils {
      * @param ressource
      *            The InputStream to the file in the <code>*.jar</code> which
      *            can get by <br>
-     *            <code>getClass().getResourceAsStream()</code>
+     *            <code>getClass().getResourceAsStream()</code> <br>
+     *            Hint: If the target file is in the first package, you have to
+     *            use <code>/targetFile</code> instead of
+     *            <code>targetFile</code>!
      * @param con
      *            The connection to the database
      * @throws Exception

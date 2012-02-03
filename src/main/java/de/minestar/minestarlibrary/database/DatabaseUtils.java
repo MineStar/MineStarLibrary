@@ -167,4 +167,18 @@ public class DatabaseUtils {
         config.save(configFile);
         ChatUtils.printConsoleError("Default config created! Please restart server after updating the default config!", pluginName);
     }
+
+    /**
+     * Escapes a string with the SQL Escape signs "'"
+     * 
+     * @param sBuilder
+     *            The string builder containing the SQL statement
+     * @param string
+     *            The string to be escaped
+     */
+    public static void appendSQLString(StringBuilder sBuilder, String string) {
+        sBuilder.append("'");
+        sBuilder.append(string);
+        sBuilder.append("'");
+    }
 }

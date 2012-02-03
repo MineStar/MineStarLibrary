@@ -84,15 +84,15 @@ public abstract class AbstractDatabaseHandler {
      * @return The database connection object which is automatically assigned to
      *         the private variable <code>dbConnection</code>
      */
-    protected abstract DatabaseConnection createConnection(File dataFolder);
+    protected abstract DatabaseConnection createConnection(File dataFolder) throws Exception;
 
     /**
      * Method for establishing a basis table structure of the database
      */
-    protected abstract void createStructure();
+    protected abstract void createStructure() throws Exception;
 
     /**
      * Method for initiating prepare statements
      */
-    protected abstract void createStatements();
+    protected abstract void createStatements() throws Exception;
 }

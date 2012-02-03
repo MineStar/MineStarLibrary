@@ -25,6 +25,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 
+import org.bukkit.configuration.file.YamlConfiguration;
+
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
 public class DatabaseUtils {
@@ -105,5 +107,64 @@ public class DatabaseUtils {
      */
     public static void createStructure(String filePath, Connection con, String pluginName) throws Exception {
         createStructure(new File(filePath), con, pluginName);
+    }
+
+    public static final byte TYPE_MYSQL = 0;
+    public static final byte TYPE_SQLLITE = 1;
+
+    /**
+     * Creates a default configuration for your database connection depending on
+     * the database type. <br>
+     * Depedning on <code>sqlType</code> the config will have the followning
+     * structure: <br>
+     * <code>TYPE_MYSQL <br>
+     * Host=host <br>
+     * Port=port <br>
+     * Database=database <br>
+     * User=user <br>
+     * Password=password
+     * </code> <br>
+     * <br>
+     * <code>TYPE_SQLLITE <br>
+     * Folder=folder <br>
+     * FileName=fileName <br>
+     * </code>
+     * 
+     * @param sqlType
+     *            The type of your database. Please use the constants of
+     *            DatabaseUtils
+     * @param configFile
+     *            The target file
+     * @param pluginName
+     *            Name of the plugin
+     * @throws IllegalArgumentException
+     *             If a wrong value for <code>sqlType</code> is used
+     * @throws Exception
+     *             Exception thrown by {@link YamlConfiguration}
+     */
+    public static void createDatabaseConfig(byte sqlType, File configFile, String pluginName) throws Exception {
+        YamlConfiguration config = new YamlConfiguration();
+        ChatUtils.printConsoleError("Can't find sql config " + configFile + ". Plugin creates a new one!", pluginName);
+
+        configFile.createNewFile();
+
+        config.load(configFile);
+        switch (sqlType) {
+            case TYPE_MYSQL :
+                config.set("Host", "host");
+                config.set("Port", "port");
+                config.set("Database", "database");
+                config.set("User", "user");
+                config.set("Password", "password");
+                break;
+            case TYPE_SQLLITE :
+                config.set("Folder", "folder");
+                config.set("FileName", "fileName");
+                break;
+            default :
+                throw new IllegalArgumentException("Unknown SQL Type value =" + sqlType + "!");
+        }
+        config.save(configFile);
+        ChatUtils.printConsoleError("Default config created! Please restart server after updating the default config!", pluginName);
     }
 }

@@ -35,7 +35,6 @@ public abstract class SuperCommand extends Command {
 
     private Command[] subCommands;
     private boolean hasFunction;
-    private String pluginName = "";
 
     public SuperCommand(String syntax, String arguments, String node, boolean hasFunction, Command... subCommands) {
         super(syntax, arguments, node);

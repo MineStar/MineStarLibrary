@@ -110,6 +110,18 @@ public class PlayerUtils {
         if (player != null)
             return player.getName().toLowerCase();
 
+        return getOfflinePlayerName(name);
+    }
+
+    /**
+     * Searches for the offline player name.
+     * 
+     * @param name
+     *            Part of the targeted account name
+     * @return <code>Null</code> when no name was found, otherwise the account
+     *         name
+     */
+    public static String getOfflinePlayerName(String name) {
         File playersDir = new File(Bukkit.getWorlds().get(0).getWorldFolder(), "players/");
         String temp = "";
         String result = "";
@@ -138,7 +150,6 @@ public class PlayerUtils {
         }
 
         return result;
-
     }
 
     /**
@@ -183,12 +194,14 @@ public class PlayerUtils {
     }
 
     /**
-     * Searches for the name in offline player files
+     * <code>IMPORTANT!</code> <br>
+     * It will return ALWAYS an object doesn't matter the player is existing or
+     * not! <br>
+     * Searches for the name in offline player files.
      * 
      * @param name
      *            Part of the target nickname
-     * @return <code>Null</code> if no player was found, otherwise the offline
-     *         player object
+     * @return An offline player object, ALWAYS!
      */
     public static OfflinePlayer getOfflinePlayer(String name) {
         return Bukkit.getOfflinePlayer(name);

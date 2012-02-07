@@ -65,6 +65,8 @@ public abstract class AbstractDatabaseHandler {
      * Initiate the database handler calling the functions
      * <code>createConnection, createStructure and createStatements</code>
      * 
+     * @param pluginName
+     *            Name of the plugin which uses the class
      * @param dataFolder
      *            The datafolder of the plugin
      * @throws Exception
@@ -82,6 +84,8 @@ public abstract class AbstractDatabaseHandler {
      * This methods establish a connection to your database. The dataFolder
      * object can be used to read a config(which is highly recommended)
      * 
+     * @param pluginName
+     *            Name of the plugin which uses the class
      * @param dataFolder
      *            The datafolder of the plugin
      * @return The database connection object which is automatically assigned to
@@ -91,11 +95,21 @@ public abstract class AbstractDatabaseHandler {
 
     /**
      * Method for establishing a basis table structure of the database
+     * 
+     * @param pluginName
+     *            Name of the plugin which uses the class
+     * @param con
+     *            The connection to the database
      */
     protected abstract void createStructure(String pluginName, Connection con) throws Exception;
 
     /**
      * Method for initiating prepare statements
+     * 
+     * @param pluginName
+     *            Name of the plugin which uses the class
+     * @param con
+     *            The connection to the database
      */
     protected abstract void createStatements(String pluginName, Connection con) throws Exception;
 

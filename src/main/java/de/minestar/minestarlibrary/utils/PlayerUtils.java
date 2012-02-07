@@ -18,41 +18,127 @@
 
 package de.minestar.minestarlibrary.utils;
 
-import java.util.Arrays;
-import java.util.Comparator;
+import java.io.File;
+import java.util.TreeSet;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 public class PlayerUtils {
 
-    // Used for binary search
-    private static Comparator<OfflinePlayer> c = new Comparator<OfflinePlayer>() {
-        @Override
-        public int compare(OfflinePlayer o1, OfflinePlayer o2) {
-            return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
-        }
-    };
-
     /**
-     * Use binary search to find the account name of the player.
+     * Check if any player contains the name. At first it will search in online
+     * player by testing the display and the account name and when no result is
+     * found it will search in offline players data.
      * 
      * @param name
-     *            Name of the player. Must be complete, but isn't case sensitive
-     * @return Name of the player case sensitive. If player is not existing,
-     *         return null
+     *            Part of the target nickname. It needn't be lower case, will
+     *            casted to lower case!
+     * @return <code>True</code> if an player's nickname or account is existing
+     *         that contains <code>name</code>, <code>false</code> if not
      */
-    public static String getOfflinePlayerName(String name) {
-        Server server = Bukkit.getServer();
-        // get all players in a sorted , ascending list
-        OfflinePlayer[] existingPlayer = server.getOfflinePlayers();
-        // creates a OfflinePlayer object ignoring player is existing or not
-        OfflinePlayer target = server.getOfflinePlayer(name.toLowerCase());
-        // returns -1 when player is not found
-        int i = Arrays.binarySearch(existingPlayer, target, c);
-        return i >= 0 ? existingPlayer[i].getName() : null;
+    public static boolean isPlayerExisiting(String name) {
+        name = name.toLowerCase();
+        if (getOnlinePlayer(name) != null)
+            return true;
+
+        File playersDir = new File(Bukkit.getWorlds().get(0).getWorldFolder(), "players/");
+        String temp = "";
+        if (playersDir.isDirectory()) {
+            File[] playerFiles = playersDir.listFiles();
+            if (playerFiles.length == 0)
+                throw new RuntimeException(playersDir + " doesn't contain any player data!");
+
+            for (File file : playerFiles) {
+                if (file.isDirectory())
+                    continue;
+
+                temp = file.getName().toLowerCase();
+                if (temp.contains(name))
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return Sorted Set of all player's nicknames who has ever conntected to
+     *         the server. The nicknames are all in lowercase!
+     */
+    public static TreeSet<String> getAllPlayerNames() {
+
+        TreeSet<String> names = new TreeSet<String>();
+        Player[] onlinePlayer = Bukkit.getOnlinePlayers();
+        for (Player player : onlinePlayer)
+            names.add(player.getName().toLowerCase());
+
+        File playersDir = new File(Bukkit.getWorlds().get(0).getWorldFolder(), "players/");
+        String temp = "";
+        if (playersDir.isDirectory()) {
+            File[] playerFiles = playersDir.listFiles();
+            if (playerFiles.length == 0)
+                throw new RuntimeException(playersDir + " doesn't contain any player data!");
+
+            for (File file : playerFiles) {
+                if (file.isDirectory())
+                    continue;
+
+                temp = file.getName().toLowerCase();
+                names.add(temp.substring(0, temp.length() - 4));
+            }
+        }
+
+        return names;
+    }
+
+    /**
+     * Searches for the correct account name of the player by searching in nick-
+     * and accountnames of all online player and accountnames of all offline
+     * players.
+     * 
+     * @param name
+     *            Part of the target nickname
+     * @return The nickname of the player with the lowest difference to
+     *         <code>nick</code>. It is in lower case!
+     */
+    public static String getCorrectPlayerName(String name) {
+        name = name.toLowerCase();
+
+        Player player = getOnlinePlayer(name);
+        if (player != null)
+            return player.getName().toLowerCase();
+
+        File playersDir = new File(Bukkit.getWorlds().get(0).getWorldFolder(), "players/");
+        String temp = "";
+        String result = "";
+        int delta = Integer.MAX_VALUE;
+        int curDelta = Integer.MAX_VALUE;
+
+        if (playersDir.isDirectory()) {
+            File[] playerFiles = playersDir.listFiles();
+            if (playerFiles.length == 0)
+                throw new RuntimeException(playersDir + " doesn't contain any player data!");
+
+            for (File file : playerFiles) {
+                if (file.isDirectory())
+                    continue;
+
+                temp = file.getName().toLowerCase();
+                temp = temp.substring(0, temp.length() - 4);
+                curDelta = temp.length() - name.length();
+                if (curDelta < delta && temp.contains(name)) {
+                    delta = curDelta;
+                    result = temp;
+                }
+                if (delta == 0)
+                    return result;
+            }
+        }
+
+        return result;
+
     }
 
     /**
@@ -60,9 +146,9 @@ public class PlayerUtils {
      * the first player that contains the name is returned.
      * 
      * @param name
-     *            The name of the player
-     * @return Null if no player who contains the name or have the case
-     *         insensitive name
+     *            Part of the target nickname. Needn't be in lower case, will
+     *            cast to it!
+     * @return <code>Null</code> if no player was found, else the player object
      */
     public static Player getOnlinePlayer(String name) {
 
@@ -78,13 +164,13 @@ public class PlayerUtils {
 
             tempName = player.getName().toLowerCase();
             curDelta = tempName.length() - name.length();
-            if (tempName.startsWith(name) && curDelta < delta) {
+            if (curDelta < delta && tempName.contains(name)) {
                 delta = curDelta;
                 result = player;
             } else {
                 tempName = player.getDisplayName().toLowerCase();
                 curDelta = tempName.length() - name.length();
-                if (tempName.startsWith(name) && curDelta < delta) {
+                if (curDelta < delta && tempName.contains(name)) {
                     delta = curDelta;
                     result = player;
                 }
@@ -94,5 +180,17 @@ public class PlayerUtils {
         }
 
         return result;
+    }
+
+    /**
+     * Searches for the name in offline player files
+     * 
+     * @param name
+     *            Part of the target nickname
+     * @return <code>Null</code> if no player was found, otherwise the offline
+     *         player object
+     */
+    public static OfflinePlayer getOfflinePlayer(String name) {
+        return Bukkit.getOfflinePlayer(name);
     }
 }

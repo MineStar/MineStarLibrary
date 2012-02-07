@@ -55,7 +55,7 @@ public abstract class AbstractDatabaseHandler {
      */
     public AbstractDatabaseHandler(String pluginName, File dataFolder) {
         try {
-            init(dataFolder);
+            init(pluginName, dataFolder);
         } catch (Exception e) {
             ChatUtils.printConsoleException(e, "Can't initiate the database!", pluginName);
         }
@@ -69,15 +69,15 @@ public abstract class AbstractDatabaseHandler {
      *            The datafolder of the plugin
      * @throws Exception
      */
-    private void init(File dataFolder) throws Exception {
-        dbConnection = createConnection(dataFolder);
+    private void init(String pluginName, File dataFolder) throws Exception {
+        dbConnection = createConnection(pluginName, dataFolder);
         if (dbConnection != null) {
-            createStructure(dbConnection.getConnection());
-            createStatements(dbConnection.getConnection());
-        }
+            createStructure(pluginName, dbConnection.getConnection());
+            createStatements(pluginName, dbConnection.getConnection());
+        } else
+            ChatUtils.printConsoleError("Can't initiate the database structure and statements because of missing connection!", pluginName);
 
     }
-
     /**
      * This methods establish a connection to your database. The dataFolder
      * object can be used to read a config(which is highly recommended)
@@ -87,17 +87,17 @@ public abstract class AbstractDatabaseHandler {
      * @return The database connection object which is automatically assigned to
      *         the private variable <code>dbConnection</code>
      */
-    protected abstract DatabaseConnection createConnection(File dataFolder) throws Exception;
+    protected abstract DatabaseConnection createConnection(String pluginName, File dataFolder) throws Exception;
 
     /**
      * Method for establishing a basis table structure of the database
      */
-    protected abstract void createStructure(Connection con) throws Exception;
+    protected abstract void createStructure(String pluginName, Connection con) throws Exception;
 
     /**
      * Method for initiating prepare statements
      */
-    protected abstract void createStatements(Connection con) throws Exception;
+    protected abstract void createStatements(String pluginName, Connection con) throws Exception;
 
     /**
      * Close the connection to the database. Call this method in "onDisable"

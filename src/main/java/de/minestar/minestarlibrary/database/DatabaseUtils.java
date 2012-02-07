@@ -61,6 +61,7 @@ public class DatabaseUtils {
         bReader.close();
         ChatUtils.printConsoleInfo("Finished importing database structure", pluginName);
     }
+
     /**
      * Read a <code>*.sql</code> batch containing SQL statements. This methods
      * reading and executing them and creats a database structure.
@@ -112,9 +113,6 @@ public class DatabaseUtils {
         createStructure(new File(filePath), con, pluginName);
     }
 
-    public static final byte TYPE_MYSQL = 0;
-    public static final byte TYPE_SQLLITE = 1;
-
     /**
      * Creates a default configuration for your database connection depending on
      * the database type. <br>
@@ -134,8 +132,7 @@ public class DatabaseUtils {
      * </code>
      * 
      * @param sqlType
-     *            The type of your database. Please use the constants of
-     *            DatabaseUtils
+     *            The type of database which is used. See {@link DatabaseType}
      * @param configFile
      *            The target file
      * @param pluginName
@@ -145,7 +142,7 @@ public class DatabaseUtils {
      * @throws Exception
      *             Exception thrown by {@link YamlConfiguration}
      */
-    public static void createDatabaseConfig(byte sqlType, File configFile, String pluginName) throws Exception {
+    public static void createDatabaseConfig(DatabaseType sqlType, File configFile, String pluginName) throws Exception {
         YamlConfiguration config = new YamlConfiguration();
         ChatUtils.printConsoleError("Can't find sql config " + configFile + ". Plugin creates a new one!", pluginName);
 
@@ -153,19 +150,17 @@ public class DatabaseUtils {
 
         config.load(configFile);
         switch (sqlType) {
-            case TYPE_MYSQL :
+            case MySQL :
                 config.set("Host", "host");
                 config.set("Port", "port");
                 config.set("Database", "database");
                 config.set("User", "user");
                 config.set("Password", "password");
                 break;
-            case TYPE_SQLLITE :
+            case SQLLite :
                 config.set("Folder", "folder");
                 config.set("FileName", "fileName");
                 break;
-            default :
-                throw new IllegalArgumentException("Unknown SQL Type value =" + sqlType + "!");
         }
         config.save(configFile);
         ChatUtils.printConsoleError("Default config created! Please restart server after updating the default config!", pluginName);

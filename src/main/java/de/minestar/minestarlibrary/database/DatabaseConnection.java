@@ -21,13 +21,17 @@ package de.minestar.minestarlibrary.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import de.minestar.minestarlibrary.utils.ChatUtils;
+
 public class DatabaseConnection {
 
-    private Connection con = null;;
+    private Connection con;
 
     /**
      * Creates a connection to a MySQL Connection.
      * 
+     * @param pluginName
+     *            Name of the plugin which uses the class
      * @param host
      *            Hosting the MySQL Database
      * @param port
@@ -39,40 +43,12 @@ public class DatabaseConnection {
      * @param password
      *            Password for the user. It will deleted by this
      */
-    public DatabaseConnection(String host, String port, String database, String userName, String password) {
+    public DatabaseConnection(String pluginName, String host, String port, String database, String userName, String password) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, userName, password);
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-        userName = null;
-        password = null;
-        System.gc();
-    }
-
-    /**
-     * Deprecated: Use please the constructor
-     * <code>DatabaseConnection(String host, String port, String database, String userName, String password</code>
-     * Creates a connection to a MySQL Connection.
-     * 
-     * @param host
-     *            Hosting the MySQL Database
-     * @param port
-     *            Port for MySQL Client
-     * @param database
-     *            Name of the database
-     * @param userName
-     *            User with enough permission to access the database
-     * @param password
-     *            Password for the user. It will deleted by this
-     */
-    @Deprecated
-    public DatabaseConnection(String host, int port, String database, String userName, String password) {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, userName, password);
-        } catch (Exception e) {
+            ChatUtils.printConsoleError("Can't create a MySQL connection! Please check your connection information in the sql.config and your database connection!", pluginName);
             e.printStackTrace();
         }
         userName = null;
@@ -85,18 +61,20 @@ public class DatabaseConnection {
      * existing in moment of creating a connection to it, a new database will be
      * created
      * 
+     * @param pluginName
+     *            Name of the plugin which uses the class
      * @param folder
      *            Where the database will be stored
      * @param databaseName
      *            Name of the file. Do not use the file ending '.db', it will
      *            added automatically
      */
-    public DatabaseConnection(String folder, String databaseName) {
+    public DatabaseConnection(String pluginName, String folder, String databaseName) {
         try {
             Class.forName("org.sqlite.JDBC");
             con = DriverManager.getConnection("jdbc:sqlite:" + folder + "/" + databaseName + ".db");
         } catch (Exception e) {
-            e.printStackTrace();
+            ChatUtils.printConsoleException(e, "Can't create a SQLLite connection to " + folder + "/" + databaseName + ".db! Please check your system rights!", pluginName);
         }
     }
 
@@ -124,5 +102,11 @@ public class DatabaseConnection {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        // Try to close connection in every case!
+        closeConnection();
     }
 }

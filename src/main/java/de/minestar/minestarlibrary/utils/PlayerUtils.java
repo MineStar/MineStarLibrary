@@ -123,8 +123,9 @@ public class PlayerUtils {
      */
     public static String getOfflinePlayerName(String name) {
         File playersDir = new File(Bukkit.getWorlds().get(0).getWorldFolder(), "players/");
+        name = name.toLowerCase();
         String temp = "";
-        String result = "";
+        String result = null;
         int delta = Integer.MAX_VALUE;
         int curDelta = Integer.MAX_VALUE;
 
@@ -147,7 +148,8 @@ public class PlayerUtils {
                 if (delta == 0)
                     return result;
             }
-        }
+        } else
+            throw new RuntimeException(playersDir + " is no directory!");
 
         return result;
     }

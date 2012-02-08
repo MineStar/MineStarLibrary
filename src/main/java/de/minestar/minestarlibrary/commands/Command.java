@@ -224,4 +224,24 @@ public abstract class Command {
                 ++counter;
         return counter;
     }
+
+    /**
+     * Checks a permission node for the player and when the player doesn't have
+     * the permission, the message <code>NO_RIGHT</code> is printed! <br>
+     * Use this method for extended commands with multiple permission checks
+     * 
+     * @param player
+     *            The possible permission owner
+     * @param node
+     *            The permission node
+     * @return <code>True</code> if player has permissions, <code>false</code>
+     *         if not!
+     */
+    protected boolean checkSpecialPermission(Player player, String node) {
+        if (!UtilPermissions.playerCanUseCommand(player, node)) {
+            ChatUtils.printError(player, pluginName, NO_RIGHT);
+            return false;
+        }
+        return true;
+    }
 }

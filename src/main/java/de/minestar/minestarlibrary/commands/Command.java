@@ -56,7 +56,7 @@ public abstract class Command {
     private final int argumentCount;
 
     /**
-     * Just call super() in the inhertited classes. <br>
+     * Just call super() in the inhertited classes.
      * 
      * @param syntax
      *            Example : /warp create
@@ -73,7 +73,7 @@ public abstract class Command {
     }
 
     /**
-     * Just call super() in the inhertited classes. <br>
+     * Just call super() in the inhertited classes.
      * 
      * @param pluginName
      *            The pluginName for the use of prefixes (Example: [Contao])
@@ -86,9 +86,7 @@ public abstract class Command {
      */
     public Command(String pluginName, String syntax, String arguments, String node) {
         this(syntax, arguments, node);
-        if (pluginName != null) {
-            this.pluginName = pluginName;
-        }
+        this.pluginName = pluginName;
     }
 
     /**

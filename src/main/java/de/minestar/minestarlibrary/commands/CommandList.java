@@ -41,7 +41,7 @@ public class CommandList {
      * @param commands
      *            A list of all commands the plugin is using
      */
-    public CommandList(AbstractCommand[] commands) {
+    public CommandList(AbstractCommand... commands) {
         initCommandList(commands);
     }
 

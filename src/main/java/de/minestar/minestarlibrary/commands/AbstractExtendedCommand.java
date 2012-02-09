@@ -27,7 +27,7 @@ package de.minestar.minestarlibrary.commands;
  * @author Meldanor, GeMoschen
  * 
  */
-public abstract class ExtendedCommand extends Command {
+public abstract class AbstractExtendedCommand extends AbstractCommand {
 
 /**
      * Creates an ExtendedCommand, which can have more arguments than given
@@ -41,7 +41,7 @@ public abstract class ExtendedCommand extends Command {
      *            many arguments are necessary!
      * @param node The permission node to use this command. When empty, everyone can use the command!
      */
-    public ExtendedCommand(String syntax, String arguments, String node) {
+    public AbstractExtendedCommand(String syntax, String arguments, String node) {
         super(syntax, arguments, node);
     }
 
@@ -57,7 +57,7 @@ public abstract class ExtendedCommand extends Command {
      *            many arguments are necessary!
      * @param node The permission node to use this command. When empty, everyone can use the command!
      */
-    public ExtendedCommand(String pluginName, String syntax, String arguments, String node) {
+    public AbstractExtendedCommand(String pluginName, String syntax, String arguments, String node) {
         super(pluginName, syntax, arguments, node);
     }
 

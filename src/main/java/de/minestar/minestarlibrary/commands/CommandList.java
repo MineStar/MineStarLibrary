@@ -31,7 +31,7 @@ public class CommandList {
 
     // The commands are stored in this list. The key indicates the
     // commandssyntax and the argument counter
-    private HashMap<String, Command> commandList;
+    private HashMap<String, AbstractCommand> commandList;
     private String pluginName = "";
 
     /**
@@ -41,7 +41,7 @@ public class CommandList {
      * @param commands
      *            A list of all commands the plugin is using
      */
-    public CommandList(Command[] commands) {
+    public CommandList(AbstractCommand[] commands) {
         initCommandList(commands);
     }
 
@@ -54,7 +54,7 @@ public class CommandList {
      * @param commands
      *            A list of all commands the plugin is using
      */
-    public CommandList(String pluginName, Command[] commands) {
+    public CommandList(String pluginName, AbstractCommand[] commands) {
         this(commands);
         if (pluginName != null) {
             this.pluginName = pluginName;
@@ -74,7 +74,7 @@ public class CommandList {
             label = "/" + label;
 
         // looking for non extended and non super command
-        Command cmd = commandList.get(label + "_" + args.length);
+        AbstractCommand cmd = commandList.get(label + "_" + args.length);
         if (cmd != null) {
             cmd.run(args, sender);
             // look for extended commands and super commands
@@ -87,14 +87,14 @@ public class CommandList {
                 ChatUtils.printError(sender, pluginName, "Command '" + label + "' not found.");
 
                 // FIND RELATED COMMANDS
-                LinkedList<Command> cmdList = new LinkedList<Command>();
-                for (Entry<String, Command> entry : commandList.entrySet()) {
+                LinkedList<AbstractCommand> cmdList = new LinkedList<AbstractCommand>();
+                for (Entry<String, AbstractCommand> entry : commandList.entrySet()) {
                     if (entry.getKey().startsWith(label))
                         cmdList.add(entry.getValue());
                 }
 
                 // PRINT SYNTAX
-                for (Command command : cmdList)
+                for (AbstractCommand command : cmdList)
                     ChatUtils.printInfo(sender, pluginName, ChatColor.GRAY, command.getSyntax() + " " + command.getArguments());
             }
         }
@@ -108,14 +108,14 @@ public class CommandList {
      * @param cmds
      *            The array list for commands
      */
-    private void initCommandList(Command[] cmds) {
+    private void initCommandList(AbstractCommand[] cmds) {
 
-        commandList = new HashMap<String, Command>();
-        for (Command cmd : cmds) {
+        commandList = new HashMap<String, AbstractCommand>();
+        for (AbstractCommand cmd : cmds) {
             String key = "";
             // when the command has a variable count of arguments or
             // when the command has sub commands
-            if (cmd instanceof ExtendedCommand || cmd instanceof SuperCommand)
+            if (cmd instanceof AbstractExtendedCommand || cmd instanceof AbstractSuperCommand)
                 key = cmd.getSyntax();
             // a normal command(no subcommands/fix argument count)
             else

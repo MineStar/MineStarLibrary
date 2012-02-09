@@ -38,7 +38,7 @@ import de.minestar.minestarlibrary.utils.ChatUtils;
  * @author Meldanor, GeMoschen
  * 
  */
-public abstract class Command {
+public abstract class AbstractCommand {
 
     public final static String NO_RIGHT = "You are not allowed to use this command!";
 
@@ -65,7 +65,7 @@ public abstract class Command {
      * @param node
      *            Example : contao.create
      */
-    public Command(String syntax, String arguments, String node) {
+    public AbstractCommand(String syntax, String arguments, String node) {
         this.syntax = syntax;
         this.arguments = arguments;
         this.permissionNode = node;
@@ -84,7 +84,7 @@ public abstract class Command {
      * @param node
      *            Example : contao.create
      */
-    public Command(String pluginName, String syntax, String arguments, String node) {
+    public AbstractCommand(String pluginName, String syntax, String arguments, String node) {
         this(syntax, arguments, node);
         this.pluginName = pluginName;
     }

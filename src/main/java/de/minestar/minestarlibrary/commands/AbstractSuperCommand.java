@@ -31,29 +31,27 @@ import de.minestar.minestarlibrary.utils.ChatUtils;
  * @author Meldanor, GeMoschen
  * 
  */
-public abstract class SuperCommand extends Command {
+public abstract class AbstractSuperCommand extends AbstractCommand {
 
-    private Command[] subCommands;
+    private AbstractCommand[] subCommands;
     private boolean hasFunction;
 
-    public SuperCommand(String syntax, String arguments, String node, boolean hasFunction, Command... subCommands) {
+    public AbstractSuperCommand(String syntax, String arguments, String node, boolean hasFunction, AbstractCommand... subCommands) {
         super(syntax, arguments, node);
         this.hasFunction = hasFunction;
         this.subCommands = subCommands;
     }
 
-    public SuperCommand(String pluginName, String syntax, String arguments, String node, boolean hasFunction, Command... subCommands) {
+    public AbstractSuperCommand(String pluginName, String syntax, String arguments, String node, boolean hasFunction, AbstractCommand... subCommands) {
         this(syntax, arguments, node, hasFunction, subCommands);
-        if (pluginName != null) {
-            this.pluginName = pluginName;
-        }
+        this.pluginName = pluginName;
     }
 
-    public SuperCommand(String pluginName, String syntax, String arguments, String node, Command... subCommands) {
+    public AbstractSuperCommand(String pluginName, String syntax, String arguments, String node, AbstractCommand... subCommands) {
         this(pluginName, syntax, arguments, node, false, subCommands);
     }
 
-    public SuperCommand(String syntax, String arguments, String node, Command... subCommands) {
+    public AbstractSuperCommand(String syntax, String arguments, String node, AbstractCommand... subCommands) {
         this(syntax, arguments, node, false, subCommands);
     }
 
@@ -74,7 +72,7 @@ public abstract class SuperCommand extends Command {
 
     private void printSubcommands(CommandSender sender) {
         ChatUtils.printInfo(sender, pluginName, ChatColor.GOLD, "Possible subcommands:");
-        for (Command command : getSubCommands())
+        for (AbstractCommand command : getSubCommands())
             ChatUtils.printLine(sender, pluginName, ChatColor.GRAY, command.getHelpMessage());
     }
 
@@ -92,7 +90,7 @@ public abstract class SuperCommand extends Command {
         if (args != null && args.length == 0)
             return false;
 
-        for (Command com : subCommands) {
+        for (AbstractCommand com : subCommands) {
             if (com.getSyntax().equalsIgnoreCase(args[0])) {
                 com.run(Arrays.copyOfRange(args, 1, args.length), sender);
                 return true;
@@ -101,7 +99,7 @@ public abstract class SuperCommand extends Command {
         return false;
     }
 
-    protected Command[] getSubCommands() {
+    protected AbstractCommand[] getSubCommands() {
         return subCommands;
     }
 }

@@ -79,10 +79,13 @@ public class DatabaseUtils {
      *             When file cannot read or statement has wrong syntax
      */
     public static void createStructure(InputStream ressource, Connection con, String pluginName) throws Exception {
-        BufferedReader bReader = new BufferedReader(new InputStreamReader(ressource));
-        createStructure(bReader, con, pluginName);
+        // Fix for reload
+        // When reload is done the ressource is always null
+        if (ressource != null) {
+            BufferedReader bReader = new BufferedReader(new InputStreamReader(ressource));
+            createStructure(bReader, con, pluginName);
+        }
     }
-
     /**
      * Read a <code>*.sql</code> batch containing SQL statements. This methods
      * reading and executing them and creats a database structure.

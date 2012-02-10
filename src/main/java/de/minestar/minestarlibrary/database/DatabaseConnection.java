@@ -21,11 +21,17 @@ package de.minestar.minestarlibrary.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
 public class DatabaseConnection {
 
     private Connection con;
+
+    private final String pluginName;
+
+    private DatabaseConnection(String pluginName) {
+        this.pluginName = pluginName;
+    }
 
     /**
      * Creates a connection to a MySQL Connection.
@@ -44,12 +50,12 @@ public class DatabaseConnection {
      *            Password for the user. It will deleted by this
      */
     public DatabaseConnection(String pluginName, String host, String port, String database, String userName, String password) {
+        this(pluginName);
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, userName, password);
         } catch (Exception e) {
-            ChatUtils.printConsoleError("Can't create a MySQL connection! Please check your connection information in the sql.config and your database connection!", pluginName);
-            e.printStackTrace();
+            ConsoleUtils.printException(e, "Can't create a MySQL connection! Please check your connection information in the sql.config and your database connection!", pluginName);
         }
         userName = null;
         password = null;
@@ -70,11 +76,12 @@ public class DatabaseConnection {
      *            added automatically
      */
     public DatabaseConnection(String pluginName, String folder, String databaseName) {
+        this(pluginName);
         try {
             Class.forName("org.sqlite.JDBC");
             con = DriverManager.getConnection("jdbc:sqlite:" + folder + "/" + databaseName + ".db");
         } catch (Exception e) {
-            ChatUtils.printConsoleException(e, "Can't create a SQLLite connection to " + folder + "/" + databaseName + ".db! Please check your system rights!", pluginName);
+            ConsoleUtils.printException(e, "Can't create a SQLLite connection to " + folder + "/" + databaseName + ".db! Please check your system rights!", pluginName);
         }
     }
 
@@ -100,10 +107,10 @@ public class DatabaseConnection {
             con.close();
             con = null;
         } catch (Exception e) {
+            ConsoleUtils.printException(e, "Can't close connection!", pluginName);
             e.printStackTrace();
         }
     }
-
     @Override
     protected void finalize() throws Throwable {
         // Try to close connection in every case!

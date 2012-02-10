@@ -22,8 +22,11 @@ import java.util.Arrays;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.ConsoleUtils;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 /**
  * Class to support commands with sub commands
@@ -57,25 +60,41 @@ public abstract class AbstractSuperCommand extends AbstractCommand {
 
     @Override
     public void run(String[] args, CommandSender sender) {
+
         if (args.length == 0) {
-            if (hasFunction)
-                ChatUtils.printInfo(sender, pluginName, ChatColor.GRAY, getHelpMessage());
-            else
+            if (hasFunction) {
+                // Player executed command
+                if (sender instanceof Player)
+                    PlayerUtils.sendInfo((Player) sender, pluginName, getHelpMessage());
+                // Console executed command
+                else if (sender instanceof ConsoleCommandSender)
+                    ConsoleUtils.printInfo(getHelpMessage(), pluginName);
+            } else
                 printSubcommands(sender);
             return;
         }
 
+        // When no sub command was found then call the run method
         if (!runSubCommand(args, sender))
             super.run(args, sender);
 
     }
 
     private void printSubcommands(CommandSender sender) {
-        ChatUtils.printInfo(sender, pluginName, ChatColor.GOLD, "Possible subcommands:");
-        for (AbstractCommand command : getSubCommands())
-            ChatUtils.printLine(sender, pluginName, ChatColor.GRAY, command.getHelpMessage());
+        // Player executed command
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            PlayerUtils.sendMessage(player, ChatColor.GOLD, pluginName, "Possible subcommands:");
+            for (AbstractCommand command : getSubCommands())
+                PlayerUtils.sendInfo(player, pluginName, command.getHelpMessage());
+        }
+        // Console executed command
+        else if (sender instanceof ConsoleCommandSender) {
+            ConsoleUtils.printInfo("Possible subcommands:", pluginName);
+            for (AbstractCommand command : getSubCommands())
+                ConsoleUtils.printInfo(command.getHelpMessage(), pluginName);
+        }
     }
-
     /**
      * Searches for sub commands by comparing the first argument with the syntax
      * of the sub commands.

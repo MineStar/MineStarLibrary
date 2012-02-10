@@ -22,6 +22,7 @@ import java.io.File;
 import java.util.TreeSet;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -207,5 +208,183 @@ public class PlayerUtils {
      */
     public static OfflinePlayer getOfflinePlayer(String name) {
         return Bukkit.getOfflinePlayer(name);
+    }
+
+    // BLANK MESSAGE
+    /**
+     * Sending a blank uncolored message with the prefix
+     * <code>[PLUGIN_NAME]</code> to the player using the method
+     * <code>player.sendMessage(msg)</code>
+     * 
+     * @param player
+     *            The recipient
+     * @param pluginName
+     *            Name of the plugin
+     * @param message
+     *            The message
+     */
+    public static void sendBlankMessage(Player player, String pluginName, String message) {
+        player.sendMessage(message);
+    }
+
+    /**
+     * Sending a blank uncolored message to the player using the method
+     * <code>player.sendMessage(msg)</code>
+     * 
+     * @param player
+     *            The recipient
+     * @param message
+     *            The message
+     */
+    public static void sendBlankMessage(Player player, String message) {
+        player.sendMessage(message);
+    }
+
+    // COLORED MESSAGE
+
+    /**
+     * Sending a colored message with the prefix <code>[PLUGIN_NAME]</code> to
+     * the player using the method <code>player.sendMessage(msg)</code>
+     * 
+     * @param player
+     *            The recipient
+     * @param color
+     *            The color of the message {@link ChatColor}
+     * @param pluginName
+     *            Name of the plugin
+     * @param message
+     *            The message
+     */
+    public static void sendMessage(Player player, ChatColor color, String pluginName, String message) {
+        sendBlankMessage(player, ChatColor.WHITE + "[" + pluginName + "] " + color + message);
+    }
+
+    /**
+     * Sending a colored message to the player using the method
+     * <code>player.sendMessage(msg)</code>
+     * 
+     * @param player
+     *            The recipient
+     * @param color
+     *            The color of the message {@link ChatColor}
+     * @param message
+     *            The message
+     */
+    public static void sendMessage(Player player, ChatColor color, String message) {
+        player.sendMessage(color + message);
+    }
+
+    // INFO
+    /**
+     * Sending a gray colored message with the prefix <code>[PLUGIN_NAME]</code>
+     * to the player using the method <code>player.sendMessage(msg)</code>
+     * 
+     * @param player
+     *            The recipient
+     * @param pluginName
+     *            Name of the plugin
+     * @param message
+     *            The message
+     */
+    public static void sendInfo(Player player, String pluginName, String message) {
+        sendMessage(player, ChatColor.GRAY, pluginName, message);
+    }
+
+    /**
+     * Sending a gray colored message to the player using the method
+     * <code>player.sendMessage(msg)</code>
+     * 
+     * @param player
+     *            The recipient
+     * @param message
+     *            The message
+     */
+    public static void sendInfo(Player player, String message) {
+        sendMessage(player, ChatColor.GRAY, message);
+    }
+
+    // SUCCESS
+    /**
+     * Sending a green colored message with the prefix
+     * <code>[PLUGIN_NAME]</code> to the player using the method
+     * <code>player.sendMessage(msg)</code>
+     * 
+     * @param player
+     *            The recipient
+     * @param pluginName
+     *            Name of the plugin
+     * @param message
+     *            The message
+     */
+    public static void sendSucces(Player player, String pluginName, String message) {
+        sendMessage(player, ChatColor.GREEN, pluginName, message);
+    }
+
+    /**
+     * Sending a green colored message to the player using the method
+     * <code>player.sendMessage(msg)</code>
+     * 
+     * @param player
+     *            The recipient
+     * @param message
+     *            The message
+     */
+    public static void sendSucces(Player player, String message) {
+        sendMessage(player, ChatColor.GREEN, message);
+    }
+
+    // ERROR
+    /**
+     * Sending a red colored message with the prefix <code>[PLUGIN_NAME]</code>
+     * to the player using the method <code>player.sendMessage(msg)</code>
+     * 
+     * @param player
+     *            The recipient
+     * @param pluginName
+     *            Name of the plugin
+     * @param message
+     *            The message
+     */
+    public static void sendError(Player player, String pluginName, String message) {
+        sendMessage(player, ChatColor.RED, pluginName, message);
+    }
+
+    /**
+     * Sending a red colored message to the player using the method
+     * <code>player.sendMessage(msg)</code>
+     * 
+     * @param player
+     *            The recipient
+     * @param message
+     *            The message
+     */
+    public static void sendError(Player player, String message) {
+        sendMessage(player, ChatColor.RED, message);
+    }
+
+    /**
+     * Sends a list of dark red colored examples for commands with possible
+     * pluginname to the player
+     * 
+     * @param player
+     *            The recipient
+     * @param pluginName
+     *            Name of the plugin sending the message to the sender.
+     * @param syntax
+     *            Syntax of the commands, beginns normally with a
+     *            <code>"/"</code>
+     * @param examples
+     *            List of examples for the Command<
+     */
+    public static void sendWrongSyntax(Player player, String pluginName, String syntax, String[] examples) {
+        sendError(player, pluginName, "Wrong Syntax! Use: " + syntax);
+
+        if (examples.length == 1)
+            sendInfo(player, pluginName, "Example:");
+        else if (examples.length > 1)
+            sendMessage(player, ChatColor.DARK_RED, pluginName, "Examples:");
+
+        for (int i = 0; i < examples.length; ++i)
+            sendInfo(player, pluginName, examples[i]);
     }
 }

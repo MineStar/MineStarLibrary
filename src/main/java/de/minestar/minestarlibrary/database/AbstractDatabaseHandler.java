@@ -21,7 +21,7 @@ package de.minestar.minestarlibrary.database;
 import java.io.File;
 import java.sql.Connection;
 
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
 /**
  * A super class for all database handler which has the same base structure like
@@ -57,7 +57,7 @@ public abstract class AbstractDatabaseHandler {
         try {
             init(pluginName, dataFolder);
         } catch (Exception e) {
-            ChatUtils.printConsoleException(e, "Can't initiate the database!", pluginName);
+            ConsoleUtils.printException(e, "Can't initiate the database!", pluginName);
         }
     }
 
@@ -77,7 +77,7 @@ public abstract class AbstractDatabaseHandler {
             createStructure(pluginName, dbConnection.getConnection());
             createStatements(pluginName, dbConnection.getConnection());
         } else
-            ChatUtils.printConsoleError("Can't initiate the database structure and statements because of missing connection!", pluginName);
+            ConsoleUtils.printError("Can't initiate the database structure and statements because of missing connection!", pluginName);
 
     }
     /**

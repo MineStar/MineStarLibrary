@@ -18,14 +18,14 @@
 
 package de.minestar.minestarlibrary.commands;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import com.bukkit.gemo.utils.UtilPermissions;
 
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.ConsoleUtils;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 /**
  * Represents a command with a fixed number of arguments and no subcommands. If
@@ -102,12 +102,15 @@ public abstract class AbstractCommand {
      */
     public void run(String[] args, CommandSender sender) {
         if (!hasRights(sender)) {
-            ChatUtils.printError(sender, pluginName, NO_RIGHT);
+            PlayerUtils.sendError((Player) sender, pluginName, NO_RIGHT);
             return;
         }
 
         if (!hasCorrectSyntax(args)) {
-            ChatUtils.printInfo(sender, pluginName, ChatColor.GRAY, getHelpMessage());
+            if (sender instanceof ConsoleCommandSender)
+                ConsoleUtils.printInfo(getHelpMessage(), pluginName);
+            else if (sender instanceof Player)
+                PlayerUtils.sendInfo((Player) sender, pluginName, getHelpMessage());
             return;
         }
 
@@ -116,7 +119,7 @@ public abstract class AbstractCommand {
         else if (sender instanceof Player)
             execute(args, (Player) sender);
         else
-            ChatUtils.printConsoleError("Unknown command sender '" + sender.getName() + "'!", pluginName);
+            ConsoleUtils.printError("Unknown command sender '" + sender.getName() + "'!", pluginName);
     }
 
     /**
@@ -140,7 +143,7 @@ public abstract class AbstractCommand {
      *            The minecraft console
      */
     public void execute(String[] args, ConsoleCommandSender console) {
-        ChatUtils.printConsoleError("The command '" + getSyntax() + "' can't be executed by console!", pluginName);
+        ConsoleUtils.printError("The command '" + getSyntax() + "' can't be executed by console!", pluginName);
     }
 
     /**
@@ -239,7 +242,7 @@ public abstract class AbstractCommand {
      */
     protected boolean checkSpecialPermission(Player player, String node) {
         if (!UtilPermissions.playerCanUseCommand(player, node)) {
-            ChatUtils.printError(player, pluginName, NO_RIGHT);
+            PlayerUtils.sendError(player, pluginName, NO_RIGHT);
             return false;
         }
         return true;

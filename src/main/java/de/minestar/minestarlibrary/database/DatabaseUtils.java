@@ -27,7 +27,7 @@ import java.sql.Connection;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
 public class DatabaseUtils {
 
@@ -43,7 +43,7 @@ public class DatabaseUtils {
      *             When file cannot read or statement has wrong syntax
      */
     private static void createStructure(BufferedReader bReader, Connection con, String pluginName) throws Exception {
-        ChatUtils.printConsoleInfo("Start importing database structure", pluginName);
+        ConsoleUtils.printInfo("Start importing database structure", pluginName);
         String line = "";
         StringBuilder sBuilder = new StringBuilder(500);
         while ((line = bReader.readLine()) != null) {
@@ -59,7 +59,7 @@ public class DatabaseUtils {
             }
         }
         bReader.close();
-        ChatUtils.printConsoleInfo("Finished importing database structure", pluginName);
+        ConsoleUtils.printInfo("Finished importing database structure", pluginName);
     }
 
     /**
@@ -147,7 +147,7 @@ public class DatabaseUtils {
      */
     public static void createDatabaseConfig(DatabaseType sqlType, File configFile, String pluginName) throws Exception {
         YamlConfiguration config = new YamlConfiguration();
-        ChatUtils.printConsoleError("Can't find sql config " + configFile + ". Plugin creates a new one!", pluginName);
+        ConsoleUtils.printError("Can't find sql config " + configFile + ". Plugin creates a new one!", pluginName);
 
         configFile.createNewFile();
 
@@ -166,7 +166,7 @@ public class DatabaseUtils {
                 break;
         }
         config.save(configFile);
-        ChatUtils.printConsoleError("Default config created! Please restart server after updating the default config!", pluginName);
+        ConsoleUtils.printError("Default config created! Please restart server after updating the default config!", pluginName);
     }
 
     /**

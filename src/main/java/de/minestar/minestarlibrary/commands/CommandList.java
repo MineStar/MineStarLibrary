@@ -22,10 +22,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.ConsoleUtils;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class CommandList {
 
@@ -56,9 +58,8 @@ public class CommandList {
      */
     public CommandList(String pluginName, AbstractCommand[] commands) {
         this(commands);
-        if (pluginName != null) {
-            this.pluginName = pluginName;
-        }
+        this.pluginName = pluginName;
+
     }
 
     /**
@@ -75,16 +76,23 @@ public class CommandList {
 
         // looking for non extended and non super command
         AbstractCommand cmd = commandList.get(label + "_" + args.length);
-        if (cmd != null) {
+        if (cmd != null)
             cmd.run(args, sender);
+
+        else {
             // look for extended commands and super commands
-        } else {
             cmd = commandList.get(label);
-            if (cmd != null) {
+            if (cmd != null)
                 cmd.run(args, sender);
-            } else {
-                // COMMAND NOT FOUND
-                ChatUtils.printError(sender, pluginName, "Command '" + label + "' not found.");
+
+            // COMMAND NOT FOUND
+            else {
+                // Player executed command
+                if (sender instanceof Player)
+                    PlayerUtils.sendError((Player) sender, pluginName, "Command '" + label + "' not found.");
+                // Console executed command
+                else if (sender instanceof ConsoleCommandSender)
+                    ConsoleUtils.printError("Command '" + label + "' not found!", pluginName);
 
                 // FIND RELATED COMMANDS
                 LinkedList<AbstractCommand> cmdList = new LinkedList<AbstractCommand>();
@@ -93,9 +101,15 @@ public class CommandList {
                         cmdList.add(entry.getValue());
                 }
 
-                // PRINT SYNTAX
-                for (AbstractCommand command : cmdList)
-                    ChatUtils.printInfo(sender, pluginName, ChatColor.GRAY, command.getSyntax() + " " + command.getArguments());
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    for (AbstractCommand command : cmdList)
+                        PlayerUtils.sendInfo(player, pluginName, command.getSyntax() + " " + command.getArguments());
+
+                } else if (sender instanceof ConsoleCommandSender) {
+                    for (AbstractCommand command : cmdList)
+                        ConsoleUtils.printInfo(command.getSyntax() + " " + command.getArguments(), pluginName);
+                }
             }
         }
     }

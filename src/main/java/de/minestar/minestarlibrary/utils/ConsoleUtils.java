@@ -31,7 +31,7 @@ public class ConsoleUtils {
      * @throws IllegalArgumentException
      *             Thrown when pluginName is empty or <code>null</code>!
      */
-    public static void printInfo(String message, String pluginName) {
+    public static void printInfo(String pluginName, String message) {
         if (pluginName == null || pluginName.length() == 0)
             throw new IllegalArgumentException("Pluginname can't be null nor empty!");
         System.out.println("[ " + pluginName + " ] : " + message);
@@ -48,7 +48,7 @@ public class ConsoleUtils {
      * @throws IllegalArgumentException
      *             Thrown when pluginName is empty or <code>null</code>!
      */
-    public static void printWarning(String message, String pluginName) {
+    public static void printWarning(String pluginName, String message) {
         printInfo("Warning! " + message, pluginName);
     }
 
@@ -63,7 +63,7 @@ public class ConsoleUtils {
      * @throws IllegalArgumentException
      *             Thrown when pluginName is empty or <code>null</code>!
      */
-    public static void printError(String message, String pluginName) {
+    public static void printError(String pluginName, String message) {
         printInfo("ERROR! " + message, pluginName);
     }
 
@@ -80,7 +80,7 @@ public class ConsoleUtils {
      * @throws IllegalArgumentException
      *             Thrown when pluginName is empty or <code>null</code>!
      */
-    public static void printException(Exception e, String message, String pluginName) {
+    public static void printException(Exception e, String pluginName, String message) {
         printInfo("EXCEPTION! " + message, pluginName);
         e.printStackTrace();
     }

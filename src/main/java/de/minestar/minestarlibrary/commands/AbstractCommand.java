@@ -119,7 +119,7 @@ public abstract class AbstractCommand {
         else if (sender instanceof Player)
             execute(args, (Player) sender);
         else
-            ConsoleUtils.printError("Unknown command sender '" + sender.getName() + "'!", pluginName);
+            ConsoleUtils.printError(pluginName, "Unknown command sender '" + sender.getName() + "'!");
     }
 
     /**
@@ -143,7 +143,7 @@ public abstract class AbstractCommand {
      *            The minecraft console
      */
     public void execute(String[] args, ConsoleCommandSender console) {
-        ConsoleUtils.printError("The command '" + getSyntax() + "' can't be executed by console!", pluginName);
+        ConsoleUtils.printError(pluginName, "The command '" + getSyntax() + "' can't be executed by console!");
     }
 
     /**

@@ -43,7 +43,7 @@ public class DatabaseUtils {
      *             When file cannot read or statement has wrong syntax
      */
     private static void createStructure(BufferedReader bReader, Connection con, String pluginName) throws Exception {
-        ConsoleUtils.printInfo("Start importing database structure", pluginName);
+        ConsoleUtils.printInfo(pluginName, "Start importing database structure");
         String line = "";
         StringBuilder sBuilder = new StringBuilder(500);
         while ((line = bReader.readLine()) != null) {
@@ -59,7 +59,7 @@ public class DatabaseUtils {
             }
         }
         bReader.close();
-        ConsoleUtils.printInfo("Finished importing database structure", pluginName);
+        ConsoleUtils.printInfo(pluginName, "Finished importing database structure");
     }
 
     /**
@@ -147,7 +147,7 @@ public class DatabaseUtils {
      */
     public static void createDatabaseConfig(DatabaseType sqlType, File configFile, String pluginName) throws Exception {
         YamlConfiguration config = new YamlConfiguration();
-        ConsoleUtils.printError("Can't find sql config " + configFile + ". Plugin creates a new one!", pluginName);
+        ConsoleUtils.printError(pluginName, "Can't find sql config " + configFile + ". Plugin creates a new one!");
 
         configFile.createNewFile();
 
@@ -166,7 +166,7 @@ public class DatabaseUtils {
                 break;
         }
         config.save(configFile);
-        ConsoleUtils.printError("Default config created! Please restart server after updating the default config!", pluginName);
+        ConsoleUtils.printError(pluginName, "Default config created! Please restart server after updating the default config!");
     }
 
     /**

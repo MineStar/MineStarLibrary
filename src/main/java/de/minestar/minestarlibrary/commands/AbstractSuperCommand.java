@@ -68,7 +68,7 @@ public abstract class AbstractSuperCommand extends AbstractCommand {
                     PlayerUtils.sendInfo((Player) sender, pluginName, getHelpMessage());
                 // Console executed command
                 else if (sender instanceof ConsoleCommandSender)
-                    ConsoleUtils.printInfo(getHelpMessage(), pluginName);
+                    ConsoleUtils.printInfo(pluginName, getHelpMessage());
             } else
                 printSubcommands(sender);
             return;
@@ -92,7 +92,7 @@ public abstract class AbstractSuperCommand extends AbstractCommand {
         else if (sender instanceof ConsoleCommandSender) {
             ConsoleUtils.printInfo("Possible subcommands:", pluginName);
             for (AbstractCommand command : getSubCommands())
-                ConsoleUtils.printInfo(command.getHelpMessage(), pluginName);
+                ConsoleUtils.printInfo(pluginName, command.getHelpMessage());
         }
     }
     /**

@@ -57,7 +57,7 @@ public abstract class AbstractDatabaseHandler {
         try {
             init(pluginName, dataFolder);
         } catch (Exception e) {
-            ConsoleUtils.printException(e, "Can't initiate the database!", pluginName);
+            ConsoleUtils.printException(e, pluginName, "Can't initiate the database!");
         }
     }
 
@@ -77,7 +77,7 @@ public abstract class AbstractDatabaseHandler {
             createStructure(pluginName, dbConnection.getConnection());
             createStatements(pluginName, dbConnection.getConnection());
         } else
-            ConsoleUtils.printError("Can't initiate the database structure and statements because of missing connection!", pluginName);
+            ConsoleUtils.printError(pluginName, "Can't initiate the database structure and statements because of missing connection!");
 
     }
     /**

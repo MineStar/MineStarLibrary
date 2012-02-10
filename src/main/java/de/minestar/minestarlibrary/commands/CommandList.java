@@ -92,7 +92,7 @@ public class CommandList {
                     PlayerUtils.sendError((Player) sender, pluginName, "Command '" + label + "' not found.");
                 // Console executed command
                 else if (sender instanceof ConsoleCommandSender)
-                    ConsoleUtils.printError("Command '" + label + "' not found!", pluginName);
+                    ConsoleUtils.printError(pluginName, "Command '" + label + "' not found!");
 
                 // FIND RELATED COMMANDS
                 LinkedList<AbstractCommand> cmdList = new LinkedList<AbstractCommand>();
@@ -108,7 +108,7 @@ public class CommandList {
 
                 } else if (sender instanceof ConsoleCommandSender) {
                     for (AbstractCommand command : cmdList)
-                        ConsoleUtils.printInfo(command.getSyntax() + " " + command.getArguments(), pluginName);
+                        ConsoleUtils.printInfo(pluginName, command.getSyntax() + " " + command.getArguments());
                 }
             }
         }

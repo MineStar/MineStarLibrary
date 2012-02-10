@@ -55,7 +55,7 @@ public class DatabaseConnection {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, userName, password);
         } catch (Exception e) {
-            ConsoleUtils.printException(e, "Can't create a MySQL connection! Please check your connection information in the sql.config and your database connection!", pluginName);
+            ConsoleUtils.printException(e, pluginName, "Can't create a MySQL connection! Please check your connection information in the sql.config and your database connection!");
         }
         userName = null;
         password = null;
@@ -81,7 +81,7 @@ public class DatabaseConnection {
             Class.forName("org.sqlite.JDBC");
             con = DriverManager.getConnection("jdbc:sqlite:" + folder + "/" + databaseName + ".db");
         } catch (Exception e) {
-            ConsoleUtils.printException(e, "Can't create a SQLLite connection to " + folder + "/" + databaseName + ".db! Please check your system rights!", pluginName);
+            ConsoleUtils.printException(e, pluginName, "Can't create a SQLLite connection to " + folder + "/" + databaseName + ".db! Please check your system rights!");
         }
     }
 
@@ -108,7 +108,6 @@ public class DatabaseConnection {
             con = null;
         } catch (Exception e) {
             ConsoleUtils.printException(e, "Can't close connection!", pluginName);
-            e.printStackTrace();
         }
     }
     @Override

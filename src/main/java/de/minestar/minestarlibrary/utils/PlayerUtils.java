@@ -65,6 +65,29 @@ public class PlayerUtils {
     }
 
     /**
+     * Check if the player name is existing. This method is very case sensitive
+     * and only works if the player name is 1:1 the correct name!
+     * 
+     * @param name
+     *            Correct name of the player
+     * @return <code>True</code> when player is on the server or was on the
+     *         server,otherwise <code>false</code>
+     */
+    public static boolean isPlayerExactExisting(String name) {
+
+        if (Bukkit.getPlayerExact(name) != null)
+            return true;
+        else {
+            File playersDir = new File(Bukkit.getWorlds().get(0).getWorldFolder(), "players/");
+            if (playersDir.isDirectory()) {
+                File playerDat = new File(playersDir, name + ".dat");
+                return playerDat.exists();
+            } else
+                return false;
+        }
+    }
+
+    /**
      * @return Sorted Set of all player's nicknames who has ever conntected to
      *         the server. The nicknames are all in lowercase!
      */

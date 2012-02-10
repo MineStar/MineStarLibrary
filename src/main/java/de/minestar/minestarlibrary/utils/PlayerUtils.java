@@ -316,7 +316,7 @@ public class PlayerUtils {
      * @param message
      *            The message
      */
-    public static void sendSucces(Player player, String pluginName, String message) {
+    public static void sendSuccess(Player player, String pluginName, String message) {
         sendMessage(player, ChatColor.GREEN, pluginName, message);
     }
 
@@ -329,7 +329,7 @@ public class PlayerUtils {
      * @param message
      *            The message
      */
-    public static void sendSucces(Player player, String message) {
+    public static void sendSuccess(Player player, String message) {
         sendMessage(player, ChatColor.GREEN, message);
     }
 

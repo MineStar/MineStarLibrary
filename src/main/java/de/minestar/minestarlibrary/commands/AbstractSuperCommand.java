@@ -61,23 +61,17 @@ public abstract class AbstractSuperCommand extends AbstractCommand {
     @Override
     public void run(String[] args, CommandSender sender) {
 
-        if (args.length == 0) {
-            if (hasFunction) {
-                // Player executed command
-                if (sender instanceof Player)
-                    PlayerUtils.sendInfo((Player) sender, pluginName, getHelpMessage());
-                // Console executed command
-                else if (sender instanceof ConsoleCommandSender)
-                    ConsoleUtils.printInfo(pluginName, getHelpMessage());
-            } else
-                printSubcommands(sender);
-            return;
-        }
+        if (!hasFunction && args.length == 0)
+            printSubcommands(sender);
 
         // When no sub command was found then call the run method
         if (!runSubCommand(args, sender))
             super.run(args, sender);
+    }
 
+    @Override
+    protected boolean hasCorrectSyntax(String[] args) {
+        return args.length >= getArgumentCount();
     }
 
     private void printSubcommands(CommandSender sender) {

@@ -238,13 +238,13 @@ public class ChatUtils {
      * @param message
      *            The message to be send
      */
-    public static void writeColoredMessage(CommandSender sender, String pluginName, ChatColor color, String message) {
-        if (sender instanceof Player)
-            PlayerUtils.sendMessage((Player) sender, color, pluginName, message);
-        else if (sender instanceof ConsoleCommandSender)
+    public static void writeColoredMessage(CommandSender reciever, String pluginName, ChatColor color, String message) {
+        if (reciever instanceof Player)
+            PlayerUtils.sendMessage((Player) reciever, color, pluginName, message);
+        else if (reciever instanceof ConsoleCommandSender)
             ConsoleUtils.printInfo(pluginName, message);
         else
-            throwException(sender);
+            throwException(reciever);
     }
 
     /**
@@ -262,13 +262,13 @@ public class ChatUtils {
      * @param message
      *            The message to be send
      */
-    public static void writeColoredMessage(CommandSender sender, ChatColor color, String message) {
-        if (sender instanceof Player)
-            PlayerUtils.sendMessage((Player) sender, color, message);
-        else if (sender instanceof ConsoleCommandSender)
+    public static void writeColoredMessage(CommandSender reciever, ChatColor color, String message) {
+        if (reciever instanceof Player)
+            PlayerUtils.sendMessage((Player) reciever, color, message);
+        else if (reciever instanceof ConsoleCommandSender)
             ConsoleUtils.printInfo(message);
         else
-            throwException(sender);
+            throwException(reciever);
     }
 
     /**

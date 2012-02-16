@@ -34,10 +34,10 @@ public class ConsoleUtils {
      * Prints an information to the console with the prefix <br>
      * <code>[ PLUGIN ] :</code>
      * 
-     * @param message
-     *            The information
      * @param pluginName
      *            The name of the plugin
+     * @param message
+     *            The information
      */
     public static void printInfo(String pluginName, String message) {
         printInfo("[ " + pluginName + " ] : " + message);
@@ -58,13 +58,13 @@ public class ConsoleUtils {
      * Prints an warning to the console with the prefix<br>
      * <code>[ PLUGIN ] : Warning! </code>
      * 
-     * @param message
-     *            The warning message
      * @param pluginName
      *            The name of the plugin
+     * @param message
+     *            The warning message
      */
     public static void printWarning(String pluginName, String message) {
-        printInfo("Warning! " + message, pluginName);
+        printInfo(pluginName, "Warning! " + message);
     }
 
     /**
@@ -82,13 +82,13 @@ public class ConsoleUtils {
      * Prints an error to the console with the prefix <br>
      * <code>[ PLUGIN ] : ERROR</code>
      * 
-     * @param message
-     *            The error message
      * @param pluginName
      *            The name of the plugin
+     * @param message
+     *            The error message
      */
     public static void printError(String pluginName, String message) {
-        printInfo("ERROR! " + message, pluginName);
+        printInfo(pluginName, "ERROR! " + message);
     }
 
     /**
@@ -112,13 +112,13 @@ public class ConsoleUtils {
      * 
      * @param e
      *            The catched exeption
-     * @param message
-     *            Helpful hints why exception was thrown
      * @param pluginName
      *            The name of the plugin
+     * @param message
+     *            Helpful hints why exception was thrown
      */
     public static void printException(Exception e, String pluginName, String message) {
-        printInfo("EXCEPTION! " + message, pluginName);
+        printInfo(pluginName, "EXCEPTION! " + message);
         e.printStackTrace();
     }
 }

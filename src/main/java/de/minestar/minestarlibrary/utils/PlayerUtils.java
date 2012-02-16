@@ -152,6 +152,9 @@ public class PlayerUtils {
     public static Player getOnlinePlayer(String name) {
 
         Player[] onlinePlayer = Bukkit.getOnlinePlayers();
+        // no player online
+        if (onlinePlayer.length == 0)
+            return null;
 
         Player result = null;
         int delta = Integer.MAX_VALUE;

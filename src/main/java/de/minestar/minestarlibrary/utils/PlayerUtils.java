@@ -41,25 +41,16 @@ public class PlayerUtils {
      */
     public static boolean isPlayerExisiting(String name) {
         name = name.toLowerCase();
+
+        // looking for display and account name at connected player
         if (getOnlinePlayer(name) != null)
             return true;
 
-        File playersDir = new File(Bukkit.getWorlds().get(0).getWorldFolder(), "players/");
-        String temp = "";
-        if (playersDir.isDirectory()) {
-            File[] playerFiles = playersDir.listFiles();
-            if (playerFiles.length == 0)
-                throw new RuntimeException(playersDir + " doesn't contain any player data!");
-
-            for (File file : playerFiles) {
-                if (file.isDirectory())
-                    continue;
-
-                temp = file.getName().toLowerCase();
-                if (temp.contains(name))
-                    return true;
-            }
-        }
+        // looking account name at all player
+        OfflinePlayer[] allPlayers = Bukkit.getServer().getOfflinePlayers();
+        for (OfflinePlayer player : allPlayers)
+            if (player.getName().toLowerCase().contains(name))
+                return true;
 
         return false;
     }
@@ -79,10 +70,9 @@ public class PlayerUtils {
             return true;
         else {
             File playersDir = new File(Bukkit.getWorlds().get(0).getWorldFolder(), "players/");
-            if (playersDir.isDirectory()) {
-                File playerDat = new File(playersDir, name + ".dat");
-                return playerDat.exists();
-            } else
+            if (playersDir.isDirectory())
+                return new File(playersDir, name + ".dat").exists();
+            else
                 return false;
         }
     }
@@ -91,30 +81,15 @@ public class PlayerUtils {
      * @return Sorted Set of all player's nicknames who has ever conntected to
      *         the server. The nicknames are all in lowercase!
      */
-    public static TreeSet<String> getAllPlayerNames() {
+    public static String[] getAllPlayerNames() {
 
-        TreeSet<String> names = new TreeSet<String>();
-        Player[] onlinePlayer = Bukkit.getOnlinePlayers();
-        for (Player player : onlinePlayer)
-            names.add(player.getName().toLowerCase());
+        TreeSet<String> playerNames = new TreeSet<String>();
 
-        File playersDir = new File(Bukkit.getWorlds().get(0).getWorldFolder(), "players/");
-        String temp = "";
-        if (playersDir.isDirectory()) {
-            File[] playerFiles = playersDir.listFiles();
-            if (playerFiles.length == 0)
-                throw new RuntimeException(playersDir + " doesn't contain any player data!");
+        OfflinePlayer[] players = Bukkit.getServer().getOfflinePlayers();
+        for (OfflinePlayer player : players)
+            playerNames.add(player.getName().toLowerCase());
 
-            for (File file : playerFiles) {
-                if (file.isDirectory())
-                    continue;
-
-                temp = file.getName().toLowerCase();
-                names.add(temp.substring(0, temp.length() - 4));
-            }
-        }
-
-        return names;
+        return playerNames.toArray(new String[playerNames.size()]);
     }
 
     /**
@@ -146,35 +121,22 @@ public class PlayerUtils {
      *         name
      */
     public static String getOfflinePlayerName(String name) {
-        File playersDir = new File(Bukkit.getWorlds().get(0).getWorldFolder(), "players/");
         name = name.toLowerCase();
+        OfflinePlayer[] offlinePlayer = Bukkit.getServer().getOfflinePlayers();
         String temp = "";
-        String result = null;
         int delta = Integer.MAX_VALUE;
         int curDelta = Integer.MAX_VALUE;
-
-        if (playersDir.isDirectory()) {
-            File[] playerFiles = playersDir.listFiles();
-            if (playerFiles.length == 0)
-                throw new RuntimeException(playersDir + " doesn't contain any player data!");
-
-            for (File file : playerFiles) {
-                if (file.isDirectory())
-                    continue;
-
-                temp = file.getName().toLowerCase();
-                temp = temp.substring(0, temp.length() - 4);
-                curDelta = temp.length() - name.length();
-                if (curDelta < delta && temp.contains(name)) {
-                    delta = curDelta;
-                    result = temp;
-                }
-                if (delta == 0)
-                    return result;
+        String result = null;
+        for (OfflinePlayer player : offlinePlayer) {
+            temp = player.getName().toLowerCase();
+            curDelta = temp.length() - name.length();
+            if (curDelta < delta && temp.contains(name)) {
+                delta = curDelta;
+                result = temp;
             }
-        } else
-            throw new RuntimeException(playersDir + " is no directory!");
-
+            if (delta == 0)
+                return result;
+        }
         return result;
     }
 
@@ -232,6 +194,10 @@ public class PlayerUtils {
     public static OfflinePlayer getOfflinePlayer(String name) {
         return Bukkit.getOfflinePlayer(name);
     }
+
+    // ***************************************************************************
+    // Communication methods
+    // ***************************************************************************
 
     // BLANK MESSAGE
     /**

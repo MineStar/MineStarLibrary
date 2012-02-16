@@ -21,47 +21,71 @@ package de.minestar.minestarlibrary.utils;
 public class ConsoleUtils {
 
     /**
-     * Prints an information to the console with the prefix
-     * <code>[ PLUGIN ] :</code>
+     * Prints an information to the console
      * 
      * @param message
-     *            The message
-     * @param pluginName
-     *            The name of the plugin, can't be empty or <code>null</code>!
-     * @throws IllegalArgumentException
-     *             Thrown when pluginName is empty or <code>null</code>!
+     *            The information
      */
-    public static void printInfo(String pluginName, String message) {
-        if (pluginName == null || pluginName.length() == 0)
-            throw new IllegalArgumentException("Pluginname can't be null nor empty!");
-        System.out.println("[ " + pluginName + " ] : " + message);
+    public static void printInfo(String message) {
+        System.out.println(message);
     }
 
     /**
-     * Prints an warning to the console with the prefix
+     * Prints an information to the console with the prefix <br>
+     * <code>[ PLUGIN ] :</code>
+     * 
+     * @param message
+     *            The information
+     * @param pluginName
+     *            The name of the plugin
+     */
+    public static void printInfo(String pluginName, String message) {
+        printInfo("[ " + pluginName + " ] : " + message);
+    }
+
+    /**
+     * Prints an warning to the console with the prefix <br>
+     * <code>Warning! </code>
+     * 
+     * @param message
+     *            The warning message
+     */
+    public static void printWarning(String message) {
+        printInfo("Warning! " + message);
+    }
+
+    /**
+     * Prints an warning to the console with the prefix<br>
      * <code>[ PLUGIN ] : Warning! </code>
      * 
      * @param message
-     *            The message
+     *            The warning message
      * @param pluginName
-     *            The name of the plugin, can't be empty or <code>null</code>!
-     * @throws IllegalArgumentException
-     *             Thrown when pluginName is empty or <code>null</code>!
+     *            The name of the plugin
      */
     public static void printWarning(String pluginName, String message) {
         printInfo("Warning! " + message, pluginName);
     }
 
     /**
-     * Prints an error to the console with the prefix
+     * Prints an error to the console with the prefix <br>
+     * <code>ERROR </code>
+     * 
+     * @param message
+     *            The error message
+     */
+    public static void printError(String message) {
+        printInfo("ERROR! " + message);
+    }
+
+    /**
+     * Prints an error to the console with the prefix <br>
      * <code>[ PLUGIN ] : ERROR</code>
      * 
      * @param message
-     *            The message
+     *            The error message
      * @param pluginName
-     *            The name of the plugin, can't be empty or <code>null</code>!
-     * @throws IllegalArgumentException
-     *             Thrown when pluginName is empty or <code>null</code>!
+     *            The name of the plugin
      */
     public static void printError(String pluginName, String message) {
         printInfo("ERROR! " + message, pluginName);
@@ -69,16 +93,29 @@ public class ConsoleUtils {
 
     /**
      * Prints an error message with the exception stacktrace to the console with
-     * the prefix <code>[ PLUGIN ] : EXCEPTION </code>
+     * the prefix <br>
+     * <code>EXCEPTION! </code>
      * 
      * @param e
-     *            The exeption that was catched!
+     *            The catched exeption
      * @param message
-     *            The message
+     *            Helpful hints why exception was thrown
+     */
+    public static void printException(Exception e, String message) {
+        printInfo("EXCEPTION! " + message);
+    }
+
+    /**
+     * Prints an error message with the exception stacktrace to the console with
+     * the prefix <br>
+     * <code>[ PLUGIN ] : EXCEPTION! </code>
+     * 
+     * @param e
+     *            The catched exeption
+     * @param message
+     *            Helpful hints why exception was thrown
      * @param pluginName
-     *            The name of the plugin, can't be empty or <code>null</code>!
-     * @throws IllegalArgumentException
-     *             Thrown when pluginName is empty or <code>null</code>!
+     *            The name of the plugin
      */
     public static void printException(Exception e, String pluginName, String message) {
         printInfo("EXCEPTION! " + message, pluginName);

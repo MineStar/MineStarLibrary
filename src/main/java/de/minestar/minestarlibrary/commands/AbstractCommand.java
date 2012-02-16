@@ -24,6 +24,7 @@ import org.bukkit.entity.Player;
 
 import com.bukkit.gemo.utils.UtilPermissions;
 
+import de.minestar.minestarlibrary.utils.ChatUtils;
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
 import de.minestar.minestarlibrary.utils.PlayerUtils;
 
@@ -107,10 +108,7 @@ public abstract class AbstractCommand {
         }
 
         if (!hasCorrectSyntax(args)) {
-            if (sender instanceof ConsoleCommandSender)
-                ConsoleUtils.printInfo(getHelpMessage(), pluginName);
-            else if (sender instanceof Player)
-                PlayerUtils.sendInfo((Player) sender, pluginName, getHelpMessage());
+            ChatUtils.writeInfo(sender, pluginName, getHelpMessage());
             return;
         }
 
@@ -119,7 +117,7 @@ public abstract class AbstractCommand {
         else if (sender instanceof Player)
             execute(args, (Player) sender);
         else
-            ConsoleUtils.printError(pluginName, "Unknown command sender '" + sender.getName() + "'!");
+            ConsoleUtils.printError(pluginName, "Unknown command sender '" + sender.getClass().getName() + "'!");
     }
 
     /**

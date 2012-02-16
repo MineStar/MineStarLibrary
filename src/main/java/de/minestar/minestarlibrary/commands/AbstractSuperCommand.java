@@ -22,11 +22,8 @@ import java.util.Arrays;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
 
-import de.minestar.minestarlibrary.utils.ConsoleUtils;
-import de.minestar.minestarlibrary.utils.PlayerUtils;
+import de.minestar.minestarlibrary.utils.ChatUtils;
 
 /**
  * Class to support commands with sub commands
@@ -36,12 +33,19 @@ import de.minestar.minestarlibrary.utils.PlayerUtils;
  */
 public abstract class AbstractSuperCommand extends AbstractCommand {
 
+    // Registered subcommands
     private AbstractCommand[] subCommands;
+    // Has this SuperCommand a function or does it only hold the sub commands
     private boolean hasFunction;
 
     public AbstractSuperCommand(String syntax, String arguments, String node, boolean hasFunction, AbstractCommand... subCommands) {
         super(syntax, arguments, node);
         this.hasFunction = hasFunction;
+        for (AbstractCommand com : subCommands) {
+            if (com.getSyntax().equalsIgnoreCase("help")) {
+                throw new RuntimeException("There can't be subcommand labeled 'help'! It is a key  word!");
+            }
+        }
         this.subCommands = subCommands;
     }
 
@@ -64,6 +68,13 @@ public abstract class AbstractSuperCommand extends AbstractCommand {
         if (!hasFunction && args.length == 0)
             printSubcommands(sender);
 
+        // the key word "help" is served
+        if (args.length == 1 && args[0].equalsIgnoreCase("help")) {
+            if (hasFunction)
+                ChatUtils.writeInfo(sender, pluginName, getHelpMessage());
+            printSubcommands(sender);
+        }
+
         // When no sub command was found then call the run method
         if (!runSubCommand(args, sender))
             super.run(args, sender);
@@ -75,20 +86,12 @@ public abstract class AbstractSuperCommand extends AbstractCommand {
     }
 
     private void printSubcommands(CommandSender sender) {
-        // Player executed command
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            PlayerUtils.sendMessage(player, ChatColor.GOLD, pluginName, "Possible subcommands:");
-            for (AbstractCommand command : getSubCommands())
-                PlayerUtils.sendInfo(player, pluginName, command.getHelpMessage());
-        }
-        // Console executed command
-        else if (sender instanceof ConsoleCommandSender) {
-            ConsoleUtils.printInfo("Possible subcommands:", pluginName);
-            for (AbstractCommand command : getSubCommands())
-                ConsoleUtils.printInfo(pluginName, command.getHelpMessage());
-        }
+        ChatUtils.writeColoredMessage(sender, pluginName, ChatColor.GOLD, "Possible subcommands:");
+        for (AbstractCommand command : getSubCommands())
+            ChatUtils.writeInfo(sender, pluginName, command.getHelpMessage());
+
     }
+
     /**
      * Searches for sub commands by comparing the first argument with the syntax
      * of the sub commands.

@@ -18,7 +18,6 @@
 
 package de.minestar.minestarlibrary.commands;
 
-
 /**
  * Represents a command with a varible number of Arguments. The only difference
  * to Command is, that the argumentcount given by the constructor is the

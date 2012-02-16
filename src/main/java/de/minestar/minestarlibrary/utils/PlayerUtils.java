@@ -39,7 +39,7 @@ public class PlayerUtils {
      * @return <code>True</code> if an player's nickname or account is existing
      *         that contains <code>name</code>, <code>false</code> if not
      */
-    public static boolean isPlayerExisiting(String name) {
+    public static boolean isPlayerExisting(String name) {
         name = name.toLowerCase();
 
         // looking for display and account name at connected player

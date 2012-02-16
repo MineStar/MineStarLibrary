@@ -103,7 +103,6 @@ public class PlayerUtils {
      *         <code>nick</code>. It is in lower case!
      */
     public static String getCorrectPlayerName(String name) {
-        name = name.toLowerCase();
 
         Player player = getOnlinePlayer(name);
         if (player != null)

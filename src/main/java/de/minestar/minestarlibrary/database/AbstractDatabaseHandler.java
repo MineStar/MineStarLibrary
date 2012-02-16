@@ -75,6 +75,7 @@ public abstract class AbstractDatabaseHandler {
         dbConnection = createConnection(pluginName, dataFolder);
         if (dbConnection != null) {
             createStructure(pluginName, dbConnection.getConnection());
+            updateDatabase(pluginName, dbConnection.getConnection(), dataFolder);
             createStatements(pluginName, dbConnection.getConnection());
         } else
             ConsoleUtils.printError(pluginName, "Can't initiate the database structure and statements because of missing connection!");
@@ -112,6 +113,22 @@ public abstract class AbstractDatabaseHandler {
      *            The connection to the database
      */
     protected abstract void createStatements(String pluginName, Connection con) throws Exception;
+
+    /**
+     * Override this method to import an update. Use this to import updates from
+     * a SQL Batch file, which will only executed once. Remember to delete the
+     * update.sql, it will loaded after reload again!
+     * 
+     * @param pluginName
+     *            Name of plugin
+     * @param con
+     *            Connection to database
+     * @param dataFolder
+     *            Plugin folder. Recommended to place the batch file here
+     */
+    public void updateDatabase(String pluginName, Connection con, File dataFolder) throws Exception {
+
+    }
 
     /**
      * Close the connection to the database. Call this method in "onDisable"

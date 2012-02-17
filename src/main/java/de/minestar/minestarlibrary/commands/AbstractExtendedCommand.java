@@ -28,38 +28,48 @@ package de.minestar.minestarlibrary.commands;
  */
 public abstract class AbstractExtendedCommand extends AbstractCommand {
 
-/**
-     * Creates an ExtendedCommand, which can have more arguments than given
+    /**
+     * Creating an ExtendedCommand which can have at least arguments than given
+     * in the paramater
      * 
      * @param syntax
-     *            When this is a subCommand, do not use a / . If not, use a / at
-     *            first
+     *            The label of the command. Example : /who
      * @param arguments
-     *            The minimum count of arguments. Use "<" to start an argument
-     *            and ">" to finish it! Without that the plugin can't see how
-     *            many arguments are necessary!
-     * @param node The permission node to use this command. When empty, everyone can use the command!
+     *            The arguments covered with Tags < >. Additional arguments can
+     *            be covered by [ ]
+     * @param node
+     *            The permission needed to call this command. Leave it empty to
+     *            allow this command to everybody
      */
     public AbstractExtendedCommand(String syntax, String arguments, String node) {
         super(syntax, arguments, node);
     }
 
-/**
-     * Creates an ExtendedCommand, which can have more arguments than given
+    /**
+     * Creating an ExtendedCommand which can have at least arguments than given
+     * in the paramater
      * 
-     * @param syntax 
-     *            When this is a subCommand, do not use a / . If not, use a / at
-     *            first
+     * @param pluginName
+     *            Name of the plugin, without brackets [ ]
+     * @param syntax
+     *            The label of the command. Example : /who
      * @param arguments
-     *            The minimum count of arguments. Use "<" to start an argument
-     *            and ">" to finish it! Without that the plugin can't see how
-     *            many arguments are necessary!
-     * @param node The permission node to use this command. When empty, everyone can use the command!
+     *            The arguments covered with Tags < >. Additional arguments can
+     *            be covered by [ ]
+     * @param node
+     *            The permission needed to call this command. Leave it empty to
+     *            allow this command to everybody
      */
     public AbstractExtendedCommand(String pluginName, String syntax, String arguments, String node) {
         super(pluginName, syntax, arguments, node);
     }
 
+    /**
+     * Allows at least the count of arguments given in constructor
+     * 
+     * @param args
+     *            The arguments
+     */
     @Override
     protected boolean hasCorrectSyntax(String[] args) {
         return args.length >= super.getArgumentCount();

@@ -38,6 +38,25 @@ public abstract class AbstractSuperCommand extends AbstractCommand {
     // Has this SuperCommand a function or does it only hold the sub commands
     private boolean hasFunction;
 
+    /**
+     * A super command holds many subcommands. <br>
+     * <code>HINT!</code> The subcommands' syntax aren't allowed to start with a
+     * '/' !
+     * 
+     * @param syntax
+     *            The label of the command. Example : /who
+     * @param arguments
+     *            The arguments covered with Tags < >. Additional arguments can
+     *            be covered by [ ]
+     * @param node
+     *            The permission needed to call this command. Leave it empty to
+     *            allow this command to everybody
+     * @param hasFunction
+     *            Set this to true when SuperCommand has another function
+     *            instead of only holding sub commands
+     * @param subCommands
+     *            A list of sub commands, can also be SuperCommands
+     */
     public AbstractSuperCommand(String syntax, String arguments, String node, boolean hasFunction, AbstractCommand... subCommands) {
         super(syntax, arguments, node);
         this.hasFunction = hasFunction;
@@ -49,20 +68,78 @@ public abstract class AbstractSuperCommand extends AbstractCommand {
         this.subCommands = subCommands;
     }
 
+    /**
+     * A super command holds many subcommands. <br>
+     * <code>HINT!</code> The subcommands' syntax aren't allowed to start with a
+     * '/' !
+     * 
+     * @param pluginName
+     *            Name of the plugin, without brackets [ ]
+     * @param syntax
+     *            The label of the command. Example : /who
+     * @param arguments
+     *            The arguments covered with Tags < >. Additional arguments can
+     *            be covered by [ ]
+     * @param node
+     *            The permission needed to call this command. Leave it empty to
+     *            allow this command to everybody
+     * @param hasFunction
+     *            Set this to true when SuperCommand has another function
+     *            instead of only holding sub commands
+     * @param subCommands
+     *            A list of sub commands, can also be SuperCommands
+     */
     public AbstractSuperCommand(String pluginName, String syntax, String arguments, String node, boolean hasFunction, AbstractCommand... subCommands) {
         this(syntax, arguments, node, hasFunction, subCommands);
         this.pluginName = pluginName;
     }
 
+    /**
+     * A super command holds many subcommands. <br>
+     * <code>HINT!</code> The subcommands' syntax aren't allowed to start with a
+     * '/' ! <br>
+     * This constructs a SuperCommand which only holds subCommands, but have no
+     * function!
+     * 
+     * @param pluginName
+     *            Name of the plugin, without brackets [ ]
+     * @param syntax
+     *            The label of the command. Example : /who
+     * @param arguments
+     *            The arguments covered with Tags < >. Additional arguments can
+     *            be covered by [ ]
+     * @param node
+     *            The permission needed to call this command. Leave it empty to
+     *            allow this command to everybody
+     * @param subCommands
+     *            A list of sub commands, can also be SuperCommands
+     */
     public AbstractSuperCommand(String pluginName, String syntax, String arguments, String node, AbstractCommand... subCommands) {
         this(pluginName, syntax, arguments, node, false, subCommands);
     }
 
+    /**
+     * A super command holds many subcommands. <br>
+     * <code>HINT!</code> The subcommands' syntax aren't allowed to start with a
+     * '/' ! <br>
+     * This constructs a SuperCommand which only holds subCommands, but have no
+     * function!
+     * 
+     * @param syntax
+     *            The label of the command. Example : /who
+     * @param arguments
+     *            The arguments covered with Tags < >. Additional arguments can
+     *            be covered by [ ]
+     * @param node
+     *            The permission needed to call this command. Leave it empty to
+     *            allow this command to everybody
+     * @param subCommands
+     *            A list of sub commands, can also be SuperCommands
+     */
     public AbstractSuperCommand(String syntax, String arguments, String node, AbstractCommand... subCommands) {
         this(syntax, arguments, node, false, subCommands);
     }
 
-    @Override
     public void run(String[] args, CommandSender sender) {
 
         if (!hasFunction && args.length == 0)
@@ -85,11 +162,16 @@ public abstract class AbstractSuperCommand extends AbstractCommand {
         return args.length >= getArgumentCount();
     }
 
+    /**
+     * Write all holded sub commands with help message
+     * 
+     * @param sender
+     *            The reciever of the list
+     */
     private void printSubcommands(CommandSender sender) {
         ChatUtils.writeColoredMessage(sender, pluginName, ChatColor.GOLD, "Possible subcommands:");
         for (AbstractCommand command : getSubCommands())
             ChatUtils.writeInfo(sender, pluginName, command.getHelpMessage());
-
     }
 
     /**
@@ -115,6 +197,9 @@ public abstract class AbstractSuperCommand extends AbstractCommand {
         return false;
     }
 
+    /**
+     * @return An array of all sub commands holded by this super command
+     */
     protected AbstractCommand[] getSubCommands() {
         return subCommands;
     }

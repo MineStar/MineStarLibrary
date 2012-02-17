@@ -53,18 +53,20 @@ public abstract class AbstractCommand {
     protected String permissionNode;
     // Example: "[Contao]";
     protected String pluginName = "";
-
+    // Number of opening < Tags
     private final int argumentCount;
 
     /**
-     * Just call super() in the inhertited classes.
+     * A command with a fixed number of arguments
      * 
      * @param syntax
-     *            Example : /warp create
+     *            The label of the command. Example : /who
      * @param arguments
-     *            Example : <Name>
+     *            The arguments covered with Tags < >. Additional arguments can
+     *            be covered by [ ]
      * @param node
-     *            Example : contao.create
+     *            The permission needed to call this command. Leave it empty to
+     *            allow this command to everybody
      */
     public AbstractCommand(String syntax, String arguments, String node) {
         this.syntax = syntax;
@@ -74,16 +76,18 @@ public abstract class AbstractCommand {
     }
 
     /**
-     * Just call super() in the inhertited classes.
+     * A command with a fixed number of arguments
      * 
      * @param pluginName
-     *            The pluginName for the use of prefixes (Example: [Contao])
+     *            Name of the plugin, without brackets [ ]
      * @param syntax
-     *            Example : /warp create
+     *            The label of the command. Example : /who
      * @param arguments
-     *            Example : <Name>
+     *            The arguments covered with Tags < >. Additional arguments can
+     *            be covered by [ ]
      * @param node
-     *            Example : contao.create
+     *            The permission needed to call this command. Leave it empty to
+     *            allow this command to everybody
      */
     public AbstractCommand(String pluginName, String syntax, String arguments, String node) {
         this(syntax, arguments, node);

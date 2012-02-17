@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
@@ -52,14 +53,16 @@ public class CommandList {
      * @param commands
      *            A list of all commands the plugin is using
      */
-    public CommandList(String pluginName, AbstractCommand[] commands) {
+    public CommandList(String pluginName, AbstractCommand... commands) {
         this(commands);
         this.pluginName = pluginName;
 
     }
 
     /**
-     * Handle a bukkit command by searching all registered commands
+     * Handle a bukkit command by searching all registered commands. <br>
+     * Call this method in
+     * {@link JavaPlugin#onCommand(CommandSender, Command, String, String[])}
      * 
      * @param sender
      *            The command caller

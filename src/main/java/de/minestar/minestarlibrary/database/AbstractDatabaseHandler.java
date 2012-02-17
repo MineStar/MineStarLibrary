@@ -138,4 +138,13 @@ public abstract class AbstractDatabaseHandler {
         if (dbConnection != null)
             dbConnection.closeConnection();
     }
+
+    /**
+     * @return <code>True</code> when there is a database connection, otherwise
+     *         <code>false</code>
+     */
+    public boolean hasConnection() {
+        return dbConnection != null;
+    }
+
 }

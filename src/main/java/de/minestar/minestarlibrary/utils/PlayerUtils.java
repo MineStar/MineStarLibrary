@@ -100,13 +100,13 @@ public class PlayerUtils {
      * @param name
      *            Part of the target nickname
      * @return The nickname of the player with the lowest difference to
-     *         <code>nick</code>. It is in lower case!
+     *         <code>nick</code>.
      */
     public static String getCorrectPlayerName(String name) {
 
         Player player = getOnlinePlayer(name);
         if (player != null)
-            return player.getName().toLowerCase();
+            return player.getName();
 
         return getOfflinePlayerName(name);
     }
@@ -131,7 +131,7 @@ public class PlayerUtils {
             curDelta = temp.length() - name.length();
             if (curDelta < delta && temp.contains(name)) {
                 delta = curDelta;
-                result = temp;
+                result = player.getName();
             }
             if (delta == 0)
                 return result;

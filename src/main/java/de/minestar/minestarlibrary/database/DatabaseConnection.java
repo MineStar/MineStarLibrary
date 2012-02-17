@@ -104,8 +104,10 @@ public class DatabaseConnection {
      */
     public void closeConnection() {
         try {
-            con.close();
-            con = null;
+            if (con != null) {
+                con.close();
+                con = null;
+            }
         } catch (Exception e) {
             ConsoleUtils.printException(e, "Can't close connection!", pluginName);
         }

@@ -35,37 +35,6 @@ public class DatabaseUtils {
      * Read a <code>*.sql</code> batch containing SQL statements. This methods
      * reading and executing them and creats a database structure.
      * 
-     * @param bReader
-     *            The BufferedReader of the resource
-     * @param con
-     *            The connection to the database
-     * @throws Exception
-     *             When file cannot read or statement has wrong syntax
-     */
-    private static void createStructure(BufferedReader bReader, Connection con, String pluginName) throws Exception {
-        ConsoleUtils.printInfo(pluginName, "Start importing database structure");
-        String line = "";
-        StringBuilder sBuilder = new StringBuilder(500);
-        while ((line = bReader.readLine()) != null) {
-            // ignore empty lines and comments
-            if (line.startsWith("#") || line.startsWith("-") || line.isEmpty())
-                continue;
-
-            sBuilder.append(line);
-            if (line.endsWith(";")) {
-                con.createStatement().execute(sBuilder.toString());
-                // reset the string builder
-                sBuilder.setLength(0);
-            }
-        }
-        bReader.close();
-        ConsoleUtils.printInfo(pluginName, "Finished importing database structure");
-    }
-
-    /**
-     * Read a <code>*.sql</code> batch containing SQL statements. This methods
-     * reading and executing them and creats a database structure.
-     * 
      * @param ressource
      *            The InputStream to the file in the <code>*.jar</code> which
      *            can get by <br>
@@ -75,17 +44,18 @@ public class DatabaseUtils {
      *            <code>targetFile</code>!
      * @param con
      *            The connection to the database
+     * @param pluginName
+     *            The name of the plugin
      * @throws Exception
      *             When file cannot read or statement has wrong syntax
      */
     public static void createStructure(InputStream ressource, Connection con, String pluginName) throws Exception {
         // Fix for reload
         // When reload is done the ressource is always null
-        if (ressource != null) {
-            BufferedReader bReader = new BufferedReader(new InputStreamReader(ressource));
-            createStructure(bReader, con, pluginName);
-        }
+        if (ressource != null)
+            createStructure(new BufferedReader(new InputStreamReader(ressource)), con, pluginName);
     }
+
     /**
      * Read a <code>*.sql</code> batch containing SQL statements. This methods
      * reading and executing them and creats a database structure.
@@ -94,6 +64,8 @@ public class DatabaseUtils {
      *            The *.sql batch file
      * @param con
      *            The connection to the database
+     * @param pluginName
+     *            The name of the plugin
      * @throws Exception
      *             When file cannot read or statement has wrong syntax
      */
@@ -109,11 +81,122 @@ public class DatabaseUtils {
      *            The path to the .sql batch file
      * @param con
      *            The connection to the database
+     * @param pluginName
+     *            The name of the plugin
      * @throws Exception
      *             When file cannot read or statement has wrong syntax
      */
     public static void createStructure(String filePath, Connection con, String pluginName) throws Exception {
-        createStructure(new File(filePath), con, pluginName);
+        createStructure(new BufferedReader(new FileReader(filePath)), con, pluginName);
+    }
+
+    /**
+     * Read a <code>*.sql</code> batch containing SQL statements. This methods
+     * read and execute them and creats a database structure.
+     * 
+     * @param bReader
+     *            The BufferedReader of the resource
+     * @param con
+     *            The connection to the database
+     * @param pluginName
+     *            The name of the plugin
+     * @throws Exception
+     *             When file cannot read or statement has wrong syntax
+     */
+    private static void createStructure(BufferedReader bReader, Connection con, String pluginName) throws Exception {
+        ConsoleUtils.printInfo(pluginName, "Start importing database structure");
+        executeBatch(bReader, con, pluginName);
+        ConsoleUtils.printInfo(pluginName, "Finished importing database structure");
+    }
+
+    /**
+     * Read a <code>*.sql</code> batch containing SQL statements. This methods
+     * read and execute them.
+     * 
+     * @param file
+     *            The *.sql batch file
+     * @param con
+     *            The connection to the database
+     * @param pluginName
+     *            The name of the plugin
+     * @throws Exception
+     *             When file cannot read or statement has wrong syntax
+     */
+    public static void executeBatch(File file, Connection con, String pluginName) throws Exception {
+        executeBatch(new BufferedReader(new FileReader(file)), con, pluginName);
+    }
+
+    /**
+     * Read a <code>*.sql</code> batch containing SQL statements. This methods
+     * read and execute them.
+     * 
+     * @param filePath
+     *            The path to the .sql batch file
+     * @param con
+     *            The connection to the database
+     * @param pluginName
+     *            The name of the plugin
+     * @throws Exception
+     *             When file cannot read or statement has wrong syntax
+     */
+    public static void executeBatch(String filePath, Connection con, String pluginName) throws Exception {
+        executeBatch(new BufferedReader(new FileReader(filePath)), con, pluginName);
+    }
+
+    /**
+     * Read a <code>*.sql</code> batch containing SQL statements. This methods
+     * read and execute them.
+     * 
+     * @param ressource
+     *            The InputStream to the file in the <code>*.jar</code> which
+     *            can get by <br>
+     *            <code>getClass().getResourceAsStream()</code> <br>
+     *            Hint: If the target file is in the first package, you have to
+     *            use <code>/targetFile</code> instead of
+     *            <code>targetFile</code>!
+     * @param con
+     *            The connection to the database
+     * @param pluginName
+     *            The name of the plugin
+     * @throws Exception
+     *             When file cannot read or statement has wrong syntax
+     */
+    public static void executeBatch(InputStream ressource, Connection con, String pluginName) throws Exception {
+        // Fix for reload
+        // When reload is done the ressource is always null
+        if (ressource != null)
+            executeBatch(new BufferedReader(new InputStreamReader(ressource)), con, pluginName);
+    }
+
+    /**
+     * Read a <code>*.sql</code> batch containing SQL statements. This methods
+     * read and execute them.
+     * 
+     * @param bReader
+     *            The BufferedReader of the resource
+     * @param con
+     *            The connection to the database
+     * @param pluginName
+     *            The name of the plugin
+     * @throws Exception
+     *             When file cannot read or statement has wrong syntax
+     */
+    private static void executeBatch(BufferedReader bReader, Connection con, String pluginName) throws Exception {
+        String line = "";
+        StringBuilder sBuilder = new StringBuilder(500);
+        while ((line = bReader.readLine()) != null) {
+            // ignore empty lines and comments
+            if (line.startsWith("#") || line.startsWith("-") || line.isEmpty())
+                continue;
+
+            sBuilder.append(line);
+            if (line.endsWith(";")) {
+                con.createStatement().execute(sBuilder.toString());
+                // reset the string builder
+                sBuilder.setLength(0);
+            }
+        }
+        bReader.close();
     }
 
     /**

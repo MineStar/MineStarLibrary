@@ -242,11 +242,16 @@ public abstract class AbstractCommand {
      * @return <code>True</code> if player has permissions, <code>false</code>
      *         if not!
      */
-    protected boolean checkSpecialPermission(Player player, String node) {
-        if (!UtilPermissions.playerCanUseCommand(player, node)) {
-            PlayerUtils.sendError(player, pluginName, NO_RIGHT);
-            return false;
+    protected boolean checkSpecialPermission(CommandSender sender, String node) {
+        if (sender instanceof ConsoleCommandSender)
+            return true;
+        else {
+            Player player = (Player) sender;
+            if (!UtilPermissions.playerCanUseCommand(player, node)) {
+                PlayerUtils.sendError(player, pluginName, NO_RIGHT);
+                return false;
+            } else
+                return true;
         }
-        return true;
     }
 }

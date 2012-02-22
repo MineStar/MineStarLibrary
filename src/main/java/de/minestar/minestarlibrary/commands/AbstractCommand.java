@@ -235,7 +235,7 @@ public abstract class AbstractCommand {
      * the permission, the message <code>NO_RIGHT</code> is printed! <br>
      * Use this method for extended commands with multiple permission checks
      * 
-     * @param player
+     * @param sender
      *            The possible permission owner
      * @param node
      *            The permission node

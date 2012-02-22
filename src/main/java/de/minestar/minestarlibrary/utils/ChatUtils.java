@@ -74,7 +74,7 @@ public class ChatUtils {
             throw new RuntimeException("start is out of range!");
         StringBuilder sBuilder = new StringBuilder(256);
         int i = start;
-        for (; i < args.length; ++i) {
+        for (; i < args.length - 1; ++i) {
             sBuilder.append(args[i]);
             sBuilder.append(delimiter);
         }

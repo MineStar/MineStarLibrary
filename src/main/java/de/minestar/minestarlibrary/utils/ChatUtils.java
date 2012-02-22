@@ -34,6 +34,59 @@ import org.bukkit.entity.Player;
 public class ChatUtils {
 
     /**
+     * Concat all strings in the array to one string seperated by single space
+     * character
+     * 
+     * @param args
+     *            The string array containing the
+     * @return Single string
+     */
+    public String getMessage(String[] args) {
+        return getMessage(args, " ");
+    }
+
+    /**
+     * Concat all strings in the array to one string seperated by delimter
+     * 
+     * @param args
+     *            The string array containing the
+     * @param delimiter
+     *            Seperator between the single strings
+     * @return Single string
+     */
+    public String getMessage(String[] args, String delimiter) {
+        return getMessage(args, delimiter, 0);
+    }
+
+    /**
+     * Concat all strings in the array to one string seperated by delimter
+     * 
+     * @param args
+     *            The string array containing the
+     * @param delimiter
+     *            Seperator between the single strings
+     * @param start
+     * 
+     * @return Single string
+     */
+    public String getMessage(String[] args, String delimiter, int start) {
+        if (start < 0 || start >= args.length)
+            throw new RuntimeException("start is out of range!");
+        StringBuilder sBuilder = new StringBuilder(256);
+        int i = start;
+        for (; i < args.length; ++i) {
+            sBuilder.append(args[i]);
+            sBuilder.append(delimiter);
+        }
+        sBuilder.append(args[i]);
+        return sBuilder.toString();
+    }
+
+    // ***************************************************************************
+    // Communication methods
+    // ***************************************************************************
+
+    /**
      * Sending an information to the reciever. <br>
      * When <code>reciever</code> is a {@link Player}, it will use
      * {@link PlayerUtils#sendInfo(Player, String, String) PlayerUtils.sendInfo} <br>

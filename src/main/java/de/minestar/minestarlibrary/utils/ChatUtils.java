@@ -41,7 +41,7 @@ public class ChatUtils {
      *            The string array containing the
      * @return Single string
      */
-    public String getMessage(String[] args) {
+    public static String getMessage(String[] args) {
         return getMessage(args, " ");
     }
 
@@ -54,7 +54,7 @@ public class ChatUtils {
      *            Seperator between the single strings
      * @return Single string
      */
-    public String getMessage(String[] args, String delimiter) {
+    public static String getMessage(String[] args, String delimiter) {
         return getMessage(args, delimiter, 0);
     }
 
@@ -69,7 +69,7 @@ public class ChatUtils {
      * 
      * @return Single string
      */
-    public String getMessage(String[] args, String delimiter, int start) {
+    public static String getMessage(String[] args, String delimiter, int start) {
         if (start < 0 || start >= args.length)
             throw new RuntimeException("start is out of range!");
         StringBuilder sBuilder = new StringBuilder(256);

@@ -29,7 +29,7 @@ import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
 public abstract class AbstractCore extends JavaPlugin {
 
-    private CommandList cmdList;
+    protected CommandList cmdList;
     public static String NAME;
 
     public AbstractCore(String name) {

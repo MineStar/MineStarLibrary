@@ -20,6 +20,10 @@ package de.minestar.minestarlibrary;
 
 public class Core extends AbstractCore {
 
+    public Core() {
+        this("MineStarLibrary");
+    }
+
     public Core(String name) {
         super(name);
     }

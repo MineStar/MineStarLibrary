@@ -32,6 +32,10 @@ public abstract class AbstractCore extends JavaPlugin {
     protected CommandList cmdList;
     public static String NAME;
 
+    public AbstractCore() {
+        NAME = "";
+    }
+
     public AbstractCore(String name) {
         NAME = name;
     }

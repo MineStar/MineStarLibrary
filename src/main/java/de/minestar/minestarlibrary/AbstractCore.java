@@ -37,7 +37,6 @@ public abstract class AbstractCore extends JavaPlugin {
     }
 
     public AbstractCore(String name) {
-        this.getDataFolder().mkdirs();
         NAME = name;
     }
 
@@ -51,6 +50,9 @@ public abstract class AbstractCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
+        // MAKE DIRS
+        this.getDataFolder().mkdirs();
 
         if (!createManager()) {
             ConsoleUtils.printError(NAME, "Can't create manager! Plugin is not enabled!");

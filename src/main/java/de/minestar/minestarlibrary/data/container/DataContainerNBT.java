@@ -76,7 +76,7 @@ public class DataContainerNBT extends DataContainerNone {
             String name;
 
             // SAVE BOOLEAN
-            currentMap = this.getMap(boolean.class);
+            currentMap = this.getMap(Boolean.class);
             thisTag = new NBTTagCompound();
             name = "BOOLEAN";
             for (Map.Entry<String, GenericValue> entry : currentMap.entrySet()) {
@@ -85,7 +85,7 @@ public class DataContainerNBT extends DataContainerNone {
             rootTag.setCompound(name, thisTag);
 
             // SAVE BYTE
-            currentMap = this.getMap(byte.class);
+            currentMap = this.getMap(Byte.class);
             thisTag = new NBTTagCompound();
             name = "BYTE";
             for (Map.Entry<String, GenericValue> entry : currentMap.entrySet()) {
@@ -94,7 +94,7 @@ public class DataContainerNBT extends DataContainerNone {
             rootTag.setCompound(name, thisTag);
 
             // SAVE BYTEARRAY
-            currentMap = this.getMap(byte[].class);
+            currentMap = this.getMap(Byte[].class);
             thisTag = new NBTTagCompound();
             name = "BYTEARRAY";
             for (Map.Entry<String, GenericValue> entry : currentMap.entrySet()) {
@@ -103,7 +103,7 @@ public class DataContainerNBT extends DataContainerNone {
             rootTag.setCompound(name, thisTag);
 
             // SAVE DOUBLE
-            currentMap = this.getMap(double.class);
+            currentMap = this.getMap(Double.class);
             thisTag = new NBTTagCompound();
             name = "DOUBLE";
             for (Map.Entry<String, GenericValue> entry : currentMap.entrySet()) {
@@ -112,7 +112,7 @@ public class DataContainerNBT extends DataContainerNone {
             rootTag.setCompound(name, thisTag);
 
             // SAVE FLOAT
-            currentMap = this.getMap(float.class);
+            currentMap = this.getMap(Float.class);
             thisTag = new NBTTagCompound();
             name = "FLOAT";
             for (Map.Entry<String, GenericValue> entry : currentMap.entrySet()) {
@@ -121,7 +121,7 @@ public class DataContainerNBT extends DataContainerNone {
             rootTag.setCompound(name, thisTag);
 
             // SAVE INTEGER
-            currentMap = this.getMap(int.class);
+            currentMap = this.getMap(Integer.class);
             thisTag = new NBTTagCompound();
             name = "INTEGER";
             for (Map.Entry<String, GenericValue> entry : currentMap.entrySet()) {
@@ -130,7 +130,7 @@ public class DataContainerNBT extends DataContainerNone {
             rootTag.setCompound(name, thisTag);
 
             // SAVE LONG
-            currentMap = this.getMap(long.class);
+            currentMap = this.getMap(Long.class);
             thisTag = new NBTTagCompound();
             name = "LONG";
             for (Map.Entry<String, GenericValue> entry : currentMap.entrySet()) {
@@ -139,7 +139,7 @@ public class DataContainerNBT extends DataContainerNone {
             rootTag.setCompound(name, thisTag);
 
             // SAVE SHORT
-            currentMap = this.getMap(short.class);
+            currentMap = this.getMap(Short.class);
             thisTag = new NBTTagCompound();
             name = "SHORT";
             for (Map.Entry<String, GenericValue> entry : currentMap.entrySet()) {

@@ -26,14 +26,14 @@ public class DataContainerNone implements IDataContainer {
 
         // INIT ALL OBJECTS THAT ARE CURRENTLY USED
         // TODO: WE WANT TO MAKE THIS AUTOMATICLY
-        this.initObject(boolean.class);
-        this.initObject(byte.class);
-        this.initObject(byte[].class);
-        this.initObject(double.class);
-        this.initObject(float.class);
-        this.initObject(int.class);
-        this.initObject(long.class);
-        this.initObject(short.class);
+        this.initObject(Boolean.class);
+        this.initObject(Byte.class);
+        this.initObject(Byte[].class);
+        this.initObject(Double.class);
+        this.initObject(Float.class);
+        this.initObject(Integer.class);
+        this.initObject(Long.class);
+        this.initObject(Short.class);
         this.initObject(String.class);
         this.initObject(Location.class);
         this.initObject(ItemStack.class);

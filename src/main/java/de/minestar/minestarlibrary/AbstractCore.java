@@ -51,6 +51,9 @@ public abstract class AbstractCore extends JavaPlugin {
     @Override
     public void onEnable() {
 
+        // create plugins datafolder
+        getDataFolder().mkdirs();
+
         if (!createManager()) {
             ConsoleUtils.printError(NAME, "Can't create manager! Plugin is not enabled!");
             return;

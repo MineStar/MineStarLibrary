@@ -130,14 +130,24 @@ public class Data {
     public boolean getBoolean(String key) {
         GenericValue<Boolean> value = this.getValue(key, boolean.class);
         if (value == null)
-            return false;
+            return Boolean.FALSE;
+        return value.getValue();
+    }
+
+    public boolean getBoolean(String key, boolean throwException) {
+        GenericValue<Boolean> value = this.getValue(key, boolean.class);
+        if (value == null)
+            if (!throwException)
+                return Boolean.FALSE;
+            else
+                throw new RuntimeException("BOOLEAN with key '" + key + "' was not found.");
         return value.getValue();
     }
 
     public byte getByte(String key) {
         GenericValue<Byte> value = this.getValue(key, byte.class);
         if (value == null)
-            return 0;
+            return Byte.MIN_VALUE;
         return value.getValue();
     }
 
@@ -151,35 +161,35 @@ public class Data {
     public double getDouble(String key) {
         GenericValue<Double> value = this.getValue(key, double.class);
         if (value == null)
-            return 0;
+            return Double.MIN_VALUE;
         return value.getValue();
     }
 
     public float getFloat(String key) {
         GenericValue<Float> value = this.getValue(key, float.class);
         if (value == null)
-            return 0;
+            return Float.MIN_VALUE;
         return value.getValue();
     }
 
     public int getInteger(String key) {
         GenericValue<Integer> value = this.getValue(key, int.class);
         if (value == null)
-            return 0;
+            return Integer.MIN_VALUE;
         return value.getValue();
     }
 
     public long getLong(String key) {
         GenericValue<Long> value = this.getValue(key, long.class);
         if (value == null)
-            return 0;
+            return Long.MIN_VALUE;
         return value.getValue();
     }
 
     public short getShort(String key) {
         GenericValue<Short> value = this.getValue(key, short.class);
         if (value == null)
-            return 0;
+            return Short.MIN_VALUE;
         return value.getValue();
     }
 

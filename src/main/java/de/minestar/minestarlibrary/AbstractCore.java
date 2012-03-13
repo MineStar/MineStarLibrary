@@ -33,10 +33,11 @@ public abstract class AbstractCore extends JavaPlugin {
     public static String NAME;
 
     public AbstractCore() {
-        NAME = "";
+        this("");
     }
 
     public AbstractCore(String name) {
+        this.getDataFolder().mkdirs();
         NAME = name;
     }
 

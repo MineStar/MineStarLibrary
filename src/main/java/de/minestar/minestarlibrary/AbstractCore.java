@@ -50,8 +50,6 @@ public abstract class AbstractCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // MAKE DIRS
-        this.getDataFolder().mkdirs();
 
         // create plugins datafolder
         getDataFolder().mkdirs();

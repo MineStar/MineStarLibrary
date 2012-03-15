@@ -13,6 +13,8 @@ public interface IDataContainer {
 
     public abstract void setValue(String key, Object value);
 
+    public abstract void removeValue(String key, Class<?> clazz);
+
     public abstract <T> GenericValue<T> getValue(String key, Class<T> clazz);
 
     @SuppressWarnings("rawtypes")

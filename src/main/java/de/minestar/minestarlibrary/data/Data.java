@@ -69,6 +69,10 @@ public class Data {
         this.dataContainer.setValue(key, value);
     }
 
+    public void removeValue(String key, Class<?> clazz) {
+        this.dataContainer.removeValue(key, clazz);
+    }
+
     public <T> GenericValue<T> getValue(String key, Class<T> clazz) {
         return this.dataContainer.getValue(key, clazz);
     }

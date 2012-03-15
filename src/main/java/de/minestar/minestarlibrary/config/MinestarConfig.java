@@ -28,37 +28,101 @@ import java.io.InputStreamReader;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import de.minestar.minestarlibrary.utils.ConsoleUtils;
+
 public class MinestarConfig extends YamlConfiguration {
 
     private final File configFile;
 
-    public MinestarConfig(File file) throws Exception {
+    /**
+     * Creates a {@link YamlConfiguration} object and open the file.
+     * 
+     * @param configFile
+     *            The configuration file in YAML format
+     * @throws Exception
+     *             Any exception thrown by YamlConfiguration
+     */
+    public MinestarConfig(File configFile) throws Exception {
         super();
-        this.configFile = file;
+        this.configFile = configFile;
         load(configFile);
     }
 
-    public MinestarConfig(String fileName) throws Exception {
-        super();
-        this.configFile = new File(fileName);
-        load(configFile);
+    /**
+     * Creates a {@link YamlConfiguration} object and open the file.<br>
+     * Also check the version tag from the configuration with the plugin version
+     * and eventually give an out date message
+     * 
+     * @param configFile
+     *            The configuration file in YAML format
+     * @throws Exception
+     *             Any exception thrown by YamlConfiguration
+     */
+    public MinestarConfig(File configFile, String pluginName, String pluginVersion) throws Exception {
+        this(configFile);
+        checkVersion(pluginName, pluginVersion);
     }
 
+    /**
+     * Saves the configuration
+     * 
+     * @throws Exception
+     *             Any exception thrown by YamlConfiguration
+     */
     public void save() throws Exception {
         save(configFile);
+    }
+
+    /**
+     * Compare the version tag from the config with the plugin version. If their
+     * differ, an outdate warning is printed on console
+     * 
+     * @param pluginName
+     *            The name of the plugin using this configuration file
+     * @param pluginVersion
+     *            The version of the plugin using this configuration file
+     */
+    private void checkVersion(String pluginName, String pluginVersion) {
+        String confVersion = getString("VERSION");
+        if (confVersion != null && !confVersion.equals(pluginVersion))
+            ConsoleUtils.printWarning(pluginName, "The config '" + configFile + "' is out of date! Plugin Version is " + pluginVersion + " but Config Version is " + confVersion + " !");
     }
 
     // *************************************
     // ********** UTIL METHODS *************
     // *************************************
+    /**
+     * Creates a copy of the configuration
+     * 
+     * @param source
+     *            The source file
+     * @param target
+     *            The target config file
+     * @return A MinestarConfig object from the target file
+     * @throws Exception
+     *             Exceptions by reading and writing objects
+     */
     public static MinestarConfig copyDefault(File source, File target) throws Exception {
         return copyDefault(new BufferedReader(new FileReader(source)), target);
     }
 
+    /**
+     * Creates a copy of the configuration. <br>
+     * This method is usefull to copy files from the jar to the plugins dir
+     * 
+     * @param source
+     *            The inputstream to the source file
+     * @param target
+     *            The target config file
+     * @return A MinestarConfig object from the target file
+     * @throws Exception
+     *             Exceptions by reading and writing objects
+     */
     public static MinestarConfig copyDefault(InputStream source, File target) throws Exception {
         return copyDefault(new BufferedReader(new InputStreamReader(source)), target);
     }
 
+    // Copy the file
     private static MinestarConfig copyDefault(BufferedReader bReader, File target) throws Exception {
         String line = "";
         BufferedWriter bWriter = new BufferedWriter(new FileWriter(target));

@@ -247,7 +247,7 @@ public class PlayerUtils {
      *            The message
      */
     public static void sendMessage(Player player, ChatColor color, String pluginName, String message) {
-        sendBlankMessage(player, ChatColor.WHITE + "[" + pluginName + "] " + color + message);
+        sendBlankMessage(player, ChatColor.AQUA + "[" + pluginName + "] " + color + message);
     }
 
     /**

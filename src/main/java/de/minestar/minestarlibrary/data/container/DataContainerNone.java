@@ -58,6 +58,14 @@ public class DataContainerNone implements IDataContainer {
         thisValues.put(key, thisV);
     }
 
+    public void removeValue(String key, Class<?> clazz) {
+        ConcurrentHashMap<String, GenericValue> thisValues = this.valueMap.get(clazz.getName());
+        if (thisValues == null) {
+            throw new RuntimeException(clazz.getName() + " IS CURRENTLY NOT SUPPORTED!");
+        }
+        thisValues.remove(key);
+    }
+
     @SuppressWarnings("unchecked")
     public <T> GenericValue<T> getValue(String key, Class<T> clazz) {
         ConcurrentHashMap<String, GenericValue> thisValues = this.valueMap.get(clazz.getName());

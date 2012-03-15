@@ -33,7 +33,7 @@ public abstract class AbstractCore extends JavaPlugin {
     public static String NAME;
 
     public AbstractCore() {
-        NAME = "";
+        this("");
     }
 
     public AbstractCore(String name) {
@@ -50,39 +50,48 @@ public abstract class AbstractCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // MAKE DIRS
+        this.getDataFolder().mkdirs();
 
         // create plugins datafolder
         getDataFolder().mkdirs();
 
         if (!createManager()) {
             ConsoleUtils.printError(NAME, "Can't create manager! Plugin is not enabled!");
+            this.setEnabled(false);
             return;
         }
         if (!createListener()) {
             ConsoleUtils.printError(NAME, "Can't create listener! Plugin is not enabled!");
+            this.setEnabled(false);
             return;
         }
         if (!createCommands()) {
             ConsoleUtils.printError(NAME, "Can't create commands! Plugin is not enabled!");
+            this.setEnabled(false);
             return;
         }
 
         if (!registerEvents(getServer().getPluginManager())) {
             ConsoleUtils.printError(NAME, "Can't register events! Plugin is not enabled!");
+            this.setEnabled(false);
             return;
         }
 
         if (!createThreads()) {
             ConsoleUtils.printError(NAME, "Can't create threads! Plugin is not enabled!");
+            this.setEnabled(false);
             return;
         }
         if (!startThreads(getServer().getScheduler())) {
             ConsoleUtils.printError(NAME, "Can't start threads! Plugin is not enabled!");
+            this.setEnabled(false);
             return;
         }
 
         if (!commonEnable()) {
             ConsoleUtils.printError(NAME, "Can't initiate common things! Plugin is not enabled!");
+            this.setEnabled(false);
             return;
         }
 

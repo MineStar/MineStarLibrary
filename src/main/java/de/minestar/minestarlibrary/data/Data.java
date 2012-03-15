@@ -73,35 +73,35 @@ public class Data {
         return this.dataContainer.getValue(key, clazz);
     }
 
-    public void setBoolean(String key, boolean value) {
+    public void setBoolean(String key, Boolean value) {
         this.setValue(key, value);
     }
 
-    public void setByte(String key, byte value) {
+    public void setByte(String key, Byte value) {
         this.setValue(key, value);
     }
 
-    public void setByteArray(String key, byte[] value) {
+    public void setByteArray(String key, Byte[] value) {
         this.setValue(key, value);
     }
 
-    public void setDouble(String key, double value) {
+    public void setDouble(String key, Double value) {
         this.setValue(key, value);
     }
 
-    public void setFloat(String key, float value) {
+    public void setFloat(String key, Float value) {
         this.setValue(key, value);
     }
 
-    public void setInteger(String key, int value) {
+    public void setInteger(String key, Integer value) {
         this.setValue(key, value);
     }
 
-    public void setLong(String key, long value) {
+    public void setLong(String key, Long value) {
         this.setValue(key, value);
     }
 
-    public void setShort(String key, short value) {
+    public void setShort(String key, Short value) {
         this.setValue(key, value);
     }
 
@@ -127,69 +127,59 @@ public class Data {
     //
     // ///////////////////////////////////////////////
 
-    public boolean getBoolean(String key) {
-        GenericValue<Boolean> value = this.getValue(key, boolean.class);
-        if (value == null)
-            return Boolean.FALSE;
-        return value.getValue();
-    }
-
-    public boolean getBoolean(String key, boolean throwException) {
-        GenericValue<Boolean> value = this.getValue(key, boolean.class);
-        if (value == null)
-            if (!throwException)
-                return Boolean.FALSE;
-            else
-                throw new RuntimeException("BOOLEAN with key '" + key + "' was not found.");
-        return value.getValue();
-    }
-
-    public byte getByte(String key) {
-        GenericValue<Byte> value = this.getValue(key, byte.class);
-        if (value == null)
-            return Byte.MIN_VALUE;
-        return value.getValue();
-    }
-
-    public byte[] getByteArray(String key) {
-        GenericValue<byte[]> value = this.getValue(key, byte[].class);
+    public Boolean getBoolean(String key) {
+        GenericValue<Boolean> value = this.getValue(key, Boolean.class);
         if (value == null)
             return null;
         return value.getValue();
     }
 
-    public double getDouble(String key) {
-        GenericValue<Double> value = this.getValue(key, double.class);
+    public Byte getByte(String key) {
+        GenericValue<Byte> value = this.getValue(key, Byte.class);
         if (value == null)
-            return Double.MIN_VALUE;
+            return null;
         return value.getValue();
     }
 
-    public float getFloat(String key) {
-        GenericValue<Float> value = this.getValue(key, float.class);
+    public Byte[] getByteArray(String key) {
+        GenericValue<Byte[]> value = this.getValue(key, Byte[].class);
         if (value == null)
-            return Float.MIN_VALUE;
+            return null;
         return value.getValue();
     }
 
-    public int getInteger(String key) {
-        GenericValue<Integer> value = this.getValue(key, int.class);
+    public Double getDouble(String key) {
+        GenericValue<Double> value = this.getValue(key, Double.class);
         if (value == null)
-            return Integer.MIN_VALUE;
+            return null;
         return value.getValue();
     }
 
-    public long getLong(String key) {
-        GenericValue<Long> value = this.getValue(key, long.class);
+    public Float getFloat(String key) {
+        GenericValue<Float> value = this.getValue(key, Float.class);
         if (value == null)
-            return Long.MIN_VALUE;
+            return null;
         return value.getValue();
     }
 
-    public short getShort(String key) {
-        GenericValue<Short> value = this.getValue(key, short.class);
+    public Integer getInteger(String key) {
+        GenericValue<Integer> value = this.getValue(key, Integer.class);
         if (value == null)
-            return Short.MIN_VALUE;
+            return null;
+        return value.getValue();
+    }
+
+    public Long getLong(String key) {
+        GenericValue<Long> value = this.getValue(key, Long.class);
+        if (value == null)
+            return null;
+        return value.getValue();
+    }
+
+    public Short getShort(String key) {
+        GenericValue<Short> value = this.getValue(key, Short.class);
+        if (value == null)
+            return null;
         return value.getValue();
     }
 

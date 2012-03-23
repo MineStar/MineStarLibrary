@@ -63,9 +63,23 @@ public class ChatUtils {
      * 
      * @param args
      *            The string array containing the
+     * @param start
+     *            The index of the array where the message fragmet
+     * @return Single string
+     */
+    public static String getMessage(String[] args, int start) {
+        return getMessage(args, " ", start);
+    }
+
+    /**
+     * Concat all strings in the array to one string seperated by delimter
+     * 
+     * @param args
+     *            The string array containing the
      * @param delimiter
      *            Seperator between the single strings
      * @param start
+     *            The index of the array where the message fragmet
      * 
      * @return Single string
      */

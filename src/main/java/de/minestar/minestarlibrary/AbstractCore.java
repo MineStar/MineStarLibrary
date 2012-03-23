@@ -30,22 +30,22 @@ import de.minestar.minestarlibrary.utils.ConsoleUtils;
 public abstract class AbstractCore extends JavaPlugin {
 
     protected CommandList cmdList;
-    public static String NAME;
+    private String tempName;
 
     public AbstractCore() {
         this("");
     }
 
     public AbstractCore(String name) {
-        NAME = name;
+        tempName = name;
     }
 
     @Override
     public void onDisable() {
         if (!commonDisable()) {
-            ConsoleUtils.printError(NAME, "Can't handle command disable action! Possible data loss!");
+            ConsoleUtils.printError(tempName, "Can't handle command disable action! Possible data loss!");
         }
-        ConsoleUtils.printInfo(NAME, "Disabled v" + getDescription().getVersion() + "!");
+        ConsoleUtils.printInfo(tempName, "Disabled v" + getDescription().getVersion() + "!");
     }
 
     @Override
@@ -55,45 +55,45 @@ public abstract class AbstractCore extends JavaPlugin {
         getDataFolder().mkdirs();
 
         if (!createManager()) {
-            ConsoleUtils.printError(NAME, "Can't create manager! Plugin is not enabled!");
+            ConsoleUtils.printError(tempName, "Can't create manager! Plugin is not enabled!");
             this.setEnabled(false);
             return;
         }
         if (!createListener()) {
-            ConsoleUtils.printError(NAME, "Can't create listener! Plugin is not enabled!");
+            ConsoleUtils.printError(tempName, "Can't create listener! Plugin is not enabled!");
             this.setEnabled(false);
             return;
         }
         if (!createCommands()) {
-            ConsoleUtils.printError(NAME, "Can't create commands! Plugin is not enabled!");
+            ConsoleUtils.printError(tempName, "Can't create commands! Plugin is not enabled!");
             this.setEnabled(false);
             return;
         }
 
         if (!registerEvents(getServer().getPluginManager())) {
-            ConsoleUtils.printError(NAME, "Can't register events! Plugin is not enabled!");
+            ConsoleUtils.printError(tempName, "Can't register events! Plugin is not enabled!");
             this.setEnabled(false);
             return;
         }
 
         if (!createThreads()) {
-            ConsoleUtils.printError(NAME, "Can't create threads! Plugin is not enabled!");
+            ConsoleUtils.printError(tempName, "Can't create threads! Plugin is not enabled!");
             this.setEnabled(false);
             return;
         }
         if (!startThreads(getServer().getScheduler())) {
-            ConsoleUtils.printError(NAME, "Can't start threads! Plugin is not enabled!");
+            ConsoleUtils.printError(tempName, "Can't start threads! Plugin is not enabled!");
             this.setEnabled(false);
             return;
         }
 
         if (!commonEnable()) {
-            ConsoleUtils.printError(NAME, "Can't initiate common things! Plugin is not enabled!");
+            ConsoleUtils.printError(tempName, "Can't initiate common things! Plugin is not enabled!");
             this.setEnabled(false);
             return;
         }
 
-        ConsoleUtils.printInfo(NAME, "Enabled v" + getDescription().getVersion() + " !");
+        ConsoleUtils.printInfo(tempName, "Enabled v" + getDescription().getVersion() + " !");
     }
 
     /**

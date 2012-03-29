@@ -18,13 +18,11 @@
 
 package de.minestar.minestarlibrary.config;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -103,7 +101,7 @@ public class MinestarConfig extends YamlConfiguration {
      *             Exceptions by reading and writing objects
      */
     public static MinestarConfig copyDefault(File source, File target) throws Exception {
-        return copyDefault(new BufferedReader(new FileReader(source)), target);
+        return copyDefault(new FileInputStream(source), target);
     }
 
     /**
@@ -119,19 +117,15 @@ public class MinestarConfig extends YamlConfiguration {
      *             Exceptions by reading and writing objects
      */
     public static MinestarConfig copyDefault(InputStream source, File target) throws Exception {
-        return copyDefault(new BufferedReader(new InputStreamReader(source)), target);
-    }
 
-    // Copy the file
-    private static MinestarConfig copyDefault(BufferedReader bReader, File target) throws Exception {
-        String line = "";
-        BufferedWriter bWriter = new BufferedWriter(new FileWriter(target));
-        while ((line = bReader.readLine()) != null)
-            bWriter.write(line);
-
-        bReader.close();
-        bWriter.close();
-
+        // 64 KB buffer
+        byte[] buffer = new byte[0xFFFF];
+        OutputStream out = new FileOutputStream(target);
+        // copy file
+        for (int len; (len = source.read(buffer)) != -1;)
+            out.write(buffer, 0, len);
+        out.close();
+        source.close();
         return new MinestarConfig(target);
     }
 }

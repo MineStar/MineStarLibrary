@@ -18,6 +18,8 @@
 
 package de.minestar.minestarlibrary;
 
+import java.io.File;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
@@ -53,6 +55,12 @@ public abstract class AbstractCore extends JavaPlugin {
 
         // create plugins datafolder
         getDataFolder().mkdirs();
+
+        if (!loadingConfigs(getDataFolder())) {
+            ConsoleUtils.printError(tempName, "Can't load configuration! Plugin is not enabled!");
+            this.setEnabled(false);
+            return;
+        }
 
         if (!createManager()) {
             ConsoleUtils.printError(tempName, "Can't create manager! Plugin is not enabled!");
@@ -94,6 +102,17 @@ public abstract class AbstractCore extends JavaPlugin {
         }
 
         ConsoleUtils.printInfo(tempName, "Enabled v" + getDescription().getVersion() + " !");
+    }
+
+    /**
+     * Loading configuration files or creating default ones
+     * 
+     * @param dataFolder
+     *            The plugins data folder
+     * @return <code>True</code> when it was sucessfull without errors
+     */
+    protected boolean loadingConfigs(File dataFolder) {
+        return true;
     }
 
     /**

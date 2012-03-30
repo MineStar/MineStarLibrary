@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.minestar</groupId>
 	<artifactId>MineStarLibrary</artifactId>
-	<version>1.7.2</version>
+	<version>1.7.3-SNAPSHOT</version>
 	<dependencies>
 		<dependency>
 			<groupId>de.minestar</groupId>

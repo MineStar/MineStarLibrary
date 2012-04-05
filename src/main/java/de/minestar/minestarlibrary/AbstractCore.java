@@ -190,7 +190,7 @@ public abstract class AbstractCore extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (cmdList != null)
-            cmdList.handleCommand(sender, label, args);
-        return true;
+            return cmdList.handleCommand(sender, label, args);
+        return false;
     }
 }

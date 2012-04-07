@@ -72,20 +72,22 @@ public class CommandList {
      *            The arguments of the command, can also be label of a
      *            subcommand
      */
-    public void handleCommand(CommandSender sender, String label, String[] args) {
+    public boolean handleCommand(CommandSender sender, String label, String[] args) {
         if (!label.startsWith("/"))
             label = "/" + label;
 
         // looking for non extended and non super command
         AbstractCommand cmd = commandList.get(label + "_" + args.length);
-        if (cmd != null)
+        if (cmd != null) {
             cmd.run(args, sender);
-
-        else {
+            return true;
+        } else {
             // look for extended commands and super commands
             cmd = commandList.get(label);
-            if (cmd != null)
+            if (cmd != null) {
                 cmd.run(args, sender);
+                return true;
+            }
 
             // COMMAND NOT FOUND
             else {
@@ -96,6 +98,7 @@ public class CommandList {
                     if (entry.getKey().startsWith(label))
                         ChatUtils.writeInfo(sender, pluginName, entry.getValue().getSyntax() + " " + entry.getValue().getArguments());
                 }
+                return false;
             }
         }
     }

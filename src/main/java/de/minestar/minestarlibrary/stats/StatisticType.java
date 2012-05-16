@@ -18,8 +18,6 @@
 
 package de.minestar.minestarlibrary.stats;
 
-import java.util.NoSuchElementException;
-
 public enum StatisticType {
 
     // @formatter:off
@@ -52,19 +50,5 @@ public enum StatisticType {
     /** @return The class representing the data in Java */
     public Class<?> getClazz() {
         return clazz;
-    }
-
-    /**
-     * Getting the StatisticType which has the
-     * 
-     * @param typeName
-     * @return
-     */
-    public static StatisticType findType(String typeName) {
-        for (StatisticType type : values()) {
-            if (type.getName().equals(typeName))
-                return type;
-        }
-        throw new NoSuchElementException("Can't find a StatisticType for name '" + typeName + "'");
     }
 }

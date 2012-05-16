@@ -66,8 +66,7 @@ public class FakeQuitEvent extends Event {
     }
 
     /**
-     * @param quitMessage
-     *            The message which shall broadcasted
+     * @return The broadcasted message when the player quits
      */
     public String getQuitMessage() {
         return quitMessage;

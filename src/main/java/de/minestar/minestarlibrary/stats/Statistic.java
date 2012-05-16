@@ -49,7 +49,7 @@ public interface Statistic {
 
     /**
      * @return An array of objects. These are the data of the statistic. They
-     *         must fit with the datatypes give in {@link Statistic.getHead}
+     *         must fit with the datatypes give in getHead()
      */
     public List<Object> getData();
 

@@ -66,8 +66,7 @@ public class FakeJoinEvent extends Event {
     }
 
     /**
-     * @param joinMessage
-     *            The message which shall broadcasted
+     * @return The broadcasted message when the player joins
      */
     public String getJoinMessage() {
         return joinMessage;

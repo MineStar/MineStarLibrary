@@ -29,6 +29,26 @@ import org.bukkit.scheduler.BukkitScheduler;
 import de.minestar.minestarlibrary.commands.CommandList;
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
+/**
+ * An abstract class for every plugins core. <br>
+ * The methods in onEnable are called in the following way: <br>
+ * 1. <code>loadingConfigs() </code><br>
+ * 2. <code>createManager() </code><br>
+ * 3. <code>createListener() </code><br>
+ * 4. <code>createCommands() </code><br>
+ * 5. <code>registerEvents() </code><br>
+ * 6. <code>createThreads() </code><br>
+ * 7. <code>startThreads() </code><br>
+ * 8. <code>registerStatistics() </code><br>
+ * 9. <code>commandEnable() </code><br>
+ * 
+ * <br>
+ * The methods in onDisabled are called in the following way:<br>
+ * 1. <code>commandDisable()</code>
+ * 
+ * @author Meldanor
+ * 
+ */
 public abstract class AbstractCore extends JavaPlugin {
 
     protected CommandList cmdList;
@@ -43,7 +63,7 @@ public abstract class AbstractCore extends JavaPlugin {
     }
 
     @Override
-    public void onDisable() {
+    public final void onDisable() {
         if (!commonDisable()) {
             ConsoleUtils.printError(tempName, "Can't handle command disable action! Possible data loss!");
         }
@@ -51,50 +71,68 @@ public abstract class AbstractCore extends JavaPlugin {
     }
 
     @Override
-    public void onEnable() {
+    public final void onEnable() {
 
         // create plugins datafolder
         getDataFolder().mkdirs();
 
+        // LOAD CONFIGS
         if (!loadingConfigs(getDataFolder())) {
             ConsoleUtils.printError(tempName, "Can't load configuration! Plugin is not enabled!");
             this.setEnabled(false);
             return;
         }
 
+        // CREATE MANAGER
         if (!createManager()) {
             ConsoleUtils.printError(tempName, "Can't create manager! Plugin is not enabled!");
             this.setEnabled(false);
             return;
         }
+
+        // CREATE LISTENER
         if (!createListener()) {
             ConsoleUtils.printError(tempName, "Can't create listener! Plugin is not enabled!");
             this.setEnabled(false);
             return;
         }
+
+        // CREATE COMMANDS
         if (!createCommands()) {
             ConsoleUtils.printError(tempName, "Can't create commands! Plugin is not enabled!");
             this.setEnabled(false);
             return;
         }
 
+        // REGISTER THE EVENTS FROM LISTENER
         if (!registerEvents(getServer().getPluginManager())) {
             ConsoleUtils.printError(tempName, "Can't register events! Plugin is not enabled!");
             this.setEnabled(false);
             return;
         }
 
+        // CREATE RUNNABLES
         if (!createThreads()) {
             ConsoleUtils.printError(tempName, "Can't create threads! Plugin is not enabled!");
             this.setEnabled(false);
             return;
         }
+
+        // START THE RUNNABLES
         if (!startThreads(getServer().getScheduler())) {
             ConsoleUtils.printError(tempName, "Can't start threads! Plugin is not enabled!");
             this.setEnabled(false);
             return;
         }
 
+        // REGISTER STATISTICS TO ILLUMINATI
+        if (!registerStatistics()) {
+            ConsoleUtils.printError(tempName, "Can't register statistics! Plugin is not enabled!");
+            this.setEnabled(false);
+            return;
+        }
+
+        // OTHER THINGS ON ENABLE
         if (!commonEnable()) {
             ConsoleUtils.printError(tempName, "Can't initiate common things! Plugin is not enabled!");
             this.setEnabled(false);
@@ -170,6 +208,16 @@ public abstract class AbstractCore extends JavaPlugin {
     }
 
     /**
+     * Register statistics for the Illuminati plugin. Will throw an exception
+     * when the plugin is not found
+     * 
+     * @return <code>True</code> when it was sucessfull without errors
+     */
+    protected boolean registerStatistics() {
+        return true;
+    }
+
+    /**
      * Handle common things on plugin enable
      * 
      * @return <code>True</code> when it was sucessfull without errors
@@ -188,7 +236,7 @@ public abstract class AbstractCore extends JavaPlugin {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public final boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (cmdList != null)
             return cmdList.handleCommand(sender, label, args);
         return false;

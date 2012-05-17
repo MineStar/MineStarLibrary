@@ -39,17 +39,17 @@ public interface Statistic {
     public String getName();
 
     /**
-     * @return An array of Strings which provides information about the head. <br>
-     *         Must be in this format: <br>
-     *         <code>AttributeName:StatisticType.getName()</code>
+     * @return A Map holding the structure of the statistic. The key is the name
+     *         of the attribute and the statisticType object refering to the key
+     *         is the type of data to store
      * 
      * @see StatisticType StatisticType
      * */
     public Map<String, StatisticType> getHead();
 
     /**
-     * @return An array of objects. These are the data of the statistic. They
-     *         must fit with the datatypes give in getHead()
+     * @return A list of objects. These are the data of the statistic. They must
+     *         fit with the datatypes give in getHead()
      */
     public List<Object> getData();
 

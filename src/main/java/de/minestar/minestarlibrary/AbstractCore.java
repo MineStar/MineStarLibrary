@@ -22,10 +22,12 @@ import java.io.File;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
+import de.minestar.minestarlibrary.annotations.UseStatistic;
 import de.minestar.minestarlibrary.commands.CommandList;
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
@@ -125,12 +127,10 @@ public abstract class AbstractCore extends JavaPlugin {
             return;
         }
 
-        // REGISTER STATISTICS TO ILLUMINATI
-        if (!registerStatistics()) {
-            ConsoleUtils.printError(tempName, "Can't register statistics! Plugin is not enabled!");
-            this.setEnabled(false);
-            return;
-        }
+        // DO WE USE STATISTICS? SEE ANNOTATIONS OF THE CLASS....
+        // "Mels Idee!!!" "GeMos Umsetzung :P"
+        if (this.usesStatistics())
+            handleRegisterStatistic();
 
         // OTHER THINGS ON ENABLE
         if (!commonEnable()) {
@@ -224,6 +224,35 @@ public abstract class AbstractCore extends JavaPlugin {
      */
     protected boolean commonEnable() {
         return true;
+    }
+
+    /**
+     * Does this Class have the annotation {@link UseStatistic} ?
+     * 
+     * @return <b>true</b> if yes, otherwise <b>false</b>
+     */
+    private boolean usesStatistics() {
+        return this.getClass().getAnnotation(UseStatistic.class) != null;
+    }
+
+    /**
+     * Searching first for the Plugin "Illuminati" and check whether it is enabled. When the plugin is enabled it will call the overriden methode 
+     */
+    private void handleRegisterStatistic() {
+        // SEARCH FOR ILLUMINATI
+        Plugin p = getServer().getPluginManager().getPlugin("Illuminati");
+        boolean illuminatiEnabled = p != null && p.isEnabled();
+
+        // REGISTER STATISTICS TO ILLUMINATI
+        if (illuminatiEnabled) {
+            if (!registerStatistics())
+                ConsoleUtils.printError(tempName, "Can't register statistics! Statistics are disabled!");
+            else
+                ConsoleUtils.printInfo(tempName, "Statistics are registered!");
+
+        } else
+            ConsoleUtils.printWarning(tempName, "Illuminati was not found. Can't register statistics!");
+
     }
 
     /**

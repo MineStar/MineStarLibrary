@@ -19,7 +19,7 @@
 package de.minestar.minestarlibrary.stats;
 
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 
 /**
  * An interface for statistic to persistate. The server has to run Illuminati
@@ -45,7 +45,7 @@ public interface Statistic {
      * 
      * @see StatisticType StatisticType
      * */
-    public Entry<String, StatisticType>[] getHead();
+    public Map<String, StatisticType> getHead();
 
     /**
      * @return An array of objects. These are the data of the statistic. They

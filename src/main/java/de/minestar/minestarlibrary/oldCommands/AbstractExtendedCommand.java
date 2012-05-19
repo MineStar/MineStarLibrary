@@ -16,7 +16,7 @@
  * along with MineStarLibrary.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.minestar.minestarlibrary.commands;
+package de.minestar.minestarlibrary.oldCommands;
 
 /**
  * Represents a command with a varible number of Arguments. The only difference

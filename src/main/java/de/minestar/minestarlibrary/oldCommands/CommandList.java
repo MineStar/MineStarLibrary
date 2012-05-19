@@ -16,7 +16,7 @@
  * along with MineStarLibrary.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.minestar.minestarlibrary.commands;
+package de.minestar.minestarlibrary.oldCommands;
 
 import java.util.HashMap;
 import java.util.Map.Entry;

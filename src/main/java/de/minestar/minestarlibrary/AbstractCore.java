@@ -28,7 +28,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import de.minestar.minestarlibrary.annotations.UseStatistic;
-import de.minestar.minestarlibrary.commands.CommandList;
+import de.minestar.minestarlibrary.oldCommands.CommandList;
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
 /**

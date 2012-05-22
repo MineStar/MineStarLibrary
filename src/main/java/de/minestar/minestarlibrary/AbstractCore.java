@@ -20,6 +20,8 @@ package de.minestar.minestarlibrary;
 
 import java.io.File;
 
+import javax.jws.soap.SOAPBinding.Use;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
@@ -232,11 +234,12 @@ public abstract class AbstractCore extends JavaPlugin {
      * @return <b>true</b> if yes, otherwise <b>false</b>
      */
     private boolean usesStatistics() {
-        return this.getClass().getAnnotation(UseStatistic.class) != null;
+        return this.getClass().isAnnotationPresent(UseStatistic.class);
     }
 
     /**
-     * Searching first for the Plugin "Illuminati" and check whether it is enabled. When the plugin is enabled it will call the overriden methode 
+     * Searching first for the Plugin "Illuminati" and check whether it is
+     * enabled. When the plugin is enabled it will call the overriden methode
      */
     private void handleRegisterStatistic() {
         // SEARCH FOR ILLUMINATI

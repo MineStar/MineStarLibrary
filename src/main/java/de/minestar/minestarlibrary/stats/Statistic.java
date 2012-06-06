@@ -18,8 +18,8 @@
 
 package de.minestar.minestarlibrary.stats;
 
-import java.util.List;
-import java.util.Map;
+import java.util.LinkedHashMap;
+import java.util.Queue;
 
 /**
  * An interface for statistic to persistate. The server has to run Illuminati
@@ -45,12 +45,12 @@ public interface Statistic {
      * 
      * @see StatisticType StatisticType
      * */
-    public Map<String, StatisticType> getHead();
+    public LinkedHashMap<String, StatisticType> getHead();
 
     /**
      * @return A list of objects. These are the data of the statistic. They must
      *         fit with the datatypes give in getHead()
      */
-    public List<Object> getData();
+    public Queue<Object> getData();
 
 }

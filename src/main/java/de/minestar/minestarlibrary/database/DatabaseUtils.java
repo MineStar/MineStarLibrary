@@ -24,6 +24,8 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -264,5 +266,20 @@ public class DatabaseUtils {
         sBuilder.append("'");
         sBuilder.append(string);
         sBuilder.append("'");
+    }
+
+    private final static SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+
+    /**
+     * Convert the date into a String with the format <br>
+     * <code>YYYY-MM-dd HH:mm:ss</code> <br>
+     * This string can be stored as a datetime in mysql
+     * 
+     * @param date
+     *            The date to convert
+     * @return A formatted string
+     */
+    public static String getDateTimeString(Date date) {
+        return DATETIME_FORMAT.format(date);
     }
 }

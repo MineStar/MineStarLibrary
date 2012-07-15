@@ -67,7 +67,7 @@ public abstract class AbstractCore extends JavaPlugin {
     @Override
     public final void onDisable() {
         if (!commonDisable()) {
-            ConsoleUtils.printError(tempName, "Can't handle command disable action! Possible data loss!");
+            ConsoleUtils.printError(tempName, "Can't handle common disable action! Possible data loss!");
         }
         ConsoleUtils.printInfo(tempName, "Disabled v" + getDescription().getVersion() + "!");
     }

@@ -144,7 +144,7 @@ public abstract class AbstractDatabaseHandler {
      *         <code>false</code>
      */
     public boolean hasConnection() {
-        return dbConnection != null;
+        return dbConnection != null && dbConnection.hasConnection();
     }
 
 }

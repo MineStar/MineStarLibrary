@@ -182,7 +182,7 @@ public class DataContainerNBT extends DataContainerNone {
         String name = "BOOLEAN";
         if (this.NBTTag.hasKey(name)) {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
-            for (Object base : thisCompound.d()) {
+            for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
                     NBTBase thisTag = (NBTBase) base;
                     this.setValue(thisTag.getName(), thisCompound.getBoolean(thisTag.getName()));
@@ -196,7 +196,7 @@ public class DataContainerNBT extends DataContainerNone {
         String name = "BYTE";
         if (this.NBTTag.hasKey(name)) {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
-            for (Object base : thisCompound.d()) {
+            for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
                     NBTBase thisTag = (NBTBase) base;
                     this.setValue(thisTag.getName(), thisCompound.getByte(thisTag.getName()));
@@ -210,7 +210,7 @@ public class DataContainerNBT extends DataContainerNone {
         String name = "BYTEARRAY";
         if (this.NBTTag.hasKey(name)) {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
-            for (Object base : thisCompound.d()) {
+            for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
                     NBTBase thisTag = (NBTBase) base;
                     this.setValue(thisTag.getName(), thisCompound.getByteArray(thisTag.getName()));
@@ -224,7 +224,7 @@ public class DataContainerNBT extends DataContainerNone {
         String name = "DOUBLE";
         if (this.NBTTag.hasKey(name)) {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
-            for (Object base : thisCompound.d()) {
+            for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
                     NBTBase thisTag = (NBTBase) base;
                     this.setValue(thisTag.getName(), thisCompound.getDouble(thisTag.getName()));
@@ -238,7 +238,7 @@ public class DataContainerNBT extends DataContainerNone {
         String name = "FLOAT";
         if (this.NBTTag.hasKey(name)) {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
-            for (Object base : thisCompound.d()) {
+            for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
                     NBTBase thisTag = (NBTBase) base;
                     this.setValue(thisTag.getName(), thisCompound.getFloat(thisTag.getName()));
@@ -252,7 +252,7 @@ public class DataContainerNBT extends DataContainerNone {
         String name = "INTEGER";
         if (this.NBTTag.hasKey(name)) {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
-            for (Object base : thisCompound.d()) {
+            for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
                     NBTBase thisTag = (NBTBase) base;
                     this.setValue(thisTag.getName(), thisCompound.getInt(thisTag.getName()));
@@ -266,7 +266,7 @@ public class DataContainerNBT extends DataContainerNone {
         String name = "LONG";
         if (this.NBTTag.hasKey(name)) {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
-            for (Object base : thisCompound.d()) {
+            for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
                     NBTBase thisTag = (NBTBase) base;
                     this.setValue(thisTag.getName(), thisCompound.getLong(thisTag.getName()));
@@ -280,7 +280,7 @@ public class DataContainerNBT extends DataContainerNone {
         String name = "SHORT";
         if (this.NBTTag.hasKey(name)) {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
-            for (Object base : thisCompound.d()) {
+            for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
                     NBTBase thisTag = (NBTBase) base;
                     this.setValue(thisTag.getName(), thisCompound.getShort(thisTag.getName()));
@@ -294,7 +294,7 @@ public class DataContainerNBT extends DataContainerNone {
         String name = "STRING";
         if (this.NBTTag.hasKey(name)) {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
-            for (Object base : thisCompound.d()) {
+            for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
                     NBTBase thisTag = (NBTBase) base;
                     this.setValue(thisTag.getName(), thisCompound.getString(thisTag.getName()));
@@ -308,7 +308,7 @@ public class DataContainerNBT extends DataContainerNone {
         String name = "LOCATION";
         if (this.NBTTag.hasKey(name)) {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
-            for (Object base : thisCompound.d()) {
+            for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
                     NBTBase thisTag = (NBTBase) base;
                     this.setValue(thisTag.getName(), BlockUtils.LocationFromString(thisCompound.getString(thisTag.getName())));

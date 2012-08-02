@@ -295,7 +295,6 @@ public class ChatUtils {
      * PlayerUtils.sendMessage} <br>
      * When <code>reciever</code> is a {@link ConsoleCommandSender}, it will use
      * {@link ConsoleUtils#printInfo(String, String) ConsoleUtils.printInfo}.
-     * This will ignore the color<br>
      * 
      * @param reciever
      *            The reciever of the message. Must be an instance of
@@ -320,8 +319,7 @@ public class ChatUtils {
      * {@link PlayerUtils#sendMessage(Player, ChatColor, String)
      * PlayerUtils.sendMessage} <br>
      * When <code>reciever</code> is a {@link ConsoleCommandSender}, it will use
-     * {@link ConsoleUtils#printInfo(String) ConsoleUtils.printInfo}. This will
-     * ignore the color
+     * {@link ConsoleUtils#printInfo(String) ConsoleUtils.printInfo}.
      * 
      * @param reciever
      *            The reciever of the message. Must be an instance of

@@ -18,8 +18,6 @@
 
 package de.minestar.minestarlibrary.utils;
 
-import org.bukkit.ChatColor;
-
 public class ConsoleUtils {
 
     /**
@@ -29,7 +27,6 @@ public class ConsoleUtils {
      *            The information
      */
     public static void printInfo(String message) {
-        message = removeColors(message);
         System.out.println(message);
     }
 
@@ -123,19 +120,5 @@ public class ConsoleUtils {
     public static void printException(Exception e, String pluginName, String message) {
         printInfo(pluginName, "EXCEPTION! " + message);
         e.printStackTrace();
-    }
-
-    /**
-     * Remove all colors from the message to prevent unreadable text
-     * 
-     * @param msg
-     *            The message maybe containing ChatColor string fragments
-     * @return Cleared string
-     */
-    private static String removeColors(String msg) {
-        ChatColor[] colors = ChatColor.values();
-        for (ChatColor color : colors)
-            msg = msg.replaceAll(color.toString(), "");
-        return msg;
     }
 }

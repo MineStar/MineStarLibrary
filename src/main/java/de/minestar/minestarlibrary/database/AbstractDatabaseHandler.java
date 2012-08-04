@@ -21,6 +21,7 @@ package de.minestar.minestarlibrary.database;
 import java.io.File;
 import java.sql.Connection;
 
+import de.minestar.minestarlibrary.config.MinestarConfig;
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
 /**
@@ -52,10 +53,12 @@ public abstract class AbstractDatabaseHandler {
      *            The name of the plugin using the class
      * @param dataFolder
      *            The datafolder of the plugin
+     * @param type
+     *            The database connection tye. See {@link DatabaseType}
      */
-    public AbstractDatabaseHandler(String pluginName, File dataFolder) {
+    public AbstractDatabaseHandler(String pluginName, File SQLConfigFile, DatabaseType type) {
         try {
-            init(pluginName, dataFolder);
+            init(pluginName, SQLConfigFile, type);
         } catch (Exception e) {
             ConsoleUtils.printException(e, pluginName, "Can't initiate the database!");
         }
@@ -67,15 +70,16 @@ public abstract class AbstractDatabaseHandler {
      * 
      * @param pluginName
      *            Name of the plugin which uses the class
+     * @param type
+     *            The database connection tye. See {@link DatabaseType}
      * @param dataFolder
      *            The datafolder of the plugin
      * @throws Exception
      */
-    private void init(String pluginName, File dataFolder) throws Exception {
-        dbConnection = createConnection(pluginName, dataFolder);
+    private void init(String pluginName, File SQLConfigFile, DatabaseType type) throws Exception {
+        dbConnection = createConnection(pluginName, SQLConfigFile, type);
         if (dbConnection != null) {
             createStructure(pluginName, dbConnection.getConnection());
-            updateDatabase(pluginName, dbConnection.getConnection(), dataFolder);
             createStatements(pluginName, dbConnection.getConnection());
         } else
             ConsoleUtils.printError(pluginName, "Can't initiate the database structure and statements because of missing connection!");
@@ -87,12 +91,20 @@ public abstract class AbstractDatabaseHandler {
      * 
      * @param pluginName
      *            Name of the plugin which uses the class
+     * @param type
+     *            The database connection tye. See {@link DatabaseType}
      * @param dataFolder
      *            The datafolder of the plugin
      * @return The database connection object which is automatically assigned to
      *         the private variable <code>dbConnection</code>
      */
-    protected abstract DatabaseConnection createConnection(String pluginName, File dataFolder) throws Exception;
+    protected DatabaseConnection createConnection(String pluginName, File SQLConfigFile, DatabaseType type) throws Exception {
+        if (!SQLConfigFile.exists()) {
+            DatabaseUtils.createDatabaseConfig(type, SQLConfigFile, pluginName);
+            return null;
+        } else
+            return new DatabaseConnection(pluginName, type, new MinestarConfig(SQLConfigFile));
+    }
 
     /**
      * Method for establishing a basis table structure of the database
@@ -115,22 +127,6 @@ public abstract class AbstractDatabaseHandler {
     protected abstract void createStatements(String pluginName, Connection con) throws Exception;
 
     /**
-     * Override this method to import an update. Use this to import updates from
-     * a SQL Batch file, which will only executed once. Remember to delete the
-     * update.sql, it will loaded after reload again!
-     * 
-     * @param pluginName
-     *            Name of plugin
-     * @param con
-     *            Connection to database
-     * @param dataFolder
-     *            Plugin folder. Recommended to place the batch file here
-     */
-    public void updateDatabase(String pluginName, Connection con, File dataFolder) throws Exception {
-
-    }
-
-    /**
      * Close the connection to the database. Call this method in "onDisable"
      * method
      */
@@ -146,5 +142,4 @@ public abstract class AbstractDatabaseHandler {
     public boolean hasConnection() {
         return dbConnection != null && dbConnection.hasConnection();
     }
-
 }

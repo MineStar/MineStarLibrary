@@ -13,48 +13,51 @@ import org.bukkit.craftbukkit.inventory.CraftItemStack;
 
 public class CraftBook implements Book {
 
-    private final ItemStack s;
+    private final ItemStack itemstack;
 
-    public CraftBook(CraftItemStack itemstack) throws Exception {
+    public CraftBook(CraftItemStack itemstack, String author, String title, ArrayList<String> pages) throws Exception {
         if (itemstack.getType() == Material.WRITTEN_BOOK || itemstack.getType() == Material.BOOK_AND_QUILL) {
             // do nothing
         } else {
             throw new Exception("CraftItemStack not Material.WRITTEN_BOOK or Material.BOOK_AND_QUILL");
         }
-        s = itemstack.getHandle();
-        if (s.tag == null) {
-            s.tag = new NBTTagCompound();
+        this.itemstack = itemstack.getHandle();
+        if (this.itemstack.tag == null) {
+            this.itemstack.tag = new NBTTagCompound();
+            this.setAuthor(author);
+            this.setTitle(title);
+            this.setPages(pages);
         }
     }
 
     @Override
     public boolean hasTitle() {
-        return s.tag.hasKey("title");
+        return itemstack.tag.hasKey("title");
     }
 
     @Override
     public boolean hasAuthor() {
-        return s.tag.hasKey("author");
+        return itemstack.tag.hasKey("author");
     }
 
     @Override
     public boolean hasPages() {
-        return s.tag.hasKey("pages");
+        return itemstack.tag.hasKey("pages");
     }
 
     @Override
     public String getTitle() {
-        return s.tag.getString("title");
+        return itemstack.tag.getString("title");
     }
 
     @Override
     public String getAuthor() {
-        return s.tag.getString("author");
+        return itemstack.tag.getString("author");
     }
 
     @Override
     public String[] getPages() {
-        NBTTagList list = (NBTTagList) s.tag.get("pages");
+        NBTTagList list = (NBTTagList) itemstack.tag.get("pages");
         String[] pages = new String[list.size()];
         for (int i = 0; i < list.size(); i++) {
             pages[i] = ((NBTTagString) list.get(i)).data;
@@ -64,7 +67,7 @@ public class CraftBook implements Book {
 
     @Override
     public List<String> getListPages() {
-        NBTTagList list = (NBTTagList) s.tag.get("pages");
+        NBTTagList list = (NBTTagList) itemstack.tag.get("pages");
         List<String> pages = new ArrayList<String>();
         for (int i = 0; i < list.size(); i++) {
             pages.add(((NBTTagString) list.get(i)).data);
@@ -78,7 +81,7 @@ public class CraftBook implements Book {
         if (title.length() > 16) {
             title = title.substring(0, 16);
         }
-        s.tag.setString("title", title);
+        itemstack.tag.setString("title", title);
     }
 
     @Override
@@ -87,7 +90,7 @@ public class CraftBook implements Book {
         if (author.length() > 16) {
             author = author.substring(0, 16);
         }
-        s.tag.setString("author", author);
+        itemstack.tag.setString("author", author);
     }
 
     @Override
@@ -108,7 +111,7 @@ public class CraftBook implements Book {
             }
         }
         list.setName("pages");
-        s.tag.set("pages", list);
+        itemstack.tag.set("pages", list);
     }
 
     @Override
@@ -128,12 +131,12 @@ public class CraftBook implements Book {
             }
         }
         list.setName("pages");
-        s.tag.set("pages", list);
+        itemstack.tag.set("pages", list);
     }
 
     @Override
     public ItemStack getItemStack() {
-        return s;
+        return itemstack;
     }
 
 }

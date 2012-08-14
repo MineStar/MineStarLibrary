@@ -1,5 +1,7 @@
 package de.minestar.minestarlibrary.bookapi;
 
+import java.util.ArrayList;
+
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,9 +16,9 @@ public class CraftBookBuilder extends BookBuilder {
     }
 
     @Override
-    public Book getBook(ItemStack itemstack) {
+    public Book getBook(ItemStack itemstack, String author, String title, ArrayList<String> pages) {
         try {
-            return new CraftBook((CraftItemStack) itemstack);
+            return new CraftBook((CraftItemStack) itemstack, author, title, pages);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

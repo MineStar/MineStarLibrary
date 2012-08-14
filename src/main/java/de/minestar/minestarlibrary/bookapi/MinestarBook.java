@@ -21,9 +21,9 @@ public class MinestarBook {
         return MinestarBook.getBook(itemStack, author, title, pages);
     }
 
-    public static MinestarBook createBookAndQuill(String author, String title, List<String> pages) {
+    public static MinestarBook createBookAndQuill(List<String> pages) {
         CraftItemStack itemStack = new CraftItemStack(Material.BOOK_AND_QUILL);
-        return MinestarBook.getBook(itemStack, author, title, pages);
+        return MinestarBook.getBook(itemStack, "", "", pages);
     }
 
     public static MinestarBook getBook(CraftItemStack itemStack, String author, String title, List<String> pages) {

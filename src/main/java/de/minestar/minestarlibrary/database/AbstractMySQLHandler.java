@@ -26,7 +26,7 @@ public abstract class AbstractMySQLHandler extends AbstractDatabaseHandler {
     public AbstractMySQLHandler(String pluginName, File SQLConfigFile) {
         super(pluginName, SQLConfigFile, DatabaseType.MySQL);
     }
-    
+
     @Override
     protected abstract void createStructure(String pluginName, Connection con) throws Exception;
 

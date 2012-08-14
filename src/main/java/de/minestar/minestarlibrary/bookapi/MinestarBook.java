@@ -11,17 +11,32 @@ import net.minecraft.server.NBTTagString;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 
-public class CraftBook implements Book {
+public class MinestarBook {
 
     private final ItemStack itemstack;
+    private final org.bukkit.inventory.ItemStack bukkitItemStack;
 
-    public CraftBook(CraftItemStack itemstack, String author, String title, List<String> pages) throws Exception {
-        if (itemstack.getType() == Material.WRITTEN_BOOK || itemstack.getType() == Material.BOOK_AND_QUILL) {
-            // do nothing
+    public static MinestarBook createWrittenBook(String author, String title, List<String> pages) {
+        CraftItemStack itemStack = new CraftItemStack(Material.WRITTEN_BOOK);
+        return MinestarBook.getBook(itemStack, author, title, pages);
+    }
+
+    public static MinestarBook createBookAndQuill(String author, String title, List<String> pages) {
+        CraftItemStack itemStack = new CraftItemStack(Material.BOOK_AND_QUILL);
+        return MinestarBook.getBook(itemStack, author, title, pages);
+    }
+
+    public static MinestarBook getBook(CraftItemStack itemStack, String author, String title, List<String> pages) {
+        if (itemStack.getTypeId() == Material.WRITTEN_BOOK.getId() || itemStack.getTypeId() == Material.BOOK_AND_QUILL.getId()) {
+            return new MinestarBook(itemStack, author, title, pages);
         } else {
-            throw new Exception("CraftItemStack not Material.WRITTEN_BOOK or Material.BOOK_AND_QUILL");
+            return null;
         }
-        this.itemstack = itemstack.getHandle();
+    }
+
+    private MinestarBook(CraftItemStack itemStack, String author, String title, List<String> pages) {
+        this.bukkitItemStack = itemStack;
+        this.itemstack = itemStack.getHandle();
         if (this.itemstack.tag == null) {
             this.itemstack.tag = new NBTTagCompound();
             this.setAuthor(author);
@@ -30,32 +45,26 @@ public class CraftBook implements Book {
         }
     }
 
-    @Override
     public boolean hasTitle() {
         return itemstack.tag.hasKey("title");
     }
 
-    @Override
     public boolean hasAuthor() {
         return itemstack.tag.hasKey("author");
     }
 
-    @Override
     public boolean hasPages() {
         return itemstack.tag.hasKey("pages");
     }
 
-    @Override
     public String getTitle() {
         return itemstack.tag.getString("title");
     }
 
-    @Override
     public String getAuthor() {
         return itemstack.tag.getString("author");
     }
 
-    @Override
     public String[] getPages() {
         NBTTagList list = (NBTTagList) itemstack.tag.get("pages");
         String[] pages = new String[list.size()];
@@ -65,7 +74,6 @@ public class CraftBook implements Book {
         return pages;
     }
 
-    @Override
     public List<String> getListPages() {
         NBTTagList list = (NBTTagList) itemstack.tag.get("pages");
         List<String> pages = new ArrayList<String>();
@@ -75,7 +83,6 @@ public class CraftBook implements Book {
         return pages;
     }
 
-    @Override
     public void setTitle(String title) {
         // sanity checking on the title
         if (title.length() > 16) {
@@ -84,7 +91,6 @@ public class CraftBook implements Book {
         itemstack.tag.setString("title", title);
     }
 
-    @Override
     public void setAuthor(String author) {
         // sanity checking on the author
         if (author.length() > 16) {
@@ -93,7 +99,6 @@ public class CraftBook implements Book {
         itemstack.tag.setString("author", author);
     }
 
-    @Override
     public void setPages(String[] pages) {
         NBTTagList list = new NBTTagList();
         int size = pages.length;
@@ -114,7 +119,6 @@ public class CraftBook implements Book {
         itemstack.tag.set("pages", list);
     }
 
-    @Override
     public void setPages(List<String> pages) {
         NBTTagList list = new NBTTagList();
         int size = pages.size();
@@ -134,9 +138,12 @@ public class CraftBook implements Book {
         itemstack.tag.set("pages", list);
     }
 
-    @Override
     public ItemStack getItemStack() {
-        return itemstack;
+        return this.itemstack;
+    }
+
+    public org.bukkit.inventory.ItemStack getBukkitItemStack() {
+        return this.bukkitItemStack;
     }
 
 }

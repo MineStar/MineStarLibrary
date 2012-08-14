@@ -1,6 +1,6 @@
 package de.minestar.minestarlibrary.bookapi;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.inventory.ItemStack;
 /**
@@ -16,7 +16,7 @@ public class BookBuilder {
      * @param itemstack
      * @return Book
      */
-    public Book getBook(ItemStack itemstack, String author, String title, ArrayList<String> pages) {
+    public Book getBook(ItemStack itemstack, String author, String title, List<String> pages) {
         if (instance == null) {
             return null;
         }

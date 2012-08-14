@@ -15,7 +15,7 @@ public class CraftBook implements Book {
 
     private final ItemStack itemstack;
 
-    public CraftBook(CraftItemStack itemstack, String author, String title, ArrayList<String> pages) throws Exception {
+    public CraftBook(CraftItemStack itemstack, String author, String title, List<String> pages) throws Exception {
         if (itemstack.getType() == Material.WRITTEN_BOOK || itemstack.getType() == Material.BOOK_AND_QUILL) {
             // do nothing
         } else {

@@ -24,12 +24,12 @@ public class SuccessMessage extends Message {
 
     private final static ChatColor COLOR = ChatColor.GREEN;
 
-    public SuccessMessage(String sender, String prefix, String message) {
-        super(sender, ChatColor.AQUA, prefix, COLOR, message);
+    public SuccessMessage(String sender, String target, String prefix, String message) {
+        super(sender, target, ChatColor.AQUA, prefix, COLOR, message);
     }
 
-    public SuccessMessage(String sender, String message) {
-        super(sender, COLOR, message);
+    public SuccessMessage(String sender, String target, String message) {
+        super(sender, target, COLOR, message);
     }
 
 }

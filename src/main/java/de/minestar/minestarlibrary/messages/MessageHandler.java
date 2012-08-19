@@ -18,14 +18,33 @@
 
 package de.minestar.minestarlibrary.messages;
 
-public class MessageSystem {
-    private static IMessageHandler messageHandler = null;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 
-    public static void register(IMessageHandler messageHandler) {
-        MessageSystem.messageHandler = messageHandler;
+import de.minestar.vincicode.core.VinciCodeCore;
+
+public class MessageHandler {
+
+    private final static boolean vinciCodeEnabled;
+
+    static {
+        // LOOK FOR VINCI CODE AT FIRST ACCESS
+        Plugin plugin = Bukkit.getPluginManager().getPlugin("VinciCode");
+        vinciCodeEnabled = plugin != null && plugin.isEnabled();
     }
 
-    public static void sendMessage(Message message) {
+    private MessageHandler() {
+        // SINGLE TON
+    }
 
+    /**
+     * Give VinciCode the message to handle
+     * 
+     * @param The
+     *            message to deliver
+     */
+    public static void sendMessage(Message message) {
+        if (vinciCodeEnabled)
+            VinciCodeCore.sendMessage(message);
     }
 }

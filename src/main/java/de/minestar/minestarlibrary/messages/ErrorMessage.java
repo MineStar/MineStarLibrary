@@ -24,12 +24,12 @@ public class ErrorMessage extends Message {
 
     private final static ChatColor COLOR = ChatColor.RED;
 
-    public ErrorMessage(String sender, String prefix, String message) {
-        super(sender, ChatColor.AQUA, prefix, COLOR, message);
+    public ErrorMessage(String sender, String target, String prefix, String message) {
+        super(sender, target, ChatColor.AQUA, prefix, COLOR, message);
     }
 
-    public ErrorMessage(String sender, String message) {
-        super(sender, COLOR, message);
+    public ErrorMessage(String sender, String target, String message) {
+        super(sender, target, COLOR, message);
     }
 
 }

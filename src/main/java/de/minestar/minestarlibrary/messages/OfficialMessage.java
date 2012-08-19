@@ -24,13 +24,13 @@ public class OfficialMessage extends Message {
 
     private final static ChatColor COLOR = ChatColor.GOLD;
 
-    public OfficialMessage(String sender, String prefix, String message) {
-        super(sender, ChatColor.AQUA, prefix, COLOR, message);
+    public OfficialMessage(String sender, String target, String prefix, String message) {
+        super(sender, target, ChatColor.AQUA, prefix, COLOR, message);
         this.isOfficial = true;
     }
 
-    public OfficialMessage(String sender, String message) {
-        super(sender, COLOR, message);
+    public OfficialMessage(String sender, String target, String message) {
+        super(sender, target, COLOR, message);
         this.isOfficial = true;
     }
 

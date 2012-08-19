@@ -23,6 +23,7 @@ import org.bukkit.ChatColor;
 public class Message {
 
     private final String sender;
+    private final String target;
 
     private final String prefix, message;
     private final ChatColor prefixColor, messageColor;
@@ -30,7 +31,7 @@ public class Message {
 
     protected boolean isOfficial;
 
-    public Message(String sender, ChatColor prefixColor, String prefix, ChatColor messageColor, String message) {
+    public Message(String sender, String target, ChatColor prefixColor, String prefix, ChatColor messageColor, String message) {
         if (prefix != null && !prefix.isEmpty())
             this.prefix = "[" + prefix + "]";
         else
@@ -48,10 +49,11 @@ public class Message {
         this.isOfficial = false;
 
         this.sender = sender;
+        this.target = target;
     }
 
-    public Message(String sender, ChatColor messageColor, String message) {
-        this(sender, ChatColor.WHITE, "", messageColor, message);
+    public Message(String sender, String target, ChatColor messageColor, String message) {
+        this(sender, target, ChatColor.WHITE, "", messageColor, message);
     }
 
     public String getCompleteMessage() {
@@ -88,5 +90,9 @@ public class Message {
 
     public String getSender() {
         return sender;
+    }
+
+    public String getTarget() {
+        return target;
     }
 }

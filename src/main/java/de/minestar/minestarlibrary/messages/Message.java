@@ -31,6 +31,20 @@ public class Message {
 
     protected boolean isOfficial;
 
+    private boolean isRead;
+
+    public Message(String sender, String target, String prefix, String message, ChatColor prefixColor, ChatColor messageColor, long timestamp, boolean isOfficial, boolean isRead) {
+        this.sender = sender;
+        this.target = target;
+        this.prefix = prefix;
+        this.message = message;
+        this.prefixColor = prefixColor;
+        this.messageColor = messageColor;
+        this.timestamp = timestamp;
+        this.isOfficial = isOfficial;
+        this.isRead = isRead;
+    }
+
     public Message(String sender, String target, ChatColor prefixColor, String prefix, ChatColor messageColor, String message) {
         if (prefix != null && !prefix.isEmpty())
             this.prefix = "[" + prefix + "]";
@@ -50,6 +64,8 @@ public class Message {
 
         this.sender = sender;
         this.target = target;
+        
+        this.isRead = false;
     }
 
     public Message(String sender, String target, ChatColor messageColor, String message) {
@@ -94,5 +110,13 @@ public class Message {
 
     public String getTarget() {
         return target;
+    }
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean isRead) {
+        this.isRead = isRead;
     }
 }

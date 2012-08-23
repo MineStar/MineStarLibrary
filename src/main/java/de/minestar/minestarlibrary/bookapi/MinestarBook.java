@@ -17,21 +17,28 @@ public class MinestarBook {
     private final org.bukkit.inventory.ItemStack bukkitItemStack;
 
     public static MinestarBook createWrittenBook(String author, String title, List<String> pages) {
-        CraftItemStack itemStack = new CraftItemStack(Material.WRITTEN_BOOK);
-        return MinestarBook.getBook(itemStack, author, title, pages);
+        return MinestarBook.createBook(Material.WRITTEN_BOOK, author, title, pages);
     }
 
     public static MinestarBook createBookAndQuill(List<String> pages) {
-        CraftItemStack itemStack = new CraftItemStack(Material.BOOK_AND_QUILL);
-        return MinestarBook.getBook(itemStack, "", "", pages);
+        return MinestarBook.createBook(Material.BOOK_AND_QUILL, "", "", pages);
     }
 
-    public static MinestarBook getBook(CraftItemStack itemStack, String author, String title, List<String> pages) {
-        if (itemStack.getTypeId() == Material.WRITTEN_BOOK.getId() || itemStack.getTypeId() == Material.BOOK_AND_QUILL.getId()) {
-            return new MinestarBook(itemStack, author, title, pages);
-        } else {
+    private static MinestarBook createBook(Material material, String author, String title, List<String> pages) {
+        CraftItemStack itemStack = new CraftItemStack(material);
+        return new MinestarBook(itemStack, author, title, pages);
+    }
+
+    public static MinestarBook loadBook(org.bukkit.inventory.ItemStack itemStack) {
+        if (!itemStack.getType().equals(Material.WRITTEN_BOOK) && !itemStack.getType().equals(Material.BOOK_AND_QUILL)) {
             return null;
         }
+        return new MinestarBook((CraftItemStack) itemStack);
+    }
+
+    private MinestarBook(CraftItemStack craftItemStack) {
+        this.itemstack = craftItemStack.getHandle();
+        this.bukkitItemStack = craftItemStack;
     }
 
     private MinestarBook(CraftItemStack itemStack, String author, String title, List<String> pages) {

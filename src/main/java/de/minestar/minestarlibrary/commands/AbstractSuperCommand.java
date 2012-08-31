@@ -150,6 +150,7 @@ public abstract class AbstractSuperCommand extends AbstractCommand {
             if (hasFunction)
                 ChatUtils.writeInfo(sender, pluginName, getHelpMessage());
             printSubcommands(sender);
+            return;
         }
 
         // When no sub command was found then call the run method

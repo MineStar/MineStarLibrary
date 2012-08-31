@@ -43,6 +43,11 @@ public abstract class AbstractDatabaseHandler {
     protected DatabaseConnection dbConnection;
 
     /**
+     * The name of the plugin
+     */
+    protected String pluginName;
+
+    /**
      * Creates a new DatabaseHandler and do the followning things: <br>
      * 1. Create a database connection depending on your implementation of
      * <code>createConnection</code> <br>
@@ -60,13 +65,13 @@ public abstract class AbstractDatabaseHandler {
      *            The database connection tye. See {@link DatabaseType}
      */
     public AbstractDatabaseHandler(String pluginName, File SQLConfigFile, DatabaseType type) {
+        this.pluginName = pluginName;
         try {
-            init(pluginName, SQLConfigFile, type);
+            init(SQLConfigFile, type);
         } catch (Exception e) {
             ConsoleUtils.printException(e, pluginName, "Can't initiate the database!");
         }
     }
-
     /**
      * Initiate the database handler calling the functions
      * <code>createConnection, createStructure and createStatements</code>
@@ -79,13 +84,13 @@ public abstract class AbstractDatabaseHandler {
      *            The datafolder of the plugin
      * @throws Exception
      */
-    private void init(String pluginName, File SQLConfigFile, DatabaseType type) throws Exception {
-        dbConnection = createConnection(pluginName, SQLConfigFile, type);
+    private void init(File SQLConfigFile, DatabaseType type) throws Exception {
+        dbConnection = createConnection(SQLConfigFile, type);
         if (dbConnection != null) {
             createStructure(pluginName, dbConnection.getConnection());
             createStatements(pluginName, dbConnection.getConnection());
 
-            startPingThread(pluginName);
+            startPingThread();
         } else
             ConsoleUtils.printError(pluginName, "Can't initiate the database structure and statements because of missing connection!");
 
@@ -104,7 +109,7 @@ public abstract class AbstractDatabaseHandler {
      * @return The database connection object which is automatically assigned to
      *         the private variable <code>dbConnection</code>
      */
-    protected DatabaseConnection createConnection(String pluginName, File SQLConfigFile, DatabaseType type) throws Exception {
+    protected DatabaseConnection createConnection(File SQLConfigFile, DatabaseType type) throws Exception {
         if (!SQLConfigFile.exists()) {
             DatabaseUtils.createDatabaseConfig(type, SQLConfigFile, pluginName);
             return null;
@@ -149,7 +154,7 @@ public abstract class AbstractDatabaseHandler {
         return dbConnection != null && dbConnection.hasConnection();
     }
 
-    private void startPingThread(String pluginName) throws Exception {
+    private void startPingThread() throws Exception {
         Plugin plugin = Bukkit.getPluginManager().getPlugin(pluginName);
         if (plugin != null)
             Bukkit.getScheduler().scheduleAsyncRepeatingTask(plugin, new PingThread(pluginName, dbConnection.getConnection()), 20L * 15L, 20L * 15L);

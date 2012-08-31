@@ -21,6 +21,9 @@ package de.minestar.minestarlibrary.database;
 import java.io.File;
 import java.sql.Connection;
 
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
+
 import de.minestar.minestarlibrary.config.MinestarConfig;
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
@@ -81,10 +84,13 @@ public abstract class AbstractDatabaseHandler {
         if (dbConnection != null) {
             createStructure(pluginName, dbConnection.getConnection());
             createStatements(pluginName, dbConnection.getConnection());
+
+            startPingThread(pluginName);
         } else
             ConsoleUtils.printError(pluginName, "Can't initiate the database structure and statements because of missing connection!");
 
     }
+
     /**
      * This methods establish a connection to your database. The dataFolder
      * object can be used to read a config(which is highly recommended)
@@ -142,4 +148,13 @@ public abstract class AbstractDatabaseHandler {
     public boolean hasConnection() {
         return dbConnection != null && dbConnection.hasConnection();
     }
+
+    private void startPingThread(String pluginName) throws Exception {
+        Plugin plugin = Bukkit.getPluginManager().getPlugin(pluginName);
+        if (plugin != null)
+            Bukkit.getScheduler().scheduleAsyncRepeatingTask(plugin, new PingThread(pluginName, dbConnection.getConnection()), 20L * 15L, 20L * 15L);
+        else
+            ConsoleUtils.printError(pluginName, "Can't create ping thread, because no plugin found named '" + pluginName + "'!");
+    }
+
 }

@@ -29,6 +29,7 @@ public class PingThread implements Runnable {
 
     public PingThread(String pluginName, Connection connection) throws Exception {
         this.pluginName = pluginName;
+        this.connection = connection;
     }
 
     @Override

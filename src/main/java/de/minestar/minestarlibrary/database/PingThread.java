@@ -19,24 +19,23 @@
 package de.minestar.minestarlibrary.database;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
 public class PingThread implements Runnable {
 
-    private PreparedStatement pingStatement;
     private String pluginName;
+    private Connection connection;
 
     public PingThread(String pluginName, Connection connection) throws Exception {
-        pingStatement = connection.prepareStatement("SELECT 1");
         this.pluginName = pluginName;
     }
 
     @Override
     public void run() {
         try {
-            pingStatement.executeQuery();
+            if (!connection.isClosed())
+                connection.createStatement().executeQuery("SELECT 1");
         } catch (Exception e) {
             ConsoleUtils.printException(e, pluginName, "Can't ping!");
         }

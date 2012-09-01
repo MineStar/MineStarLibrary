@@ -19,6 +19,7 @@
 package de.minestar.minestarlibrary.database;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
@@ -26,19 +27,27 @@ public class PingThread implements Runnable {
 
     private String pluginName;
     private Connection connection;
+    private PreparedStatement pingStatement;
 
     public PingThread(String pluginName, Connection connection) throws Exception {
         this.pluginName = pluginName;
         this.connection = connection;
+        this.pingStatement = connection.prepareStatement("SELECT 1");
     }
 
     @Override
     public void run() {
         try {
             if (!connection.isClosed())
-                connection.createStatement().executeQuery("SELECT 1");
+                pingStatement.execute();
         } catch (Exception e) {
-            ConsoleUtils.printException(e, pluginName, "Can't ping!");
+            ConsoleUtils.printException(e, pluginName, "Can't ping! Restart ping thread!");
+            try {
+                if (!connection.isClosed())
+                    this.pingStatement = connection.prepareStatement("SELECT 1");
+            } catch (Exception ex) {
+                ConsoleUtils.printException(ex, pluginName, "Can't recreate ping thread!");
+            }
         }
     }
 }

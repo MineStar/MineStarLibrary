@@ -20,6 +20,7 @@ package de.minestar.minestarlibrary.database;
 
 import java.io.File;
 import java.sql.Connection;
+import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -157,7 +158,7 @@ public abstract class AbstractDatabaseHandler {
     private void startPingThread() throws Exception {
         Plugin plugin = Bukkit.getPluginManager().getPlugin(pluginName);
         if (plugin != null)
-            Bukkit.getScheduler().scheduleAsyncRepeatingTask(plugin, new PingThread(pluginName, dbConnection.getConnection()), 20L * 15L, 20L * 15L);
+            Bukkit.getScheduler().scheduleAsyncRepeatingTask(plugin, new PingThread(pluginName, dbConnection.getConnection()), 20L * 15L, 20L * (15L + new Random().nextInt(15)));
         else
             ConsoleUtils.printError(pluginName, "Can't create ping thread, because no plugin found named '" + pluginName + "'!");
     }

@@ -18,7 +18,6 @@
 
 package de.minestar.minestarlibrary;
 
-
 public class Core extends AbstractCore {
 
     public Core() {

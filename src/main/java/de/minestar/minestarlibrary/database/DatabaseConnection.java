@@ -122,7 +122,7 @@ public class DatabaseConnection {
     private void createMySQLConnection(String host, String port, String database, String userName, String password) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, userName, password);
+            con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "?autoReconnect=true", userName, password);
         } catch (Exception e) {
             ConsoleUtils.printException(e, pluginName, "Can't create a MySQL connection! Please check your connection information in the sql.config and your database connection!");
         }

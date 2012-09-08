@@ -64,7 +64,7 @@ public class Message {
 
         this.sender = sender;
         this.target = target;
-        
+
         this.isRead = false;
     }
 

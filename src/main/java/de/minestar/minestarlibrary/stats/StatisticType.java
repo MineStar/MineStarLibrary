@@ -21,6 +21,7 @@ package de.minestar.minestarlibrary.stats;
 public enum StatisticType {
 
     // @formatter:off
+    BOOLEAN (Boolean.class,     "TINYINT"),
     INT     (Integer.class,     "INT"),
     FLOAT   (Float.class,       "FLOAT"),
     DOUBLE  (Double.class,      "DOUBLE"),

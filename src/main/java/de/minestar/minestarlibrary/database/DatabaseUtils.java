@@ -246,7 +246,7 @@ public class DatabaseUtils {
                 config.set("Password", "password");
                 break;
             case SQLLite :
-                config.set("Folder", "folder");
+                config.set("Folder", pluginName);
                 config.set("FileName", "fileName");
                 break;
         }

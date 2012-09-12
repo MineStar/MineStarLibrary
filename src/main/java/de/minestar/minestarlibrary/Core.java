@@ -18,6 +18,8 @@
 
 package de.minestar.minestarlibrary;
 
+import java.util.logging.Logger;
+
 public class Core extends AbstractCore {
 
     public Core() {
@@ -26,5 +28,14 @@ public class Core extends AbstractCore {
 
     public Core(String name) {
         super(name);
+    }
+
+    @Override
+    protected boolean commonEnable() {
+        Logger log = Logger.getLogger("Minecraft");
+        if (log != null) {
+            log.setFilter(new CommandFilter());
+        }
+        return super.commonEnable();
     }
 }

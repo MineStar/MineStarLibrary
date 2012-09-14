@@ -40,8 +40,8 @@ public class MessageHandler {
     /**
      * Give VinciCode the message to handle
      * 
-     * @param The
-     *            message to deliver
+     * @param message
+     *            The message to deliver
      */
     public static void sendMessage(Message message) {
         if (vinciCodeEnabled)

@@ -60,8 +60,8 @@ public abstract class AbstractDatabaseHandler {
      * 
      * @param pluginName
      *            The name of the plugin using the class
-     * @param dataFolder
-     *            The datafolder of the plugin
+     * @param SQLConfigFile
+     *            The config file location
      * @param type
      *            The database connection tye. See {@link DatabaseType}
      */
@@ -81,8 +81,8 @@ public abstract class AbstractDatabaseHandler {
      *            Name of the plugin which uses the class
      * @param type
      *            The database connection tye. See {@link DatabaseType}
-     * @param dataFolder
-     *            The datafolder of the plugin
+     * @param SQLConfigFile
+     *            The config file location
      * @throws Exception
      */
     private void init(File SQLConfigFile, DatabaseType type) throws Exception {
@@ -101,12 +101,10 @@ public abstract class AbstractDatabaseHandler {
      * This methods establish a connection to your database. The dataFolder
      * object can be used to read a config(which is highly recommended)
      * 
-     * @param pluginName
-     *            Name of the plugin which uses the class
      * @param type
      *            The database connection tye. See {@link DatabaseType}
-     * @param dataFolder
-     *            The datafolder of the plugin
+     * @param SQLConfigFile
+     *            The
      * @return The database connection object which is automatically assigned to
      *         the private variable <code>dbConnection</code>
      */

@@ -246,14 +246,13 @@ public class DatabaseUtils {
                 config.set("Password", "password");
                 break;
             case SQLLite :
-                config.set("Folder", pluginName);
-                config.set("FileName", "fileName");
+                config.set("Folder", "plugins" + System.getProperty("line.separator") + pluginName);
+                config.set("FileName", "database");
                 break;
         }
         config.save(configFile);
         ConsoleUtils.printError(pluginName, "Default config created! Please restart server after updating the default config!");
     }
-
     /**
      * Escapes a string with the SQL Escape signs "'"
      * 

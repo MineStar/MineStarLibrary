@@ -18,18 +18,20 @@
 
 package de.minestar.minestarlibrary.messages;
 
-import org.bukkit.ChatColor;
-
 public class SuccessMessage extends Message {
 
-    private final static ChatColor COLOR = ChatColor.GREEN;
-
-    public SuccessMessage(String sender, String target, String prefix, String message) {
-        super(sender, target, ChatColor.AQUA, prefix, COLOR, message);
-    }
-
-    public SuccessMessage(String sender, String target, String message) {
-        super(sender, target, COLOR, message);
+    /**
+     * Create a success message. This is normally used by plugins
+     * 
+     * @param pluginName
+     *            The name of the plugin sending the message
+     * @param receiver
+     *            The receiver
+     * @param text
+     *            The text
+     */
+    public SuccessMessage(String pluginName, String receiver, String text) {
+        super(pluginName, receiver, text, MessageType.SUCCESS);
     }
 
 }

@@ -18,17 +18,19 @@
 
 package de.minestar.minestarlibrary.messages;
 
-import org.bukkit.ChatColor;
+public class DefaultMessage extends Message {
 
-public class BlankMessage extends Message {
-
-    private final static ChatColor COLOR = ChatColor.WHITE;
-
-    public BlankMessage(String sender, String target, String prefix, String message) {
-        super(sender, target, ChatColor.AQUA, prefix, COLOR, message);
-    }
-
-    public BlankMessage(String sender, String target, String message) {
-        super(sender, target, COLOR, message);
+    /**
+     * Create a default message without any formattation
+     * 
+     * @param sender
+     *            Who sent the message
+     * @param receiver
+     *            Who receives the message
+     * @param text
+     *            The text of the message
+     */
+    public DefaultMessage(String sender, String receiver, String text) {
+        super(sender, receiver, text, MessageType.DEFAULT);
     }
 }

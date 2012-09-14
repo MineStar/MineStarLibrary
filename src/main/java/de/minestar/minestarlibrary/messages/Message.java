@@ -18,98 +18,74 @@
 
 package de.minestar.minestarlibrary.messages;
 
-import org.bukkit.ChatColor;
-
 public class Message {
 
     private final String sender;
-    private final String target;
+    private final String receiver;
 
-    private final String prefix, message;
-    private final ChatColor prefixColor, messageColor;
+    private final String text;
     private final long timestamp;
 
-    protected boolean isOfficial;
+    private final MessageType type;
 
     private boolean isRead;
 
-    public Message(String sender, String target, String prefix, String message, ChatColor prefixColor, ChatColor messageColor, long timestamp, boolean isOfficial, boolean isRead) {
+    /**
+     * Constructor load from database
+     * 
+     * @param sender
+     *            Who sent the message
+     * @param receiver
+     *            Who receives the message
+     * @param text
+     *            The text of the message
+     * @param timestamp
+     *            When the message was sent
+     * @param type
+     * 
+     * @param isRead
+     *            Is the messages read
+     */
+    public Message(String sender, String receiver, String text, MessageType type, long timestamp, boolean isRead) {
         this.sender = sender;
-        this.target = target;
-        this.prefix = prefix;
-        this.message = message;
-        this.prefixColor = prefixColor;
-        this.messageColor = messageColor;
+        this.receiver = receiver;
+        this.text = text;
         this.timestamp = timestamp;
-        this.isOfficial = isOfficial;
         this.isRead = isRead;
+        this.type = type;
     }
 
-    public Message(String sender, String target, ChatColor prefixColor, String prefix, ChatColor messageColor, String message) {
-        if (prefix != null && !prefix.isEmpty())
-            this.prefix = "[" + prefix + "]";
-        else
-            this.prefix = "";
-
-        if (message != null)
-            this.message = message;
-        else
-            this.message = "";
-
-        this.prefixColor = prefixColor;
-        this.messageColor = messageColor;
-        this.timestamp = System.currentTimeMillis();
-
-        this.isOfficial = false;
-
-        this.sender = sender;
-        this.target = target;
-
-        this.isRead = false;
+    /**
+     * Constructor for creating a new ingame message
+     * 
+     * @param sender
+     *            Who sent the message
+     * @param receiver
+     *            Who receives the message
+     * @param text
+     *            The text of the message
+     * @param type
+     *            The type of the messages. This is used to format the message.
+     *            See {@link MessageType}
+     */
+    public Message(String sender, String receiver, String text, MessageType type) {
+        this(sender, receiver, text, type, System.currentTimeMillis(), false);
     }
 
-    public Message(String sender, String target, ChatColor messageColor, String message) {
-        this(sender, target, ChatColor.WHITE, "", messageColor, message);
-    }
-
-    public String getCompleteMessage() {
-        if (this.prefix.length() > 0) {
-            return this.prefixColor + this.prefix + " " + this.messageColor + this.message;
-        } else {
-            return this.messageColor + this.message;
-        }
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public ChatColor getMessageColor() {
-        return messageColor;
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public ChatColor getPrefixColor() {
-        return prefixColor;
+    public String getText() {
+        return text;
     }
 
     public long getTimestamp() {
         return timestamp;
     }
 
-    public boolean isOfficial() {
-        return isOfficial;
-    }
-
     public String getSender() {
         return sender;
     }
 
-    public String getTarget() {
-        return target;
+    public String getReceiver() {
+        return receiver;
     }
 
     public boolean isRead() {
@@ -118,5 +94,14 @@ public class Message {
 
     public void setRead(boolean isRead) {
         this.isRead = isRead;
+    }
+
+    public MessageType getType() {
+        return type;
+    }
+
+    @Override
+    public String toString() {
+        return "Message={Sender=" + sender + ";Target=" + receiver + ";Type=" + type + ";Read=" + isRead + ";Text=" + text + "}";
     }
 }

@@ -18,18 +18,20 @@
 
 package de.minestar.minestarlibrary.messages;
 
-import org.bukkit.ChatColor;
-
 public class InfoMessage extends Message {
 
-    private final static ChatColor COLOR = ChatColor.GRAY;
-
-    public InfoMessage(String sender, String target, String prefix, String message) {
-        super(sender, target, ChatColor.AQUA, prefix, COLOR, message);
-    }
-
-    public InfoMessage(String sender, String target, String message) {
-        super(sender, target, COLOR, message);
+    /**
+     * Create an info message. This is normally used by plugins
+     * 
+     * @param pluginName
+     *            The name of the plugin sending the message
+     * @param receiver
+     *            The receiver
+     * @param text
+     *            The text
+     */
+    public InfoMessage(String pluginName, String receiver, String text) {
+        super(pluginName, receiver, text, MessageType.INFO);
     }
 
 }

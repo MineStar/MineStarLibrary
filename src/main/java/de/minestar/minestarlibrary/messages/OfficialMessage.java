@@ -18,20 +18,21 @@
 
 package de.minestar.minestarlibrary.messages;
 
-import org.bukkit.ChatColor;
-
 public class OfficialMessage extends Message {
 
-    private final static ChatColor COLOR = ChatColor.GOLD;
-
-    public OfficialMessage(String sender, String target, String prefix, String message) {
-        super(sender, target, ChatColor.AQUA, prefix, COLOR, message);
-        this.isOfficial = true;
-    }
-
-    public OfficialMessage(String sender, String target, String message) {
-        super(sender, target, COLOR, message);
-        this.isOfficial = true;
+    /**
+     * Create an official message. This is used by admins sending important
+     * information to user
+     * 
+     * @param sender
+     *            The sender of the message
+     * @param receiver
+     *            The receiver of the message
+     * @param text
+     *            The text of the message
+     */
+    public OfficialMessage(String sender, String receiver, String text) {
+        super(sender, receiver, text, MessageType.OFFICIAL);
     }
 
 }

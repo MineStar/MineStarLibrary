@@ -18,28 +18,7 @@
 
 package de.minestar.minestarlibrary.messages;
 
-import java.util.Comparator;
-
 public class Message implements Comparable<Message> {
-
-    public class MessageComparator implements Comparator<Message> {
-        @Override
-        public int compare(Message message, Message otherMessage) {
-            if (message.isRead) {
-                if (otherMessage.isRead) {
-                    return (int) (message.timestamp - otherMessage.timestamp);
-                } else {
-                    return 1;
-                }
-            } else {
-                if (otherMessage.isRead) {
-                    return -1;
-                } else {
-                    return (int) (message.timestamp - otherMessage.timestamp);
-                }
-            }
-        }
-    }
 
     private final String sender;
     private final String receiver;

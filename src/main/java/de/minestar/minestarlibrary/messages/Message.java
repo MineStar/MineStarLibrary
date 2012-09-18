@@ -18,7 +18,29 @@
 
 package de.minestar.minestarlibrary.messages;
 
-public class Message {
+import java.util.Comparator;
+
+public class Message implements Comparable<Message> {
+
+    public static class MessageComparator implements Comparator<Message> {
+
+        @Override
+        public int compare(Message message, Message otherMessage) {
+            if (message.isRead) {
+                if (otherMessage.isRead) {
+                    return (int) (message.timestamp - otherMessage.timestamp);
+                } else {
+                    return 1;
+                }
+            } else {
+                if (otherMessage.isRead) {
+                    return -1;
+                } else {
+                    return (int) (message.timestamp - otherMessage.timestamp);
+                }
+            }
+        }
+    }
 
     private final String sender;
     private final String receiver;
@@ -103,5 +125,22 @@ public class Message {
     @Override
     public String toString() {
         return "Message={Sender=" + sender + ";Target=" + receiver + ";Type=" + type + ";Read=" + isRead + ";Text=" + text + "}";
+    }
+
+    @Override
+    public int compareTo(Message otherMessage) {
+        if (this.isRead) {
+            if (otherMessage.isRead) {
+                return (int) (this.timestamp - otherMessage.timestamp);
+            } else {
+                return 1;
+            }
+        } else {
+            if (otherMessage.isRead) {
+                return -1;
+            } else {
+                return (int) (this.timestamp - otherMessage.timestamp);
+            }
+        }
     }
 }

@@ -22,8 +22,7 @@ import java.util.Comparator;
 
 public class Message implements Comparable<Message> {
 
-    public static class MessageComparator implements Comparator<Message> {
-
+    public class MessageComparator implements Comparator<Message> {
         @Override
         public int compare(Message message, Message otherMessage) {
             if (message.isRead) {

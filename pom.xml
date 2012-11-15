@@ -24,11 +24,6 @@
 			<version>0.92.3alpha</version>
 		</dependency>
 		<dependency>
-			<groupId>org.bukkit</groupId>
-			<artifactId>craftbukkit</artifactId>
-			<version>1.4.4-R0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>de.minestar</groupId>
 			<artifactId>Illuminati</artifactId>
 			<version>1.1.2</version>

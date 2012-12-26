@@ -3,18 +3,18 @@ package de.minestar.minestarlibrary.bookapi;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.server.ItemStack;
-import net.minecraft.server.NBTTagCompound;
-import net.minecraft.server.NBTTagList;
-import net.minecraft.server.NBTTagString;
+import net.minecraft.server.v1_4_6.ItemStack;
+import net.minecraft.server.v1_4_6.NBTTagCompound;
+import net.minecraft.server.v1_4_6.NBTTagList;
+import net.minecraft.server.v1_4_6.NBTTagString;
 
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_4_6.inventory.CraftItemStack;
 
 public class MinestarBook {
 
     private final ItemStack itemstack;
-    private final org.bukkit.inventory.ItemStack bukkitItemStack;
+    private final org.bukkit.craftbukkit.v1_4_6.inventory.CraftItemStack bukkitItemStack;
 
     public static MinestarBook createWrittenBook(String author, String title, List<String> pages) {
         return MinestarBook.createBook(Material.WRITTEN_BOOK, author, title, pages);
@@ -25,7 +25,8 @@ public class MinestarBook {
     }
 
     private static MinestarBook createBook(Material material, String author, String title, List<String> pages) {
-        CraftItemStack itemStack = new CraftItemStack(material);
+        CraftItemStack itemStack = (CraftItemStack) new org.bukkit.inventory.ItemStack(material);
+        itemStack.setAmount(1);
         return new MinestarBook(itemStack, author, title, pages);
     }
 
@@ -37,13 +38,13 @@ public class MinestarBook {
     }
 
     private MinestarBook(CraftItemStack craftItemStack) {
-        this.itemstack = craftItemStack.getHandle();
+        this.itemstack = CraftItemStack.asNMSCopy(craftItemStack);
         this.bukkitItemStack = craftItemStack;
     }
 
     private MinestarBook(CraftItemStack itemStack, String author, String title, List<String> pages) {
         this.bukkitItemStack = itemStack;
-        this.itemstack = itemStack.getHandle();
+        this.itemstack = CraftItemStack.asNMSCopy(itemStack);
         if (this.itemstack.tag == null) {
             this.itemstack.tag = new NBTTagCompound();
             this.setAuthor(author);

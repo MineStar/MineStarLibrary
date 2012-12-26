@@ -29,6 +29,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 
 import de.minestar.minestarlibrary.annotations.UseStatistic;
 import de.minestar.minestarlibrary.commands.CommandList;
+import de.minestar.minestarlibrary.database.DatabaseUtils;
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
 /**
@@ -74,7 +75,8 @@ public abstract class AbstractCore extends JavaPlugin {
 
     @Override
     public final void onEnable() {
-
+        DatabaseUtils.init();
+        
         // create plugins datafolder
         getDataFolder().mkdirs();
 

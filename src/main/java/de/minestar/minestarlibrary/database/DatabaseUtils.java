@@ -33,6 +33,13 @@ import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
 public class DatabaseUtils {
 
+    static {
+    }
+
+    public static void init() {
+
+    }
+
     /**
      * Read a <code>*.sql</code> batch containing SQL statements. This methods
      * reading and executing them and creats a database structure.

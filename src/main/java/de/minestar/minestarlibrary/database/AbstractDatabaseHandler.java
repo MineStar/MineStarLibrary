@@ -73,6 +73,7 @@ public abstract class AbstractDatabaseHandler {
             ConsoleUtils.printException(e, pluginName, "Can't initiate the database!");
         }
     }
+
     /**
      * Initiate the database handler calling the functions
      * <code>createConnection, createStructure and createStatements</code>
@@ -156,7 +157,7 @@ public abstract class AbstractDatabaseHandler {
     private void startPingThread() throws Exception {
         Plugin plugin = Bukkit.getPluginManager().getPlugin(pluginName);
         if (plugin != null)
-            Bukkit.getScheduler().scheduleAsyncRepeatingTask(plugin, new PingThread(pluginName, dbConnection.getConnection()), 20L * 15L, 20L * (15L + new Random().nextInt(15)));
+            Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, new PingThread(pluginName, dbConnection.getConnection()), 20L * 15L, 20L * (15L + new Random().nextInt(15)));
         else
             ConsoleUtils.printError(pluginName, "Can't create ping thread, because no plugin found named '" + pluginName + "'!");
     }

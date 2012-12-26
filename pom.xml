@@ -21,7 +21,7 @@
 		<dependency>
 			<groupId>de.minestar</groupId>
 			<artifactId>FalseBookCore</artifactId>
-			<version>0.95alpha</version>
+			<version>0.96alpha</version>
 		</dependency>
 		<dependency>
 			<groupId>de.minestar</groupId>
@@ -77,5 +77,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	<version>1.9.2</version>
+	<version>1.4.6_1</version>
 </project>

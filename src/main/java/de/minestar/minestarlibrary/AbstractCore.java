@@ -76,7 +76,7 @@ public abstract class AbstractCore extends JavaPlugin {
     @Override
     public final void onEnable() {
         DatabaseUtils.init();
-        
+
         // create plugins datafolder
         getDataFolder().mkdirs();
 

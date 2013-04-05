@@ -4,6 +4,7 @@
 	<groupId>de.minestar</groupId>
 	<artifactId>MineStarLibrary</artifactId>
 	<version>1.5.1_R3-SNAPSHOT</version>
+
 	<distributionManagement>
 		<!-- use the following if you're not using a snapshot version. -->
 		<repository>
@@ -18,17 +19,19 @@
 			<url>http://server2.minestar.de:8081/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
+
 	<repositories>
 		<repository>
 			<id>MinestarNexus</id>
 			<url>http://server2.minestar.de:8081/nexus/content/groups/public/</url>
 		</repository>
 	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>de.minestar</groupId>
 			<artifactId>FalseBookCore</artifactId>
-			<version>0.97alpha</version>
+			<version>0.97alpha-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>de.minestar</groupId>
@@ -41,6 +44,7 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
+
 	<build>
 		<resources>
 			<resource>

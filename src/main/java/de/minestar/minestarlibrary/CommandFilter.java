@@ -25,7 +25,7 @@ public class CommandFilter implements Filter {
 
     @Override
     public boolean isLoggable(LogRecord record) {
-        return !record.getMessage().contains(" issued server command: /");
+        return !record.getMessage().contains(" issued server command:");
     }
 
 }

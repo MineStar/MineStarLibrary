@@ -1,4 +1,4 @@
-package de.minestar.bungeebridge.protocol;
+package de.minestar.minestarlibrary.protocol;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

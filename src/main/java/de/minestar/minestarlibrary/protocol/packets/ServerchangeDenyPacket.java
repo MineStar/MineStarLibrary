@@ -1,28 +1,30 @@
-package de.minestar.bungeebridge.protocol.packets;
+package de.minestar.minestarlibrary.protocol.packets;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import de.minestar.bungeebridge.protocol.NetworkPacket;
-import de.minestar.bungeebridge.protocol.PacketType;
+import de.minestar.minestarlibrary.protocol.NetworkPacket;
+import de.minestar.minestarlibrary.protocol.PacketType;
 
-public class DataOKPacket extends NetworkPacket {
+public class ServerchangeDenyPacket extends NetworkPacket {
 
-    private final static PacketType thisPacketType = PacketType.DATA_OK;
+    private final static PacketType thisPacketType = PacketType.SERVERCHANGE_DENY;
 
     private String playerName;
+    private String reason;
 
-    public DataOKPacket(String playerName) {
+    public ServerchangeDenyPacket(String playerName, String reason) {
         super(thisPacketType);
         this.playerName = playerName;
+        this.reason = reason;
     }
 
-    public DataOKPacket(PacketType type) {
+    public ServerchangeDenyPacket(PacketType type) {
         super(thisPacketType);
     }
 
-    public DataOKPacket(DataInputStream dataInputStream) throws IOException {
+    public ServerchangeDenyPacket(DataInputStream dataInputStream) throws IOException {
         super(thisPacketType, dataInputStream);
     }
 
@@ -33,14 +35,20 @@ public class DataOKPacket extends NetworkPacket {
     @Override
     public void onSend(DataOutputStream dataOutputStream) throws IOException {
         dataOutputStream.writeUTF(this.playerName);
+        dataOutputStream.writeUTF(this.reason);
     }
 
     @Override
     public void onReceive(DataInputStream dataInputStream) throws IOException {
         this.playerName = dataInputStream.readUTF();
+        this.reason = dataInputStream.readUTF();
     }
 
     public String getPlayerName() {
         return playerName;
+    }
+
+    public String getReason() {
+        return reason;
     }
 }

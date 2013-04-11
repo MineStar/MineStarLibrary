@@ -1,11 +1,11 @@
-package de.minestar.bungeebridge.protocol.packets;
+package de.minestar.minestarlibrary.protocol.packets;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import de.minestar.bungeebridge.protocol.NetworkPacket;
-import de.minestar.bungeebridge.protocol.PacketType;
+import de.minestar.minestarlibrary.protocol.NetworkPacket;
+import de.minestar.minestarlibrary.protocol.PacketType;
 
 public class ServerchangeRequestPacket extends NetworkPacket {
 

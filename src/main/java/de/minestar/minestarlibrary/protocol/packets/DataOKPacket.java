@@ -1,28 +1,28 @@
-package de.minestar.bungeebridge.protocol.packets;
+package de.minestar.minestarlibrary.protocol.packets;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import de.minestar.bungeebridge.protocol.NetworkPacket;
-import de.minestar.bungeebridge.protocol.PacketType;
+import de.minestar.minestarlibrary.protocol.NetworkPacket;
+import de.minestar.minestarlibrary.protocol.PacketType;
 
-public class DataRequestPacket extends NetworkPacket {
+public class DataOKPacket extends NetworkPacket {
 
-    private final static PacketType thisPacketType = PacketType.DATA_REQUEST;
+    private final static PacketType thisPacketType = PacketType.DATA_OK;
 
     private String playerName;
 
-    public DataRequestPacket(String playerName) {
+    public DataOKPacket(String playerName) {
         super(thisPacketType);
         this.playerName = playerName;
     }
 
-    public DataRequestPacket(PacketType type) {
+    public DataOKPacket(PacketType type) {
         super(thisPacketType);
     }
 
-    public DataRequestPacket(DataInputStream dataInputStream) throws IOException {
+    public DataOKPacket(DataInputStream dataInputStream) throws IOException {
         super(thisPacketType, dataInputStream);
     }
 

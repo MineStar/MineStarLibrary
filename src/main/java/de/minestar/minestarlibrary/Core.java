@@ -18,10 +18,6 @@
 
 package de.minestar.minestarlibrary;
 
-import java.util.logging.Logger;
-
-import de.minestar.minestarlibrary.utils.ConsoleUtils;
-
 public class Core extends AbstractCore {
 
     public Core() {
@@ -30,23 +26,5 @@ public class Core extends AbstractCore {
 
     public Core(String name) {
         super(name);
-    }
-
-    @Override
-    protected boolean commonEnable() {
-        Logger log = Logger.getLogger("Minecraft");
-        if (log != null) {
-            log.setFilter(new CommandFilter());
-        } else {
-            ConsoleUtils.printError("Minecraft-Logger not found.");
-        }
-
-        log = this.getLogger();
-        if (log != null) {
-            log.setFilter(new CommandFilter());
-        } else {
-            ConsoleUtils.printError("Plugin-Logger not found.");
-        }
-        return super.commonEnable();
     }
 }

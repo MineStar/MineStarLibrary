@@ -14,10 +14,10 @@ public class ChatDeathPacket extends NetworkPacket {
     private String serverName;
     private String message;
 
-    public ChatDeathPacket(String serverName, String playerName) {
+    public ChatDeathPacket(String serverName, String message) {
         super(thisPacketType);
         this.serverName = serverName;
-        this.message = playerName;
+        this.message = message;
     }
 
     public ChatDeathPacket(PacketType type) {

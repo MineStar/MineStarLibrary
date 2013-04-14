@@ -20,7 +20,11 @@ public enum PacketType {
 
     CHAT_MESSAGE,
 
-    CHAT_DEATH;
+    CHAT_DEATH,
+
+    WHO_REQUEST,
+
+    WHO_ANSWER;
 
     private static Map<Integer, PacketType> mapByOrdinal;
 

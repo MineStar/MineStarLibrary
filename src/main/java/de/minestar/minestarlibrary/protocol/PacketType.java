@@ -24,7 +24,11 @@ public enum PacketType {
 
     WHO_REQUEST,
 
-    WHO_ANSWER;
+    WHO_ANSWER,
+
+    FREESLOTS_REQUEST,
+
+    FREESLOTS_ANSWER;
 
     private static Map<Integer, PacketType> mapByOrdinal;
 

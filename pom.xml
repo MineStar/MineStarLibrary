@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.minestar</groupId>
 	<artifactId>MineStarLibrary</artifactId>
-	<version>1.5.1_R3-SNAPSHOT</version>
+	<version>1.5.2_R1-SNAPSHOT</version>
 
 	<distributionManagement>
 		<!-- use the following if you're not using a snapshot version. -->
@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>de.minestar</groupId>
 			<artifactId>FalseBookCore</artifactId>
-			<version>0.97alpha-SNAPSHOT</version>
+			<version>0.98alpha-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>de.minestar</groupId>

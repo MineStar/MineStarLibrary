@@ -6,8 +6,8 @@ import java.io.FileOutputStream;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.minecraft.server.v1_5_R3.NBTBase;
-import net.minecraft.server.v1_5_R3.NBTTagCompound;
+import net.minecraft.server.v1_6_R2.NBTBase;
+import net.minecraft.server.v1_6_R2.NBTTagCompound;
 
 import org.bukkit.Location;
 

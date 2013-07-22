@@ -3,18 +3,18 @@ package de.minestar.minestarlibrary.bookapi;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.server.v1_5_R3.ItemStack;
-import net.minecraft.server.v1_5_R3.NBTTagCompound;
-import net.minecraft.server.v1_5_R3.NBTTagList;
-import net.minecraft.server.v1_5_R3.NBTTagString;
+import net.minecraft.server.v1_6_R2.ItemStack;
+import net.minecraft.server.v1_6_R2.NBTTagCompound;
+import net.minecraft.server.v1_6_R2.NBTTagList;
+import net.minecraft.server.v1_6_R2.NBTTagString;
 
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_5_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_6_R2.inventory.CraftItemStack;
 
 public class MinestarBook {
 
     private final ItemStack itemstack;
-    private final org.bukkit.craftbukkit.v1_5_R3.inventory.CraftItemStack bukkitItemStack;
+    private final org.bukkit.craftbukkit.v1_6_R2.inventory.CraftItemStack bukkitItemStack;
 
     public static MinestarBook createWrittenBook(String author, String title, List<String> pages) {
         return MinestarBook.createBook(Material.WRITTEN_BOOK, author, title, pages);

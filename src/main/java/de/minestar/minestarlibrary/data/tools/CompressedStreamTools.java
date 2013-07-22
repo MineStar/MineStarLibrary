@@ -13,8 +13,8 @@ import java.io.OutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-import net.minecraft.server.v1_5_R3.NBTBase;
-import net.minecraft.server.v1_5_R3.NBTTagCompound;
+import net.minecraft.server.v1_6_R2.NBTBase;
+import net.minecraft.server.v1_6_R2.NBTTagCompound;
 
 public class CompressedStreamTools {
 
@@ -59,7 +59,7 @@ public class CompressedStreamTools {
     }
 
     public static NBTTagCompound read(DataInput input) throws IOException {
-        NBTBase nbtbase = NBTBase.b(input);
+        NBTBase nbtbase = NBTBase.a(input);
         if (nbtbase instanceof NBTTagCompound) {
             return (NBTTagCompound) nbtbase;
         } else {

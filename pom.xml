@@ -29,9 +29,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>de.minestar</groupId>
-			<artifactId>FalseBookCore</artifactId>
-			<version>0.99alpha-SNAPSHOT</version>
+			<groupId>org.bukkit</groupId>
+			<artifactId>craftbukkit</artifactId>
+			<version>1.6.2-R0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>de.minestar</groupId>

@@ -18,19 +18,19 @@
 
 package de.minestar.minestarlibrary.stats;
 
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
+//import org.bukkit.Bukkit;
+//import org.bukkit.plugin.Plugin;
 
-import de.minestar.illuminati.IlluminatiCore;
+//import de.minestar.illuminati.IlluminatiCore;
 
 public class StatisticHandler {
 
-    private final static boolean illuminatiEnabled;
+//    private final static boolean illuminatiEnabled;
 
     static {
 
-        Plugin plugin = Bukkit.getPluginManager().getPlugin("Illuminati");
-        illuminatiEnabled = plugin != null && plugin.isEnabled();
+//        Plugin plugin = Bukkit.getPluginManager().getPlugin("Illuminati");
+//        illuminatiEnabled = plugin != null && plugin.isEnabled();
     }
 
     private StatisticHandler() {
@@ -43,8 +43,8 @@ public class StatisticHandler {
      *            The statistic to send to Illuminati
      */
     public static void handleStatistic(Statistic statistic) {
-        if (illuminatiEnabled)
-            IlluminatiCore.handleStatistic(statistic);
+//        if (illuminatiEnabled)
+//            IlluminatiCore.handleStatistic(statistic);
     }
 
     /**
@@ -54,7 +54,7 @@ public class StatisticHandler {
      *            A class which implements the the interface Statistic
      */
     public static void registerStatistic(Class<? extends Statistic> statistic) {
-        if (illuminatiEnabled)
-            IlluminatiCore.registerStatistic(statistic);
+//        if (illuminatiEnabled)
+//            IlluminatiCore.registerStatistic(statistic);
     }
 }

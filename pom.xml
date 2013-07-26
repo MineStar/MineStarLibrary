@@ -35,14 +35,19 @@
 		</dependency>
 		<dependency>
 			<groupId>de.minestar</groupId>
-			<artifactId>Illuminati</artifactId>
-			<version>1.1.2</version>
+			<artifactId>FalseBookCore</artifactId>
+			<version>0.99alpha-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>de.minestar</groupId>
-			<artifactId>VinciCode</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>de.minestar</groupId> -->
+		<!-- <artifactId>Illuminati</artifactId> -->
+		<!-- <version>1.1.2</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>de.minestar</groupId> -->
+		<!-- <artifactId>VinciCode</artifactId> -->
+		<!-- <version>0.0.1-SNAPSHOT</version> -->
+		<!-- </dependency> -->
 	</dependencies>
 
 	<build>

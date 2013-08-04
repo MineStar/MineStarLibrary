@@ -48,6 +48,11 @@
 		<!-- <artifactId>VinciCode</artifactId> -->
 		<!-- <version>0.0.1-SNAPSHOT</version> -->
 		<!-- </dependency> -->
+		<dependency>
+			<groupId>org.bukkit</groupId>
+			<artifactId>bukkit</artifactId>
+			<version>1.6.2-R0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

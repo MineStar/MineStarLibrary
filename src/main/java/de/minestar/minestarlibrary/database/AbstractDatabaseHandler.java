@@ -23,9 +23,9 @@ import java.sql.Connection;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
-import de.minestar.minestarlibrary.config.MinestarConfig;
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
 /**
@@ -114,7 +114,7 @@ public abstract class AbstractDatabaseHandler {
             DatabaseUtils.createDatabaseConfig(type, SQLConfigFile, pluginName);
             return null;
         } else
-            return new DatabaseConnection(pluginName, type, new MinestarConfig(SQLConfigFile));
+            return new DatabaseConnection(pluginName, type, YamlConfiguration.loadConfiguration(SQLConfigFile));
     }
 
     /**

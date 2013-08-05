@@ -35,7 +35,7 @@ public class InfoMessage extends Message {
      */
     public InfoMessage(String pluginName) {
         super(pluginName, Type.INFO);
-        add(INFO_COLOR);
+        color(INFO_COLOR);
     }
 
 }

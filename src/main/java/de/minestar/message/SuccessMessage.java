@@ -36,7 +36,7 @@ public class SuccessMessage extends Message {
      */
     public SuccessMessage(String pluginName) {
         super(pluginName, Type.SUCCESS);
-        add(SUCCESS_COLOR);
+        color(SUCCESS_COLOR);
     }
 
 }

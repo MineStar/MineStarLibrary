@@ -35,6 +35,6 @@ public class WarningMessage extends Message {
      */
     public WarningMessage(String pluginName) {
         super(pluginName, Type.WARNING);
-        add(WARNING_COLOR);
+        color(WARNING_COLOR);
     }
 }

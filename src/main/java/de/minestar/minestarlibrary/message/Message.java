@@ -16,7 +16,7 @@
  * along with MineStarLibrary.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.minestar.message;
+package de.minestar.minestarlibrary.message;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

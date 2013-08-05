@@ -16,27 +16,26 @@
  * along with MineStarLibrary.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.minestar.message;
+package de.minestar.minestarlibrary.message;
 
 import org.bukkit.ChatColor;
 
 /**
- * A success message when something went ok and as expected
- * 
+ * A message for just informing someone. Nothing special or specific
  */
-public class SuccessMessage extends Message {
+public class InfoMessage extends Message {
 
-    private final static ChatColor SUCCESS_COLOR = ChatColor.GREEN;
+    private final static ChatColor INFO_COLOR = ChatColor.WHITE;
 
     /**
-     * Creates a new success message green colored
+     * Create a new info message white colored
      * 
      * @param pluginName
-     *            The source of the success
+     *            The source of the information
      */
-    public SuccessMessage(String pluginName) {
-        super(pluginName, Type.SUCCESS);
-        color(SUCCESS_COLOR);
+    public InfoMessage(String pluginName) {
+        super(pluginName, Type.INFO);
+        color(INFO_COLOR);
     }
 
 }

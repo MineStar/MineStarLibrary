@@ -16,7 +16,7 @@
  * along with MineStarLibrary.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.minestar.message;
+package de.minestar.minestarlibrary.message;
 
 import org.bukkit.ChatColor;
 

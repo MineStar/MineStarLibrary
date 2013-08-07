@@ -20,9 +20,32 @@ package de.minestar.stats;
 
 import org.bukkit.plugin.Plugin;
 
+/**
+ * Every plugin want to store and handle statistic have to implement this
+ * interface. There can be multiple plugins with this interface , everyone gets
+ * the necessary information
+ */
 public interface StatisticPlugin {
 
+    /**
+     * Register statistics based on information in the plugin. For example an
+     * XML document descriping the statistics of the plugin is stored in the
+     * plugins archive
+     * 
+     * @param plugin
+     *            The plugin to store statstics about
+     */
     public void registerStatistics(Plugin plugin);
 
+    /**
+     * Handle and store a single statistic
+     * 
+     * @param plugin
+     *            The plugin to store the statistic is about
+     * @param statisticName
+     *            The name of the plugin. The name must be unique in the plugin
+     * @param data
+     *            The data of the statistic
+     */
     public void storeStatistic(Plugin plugin, String statisticName, Object... data);
 }

@@ -19,12 +19,29 @@
 package de.minestar.minestarlibrary.message;
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 
 /**
  * A success message when something went ok and as expected
  * 
  */
 public class SuccessMessage extends Message {
+
+    /**
+     * Shortcut for sending a success message
+     * 
+     * @param text
+     *            The text to send
+     * @param pluginName
+     *            The name of the plugin the message is from
+     * @param receiver
+     *            List of receiver, for console use {@link Message#CONSOLE} as
+     *            an argument
+     * @return Created message
+     */
+    public static Message send(String text, String pluginName, CommandSender... receiver) {
+        return new SuccessMessage(pluginName).add(text).send(receiver);
+    }
 
     private final static ChatColor SUCCESS_COLOR = ChatColor.GREEN;
 

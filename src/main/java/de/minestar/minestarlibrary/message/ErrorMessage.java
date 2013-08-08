@@ -19,11 +19,28 @@
 package de.minestar.minestarlibrary.message;
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 
 /**
  * An error message for information when something went terrible wrong.
  */
 public class ErrorMessage extends Message {
+
+    /**
+     * Shortcut for sending an error message
+     * 
+     * @param text
+     *            The text to send
+     * @param pluginName
+     *            The name of the plugin the message is from
+     * @param receiver
+     *            List of receiver, for console use {@link Message#CONSOLE} as
+     *            an argument
+     * @return Created message
+     */
+    public static Message send(String text, String pluginName, CommandSender... receiver) {
+        return new ErrorMessage(pluginName).add(text).send(receiver);
+    }
 
     private final static ChatColor ERROR_COLOR = ChatColor.RED;
 

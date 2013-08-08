@@ -29,6 +29,10 @@ import org.bukkit.entity.Player;
 
 public class Message {
 
+    public static Message send(String text, CommandSender... receiver) {
+        return new Message().add(text).send(receiver);
+    }
+
     /**
      * The type of the message
      */

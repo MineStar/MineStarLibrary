@@ -19,11 +19,28 @@
 package de.minestar.minestarlibrary.message;
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 
 /**
  * A message for just informing someone. Nothing special or specific
  */
 public class InfoMessage extends Message {
+
+    /**
+     * Shortcut for sending an information message
+     * 
+     * @param text
+     *            The text to send
+     * @param pluginName
+     *            The name of the plugin the message is from
+     * @param receiver
+     *            List of receiver, for console use {@link Message#CONSOLE} as
+     *            an argument
+     * @return Created message
+     */
+    public static Message send(String text, String pluginName, CommandSender... receiver) {
+        return new InfoMessage(pluginName).add(text).send(receiver);
+    }
 
     private final static ChatColor INFO_COLOR = ChatColor.WHITE;
 

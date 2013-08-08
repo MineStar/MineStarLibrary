@@ -16,7 +16,7 @@
  * along with MineStarLibrary.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.minestar.stats;
+package de.minestar.minestarlibrary.statistic;
 
 import org.bukkit.plugin.Plugin;
 

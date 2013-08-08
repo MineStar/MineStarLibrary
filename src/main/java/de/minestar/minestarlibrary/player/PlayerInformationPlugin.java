@@ -20,6 +20,8 @@ package de.minestar.minestarlibrary.player;
 
 import java.util.List;
 
+import org.bukkit.command.CommandSender;
+
 /**
  * Plugin which hold interesting, displayable information about a certain player
  * 
@@ -35,6 +37,6 @@ public interface PlayerInformationPlugin {
      * @return A list(can be empty) containing single lines of displayable
      *         information
      */
-    public List<String> getInformation(String playerName);
+    public List<String> getInformationAbout(CommandSender source, String playerName);
 
 }

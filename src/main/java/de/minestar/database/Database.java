@@ -29,8 +29,8 @@ import java.util.Map.Entry;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
-import de.minestar.minestarlibrary.message.DebugMessage;
-import de.minestar.minestarlibrary.message.Message;
+import de.minestar.library.message.DebugMessage;
+import de.minestar.library.message.Message;
 
 public abstract class Database {
 

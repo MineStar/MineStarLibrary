@@ -19,6 +19,7 @@
 package de.minestar.database;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -50,7 +51,11 @@ public abstract class Database {
     public Database(Plugin plugin) {
         File connectionInfoFile = new File(plugin.getDataFolder(), DEFAULT_CONFIG_NAME);
         openConnection(YamlConfiguration.loadConfiguration(connectionInfoFile));
-        loadQueries(plugin);
+        if (isAlive()) {
+            loadQueries(plugin);
+        } else {
+            createDefaultConfig(plugin);
+        }
     }
 
     public abstract void openConnection(String... args);
@@ -76,6 +81,19 @@ public abstract class Database {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    private void createDefaultConfig(Plugin plugin) {
+
+        YamlConfiguration defaultConfig = new YamlConfiguration();
+        for (String config : getDefaultConfig())
+            defaultConfig.set(config, "");
+        File defaultConfigFile = new File(plugin.getDataFolder(), DEFAULT_CONFIG_NAME);
+        try {
+            defaultConfig.save(defaultConfigFile);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

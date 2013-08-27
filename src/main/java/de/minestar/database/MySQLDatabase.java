@@ -22,6 +22,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 
 import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
 
@@ -42,6 +43,18 @@ public class MySQLDatabase extends Database {
         CONFIG_PASSWORD,
     };
     //@formatter:on
+
+    public MySQLDatabase(String... args) {
+        super(args);
+    }
+
+    public MySQLDatabase(YamlConfiguration config) {
+        super(config);
+    }
+
+    public MySQLDatabase(Plugin plugin) {
+        super(plugin);
+    }
 
     @Override
     public void openConnection(String... args) {

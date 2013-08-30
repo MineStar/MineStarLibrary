@@ -18,34 +18,22 @@
 
 package de.minestar.database;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
+import org.common.begin.clinton.ScriptRunner;
 
 import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
 
 public class SQLiteDatabase extends Database {
 
-    private static final String CONFIG_FILE = "DatabaseFile";
-
-    //@formatter:off
-    private final static String[] DEFAULT_CONFIG = {
-        CONFIG_FILE
-    };
-    //@formatter:on
-
     public SQLiteDatabase(String... args) {
         super(args);
-    }
-
-    public SQLiteDatabase(YamlConfiguration config) {
-        super(config);
-    }
-
-    public SQLiteDatabase(Plugin plugin) {
-        super(plugin);
     }
 
     @Override
@@ -56,23 +44,6 @@ public class SQLiteDatabase extends Database {
             e.printStackTrace();
         }
 
-    }
-
-    @Override
-    public void openConnection(YamlConfiguration config) {
-
-        String file = config.getString(CONFIG_FILE);
-
-        if (file == null)
-            return;
-        else {
-            openConnection(file);
-        }
-    }
-
-    @Override
-    public String[] getDefaultConfig() {
-        return DEFAULT_CONFIG;
     }
 
     private class SQLiteDatabaseConnection extends DatabaseConnection {
@@ -100,5 +71,23 @@ public class SQLiteDatabase extends Database {
             return con;
         }
 
+    }
+
+    @Override
+    public void createStructureIfNeeded(InputStream source) {
+        if (source == null)
+            return;
+        // Thanks
+        // http://stackoverflow.com/questions/1044194/running-a-sql-script-using-mysql-with-jdbc/1044837#1044837
+        // for this hint
+        BufferedReader bReader = new BufferedReader(new InputStreamReader(source));
+        ScriptRunner runner = new ScriptRunner(this.dbConnection.getConnection(), true, true);
+        try {
+            runner.runScript(bReader);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

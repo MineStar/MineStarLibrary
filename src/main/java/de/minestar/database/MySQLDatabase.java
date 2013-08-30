@@ -18,42 +18,22 @@
 
 package de.minestar.database;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
+import org.common.begin.clinton.ScriptRunner;
 
 import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
 
 public class MySQLDatabase extends Database {
 
-    private static final String CONFIG_HOST = "Host";
-    private static final String CONFIG_PORT = "Port";
-    private static final String CONFIG_DATABASE = "Database";
-    private static final String CONFIG_USERNAME = "Username";
-    private static final String CONFIG_PASSWORD = "Password";
-
-    //@formatter:off
-    private final static String[] DEFAULT_CONFIG = {
-        CONFIG_HOST,
-        CONFIG_PORT,
-        CONFIG_DATABASE,
-        CONFIG_USERNAME,
-        CONFIG_PASSWORD,
-    };
-    //@formatter:on
-
     public MySQLDatabase(String... args) {
         super(args);
-    }
-
-    public MySQLDatabase(YamlConfiguration config) {
-        super(config);
-    }
-
-    public MySQLDatabase(Plugin plugin) {
-        super(plugin);
     }
 
     @Override
@@ -64,30 +44,6 @@ public class MySQLDatabase extends Database {
             e.printStackTrace();
         }
 
-    }
-
-    @Override
-    public void openConnection(YamlConfiguration config) {
-
-        String host = config.getString(CONFIG_HOST);
-        String port = config.getString(CONFIG_PORT);
-        String databaseName = config.getString(CONFIG_DATABASE);
-        String username = config.getString(CONFIG_USERNAME);
-        String password = config.getString(CONFIG_PASSWORD);
-
-        if (host == null || port == null || databaseName == null)
-            return;
-        if (username == null && password == null) {
-            openConnection(host, port, databaseName);
-        } else {
-            openConnection(host, port, databaseName, username, password);
-        }
-
-    }
-
-    @Override
-    public String[] getDefaultConfig() {
-        return DEFAULT_CONFIG;
     }
 
     private class MySQLDatabaseConnection extends DatabaseConnection {
@@ -106,7 +62,11 @@ public class MySQLDatabase extends Database {
                     return createUnauthorizedConnection(args[0], args[1], args[2]);
                     // Create Connection with security information
                 case 5 :
-                    return createAuthorizedConnection(args[0], args[2], args[3], args[4], args[5]);
+                    // Ignore null arguments
+                    if (args[3] == null || args[4] == null)
+                        return createUnauthorizedConnection(args[0], args[1], args[2]);
+                    else
+                        return createAuthorizedConnection(args[0], args[1], args[2], args[3], args[4]);
                     // Wrong count of arguments
                 default :
                     throw new WrongNumberArgsException("3 or 5 arguments expected!");
@@ -126,5 +86,23 @@ public class MySQLDatabase extends Database {
             return con;
         }
 
+    }
+
+    @Override
+    public void createStructureIfNeeded(InputStream source) {
+        if (source == null)
+            return;
+        // Thanks
+        // http://stackoverflow.com/questions/1044194/running-a-sql-script-using-mysql-with-jdbc/1044837#1044837
+        // for this hint
+        BufferedReader bReader = new BufferedReader(new InputStreamReader(source));
+        ScriptRunner runner = new ScriptRunner(this.dbConnection.getConnection(), true, true);
+        try {
+            runner.runScript(bReader);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

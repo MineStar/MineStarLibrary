@@ -20,13 +20,14 @@ package de.minestar.database;
 
 import java.io.InputStream;
 import java.sql.PreparedStatement;
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Database {
 
     protected DatabaseConnection dbConnection;
 
-    private Map<String, PreparedStatement> queries;
+    private Map<String, PreparedStatement> queries = new HashMap<String, PreparedStatement>();
 
     public Database(String... args) {
         openConnection(args);

@@ -18,17 +18,9 @@
 
 package de.minestar.database;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
-
-import org.common.begin.clinton.ScriptRunner;
-
-import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
 
 public class MySQLDatabase extends Database {
 
@@ -69,7 +61,7 @@ public class MySQLDatabase extends Database {
                         return createAuthorizedConnection(args[0], args[1], args[2], args[3], args[4]);
                     // Wrong count of arguments
                 default :
-                    throw new WrongNumberArgsException("3 or 5 arguments expected!");
+                    throw new WrongArgsNumberException("3 or 5 arguments expected!");
             }
 
         }
@@ -92,16 +84,10 @@ public class MySQLDatabase extends Database {
     public void createStructureIfNeeded(InputStream source) {
         if (source == null)
             return;
-        // Thanks
-        // http://stackoverflow.com/questions/1044194/running-a-sql-script-using-mysql-with-jdbc/1044837#1044837
-        // for this hint
-        BufferedReader bReader = new BufferedReader(new InputStreamReader(source));
-        ScriptRunner runner = new ScriptRunner(this.dbConnection.getConnection(), true, true);
+        SQLBatcher batcher = new SQLBatcher(this.dbConnection.getConnection());
         try {
-            runner.runScript(bReader);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+            batcher.run(source, false);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

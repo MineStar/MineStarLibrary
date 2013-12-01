@@ -3,18 +3,18 @@ package de.minestar.minestarlibrary.bookapi;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.server.v1_6_R2.ItemStack;
-import net.minecraft.server.v1_6_R2.NBTTagCompound;
-import net.minecraft.server.v1_6_R2.NBTTagList;
-import net.minecraft.server.v1_6_R2.NBTTagString;
+import net.minecraft.server.v1_7_R1.ItemStack;
+import net.minecraft.server.v1_7_R1.NBTTagCompound;
+import net.minecraft.server.v1_7_R1.NBTTagList;
+import net.minecraft.server.v1_7_R1.NBTTagString;
 
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_6_R2.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftItemStack;
 
 public class MinestarBook {
 
     private final ItemStack itemstack;
-    private final org.bukkit.craftbukkit.v1_6_R2.inventory.CraftItemStack bukkitItemStack;
+    private final org.bukkit.craftbukkit.v1_7_R1.inventory.CraftItemStack bukkitItemStack;
 
     public static MinestarBook createWrittenBook(String author, String title, List<String> pages) {
         return MinestarBook.createBook(Material.WRITTEN_BOOK, author, title, pages);
@@ -77,7 +77,8 @@ public class MinestarBook {
         NBTTagList list = (NBTTagList) itemstack.tag.get("pages");
         String[] pages = new String[list.size()];
         for (int i = 0; i < list.size(); i++) {
-            pages[i] = ((NBTTagString) list.get(i)).data;
+            // TODO: CHECK IF THIS WORKS!
+            pages[i] = list.get(i).getString("");
         }
         return pages;
     }
@@ -86,7 +87,8 @@ public class MinestarBook {
         NBTTagList list = (NBTTagList) itemstack.tag.get("pages");
         List<String> pages = new ArrayList<String>();
         for (int i = 0; i < list.size(); i++) {
-            pages.add(((NBTTagString) list.get(i)).data);
+            // TODO: CHECK IF THIS WORKS!
+            pages.add(list.get(i).getString(""));
         }
         return pages;
     }
@@ -107,6 +109,7 @@ public class MinestarBook {
         itemstack.tag.setString("author", author);
     }
 
+    // TODO: CHECK IF THIS WORKS!
     public void setPages(String[] pages) {
         NBTTagList list = new NBTTagList();
         int size = pages.length;
@@ -118,15 +121,18 @@ public class MinestarBook {
             }
             if (page != null && !page.equals("") && !page.isEmpty()) {
                 NBTTagString p = new NBTTagString(page);
-                p.setName(page);
-                p.data = page;
+                
+//                p.setName(page);
+//                p.data = page;
                 list.add(p);
             }
         }
-        list.setName("pages");
+//        list.
+//        list.setName("pages");
         itemstack.tag.set("pages", list);
     }
 
+    // TODO: CHECK IF THIS WORKS!
     public void setPages(List<String> pages) {
         NBTTagList list = new NBTTagList();
         int size = pages.size();
@@ -137,12 +143,12 @@ public class MinestarBook {
             }
             if (page != null && !page.equals("") && !page.isEmpty()) {
                 NBTTagString p = new NBTTagString(page);
-                p.setName(page);
-                p.data = page;
+//                p.setName(page);
+//                p.data = page;
                 list.add(p);
             }
         }
-        list.setName("pages");
+//        list.setName("pages");
         itemstack.tag.set("pages", list);
     }
 

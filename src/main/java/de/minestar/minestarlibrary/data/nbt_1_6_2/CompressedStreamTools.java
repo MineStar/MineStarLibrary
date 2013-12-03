@@ -1,4 +1,4 @@
-package de.minestar.minestarlibrary.data.tools;
+package de.minestar.minestarlibrary.data.nbt_1_6_2;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -12,8 +12,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
-
-import net.minecraft.server.v1_7_R1.NBTTagCompound;
 
 public class CompressedStreamTools {
 
@@ -57,18 +55,16 @@ public class CompressedStreamTools {
         return bytearrayoutputstream.toByteArray();
     }
 
-    // TODO: Think about!
     public static NBTTagCompound read(DataInput input) throws IOException {
-//        NBTBase nbtbase = NBTBase.a(input);
-//        if (nbtbase instanceof NBTTagCompound) {
-//            return (NBTTagCompound) nbtbase;
-//        } else {
-//            throw new IOException("Root tag must be a named compound tag");
-//        }
-        throw new IOException("Bukkit fucked us up!");
+        NBTBase nbtbase = NBTBase.a(input);
+        if (nbtbase instanceof NBTTagCompound) {
+            return (NBTTagCompound) nbtbase;
+        } else {
+            throw new IOException("Root tag must be a named compound tag");
+        }
     }
 
     public static void writeTo(NBTTagCompound nbttag, DataOutput output) throws IOException {
-//        NBTBase.a(nbttag, output);
+        NBTBase.a(nbttag, output);
     }
 }

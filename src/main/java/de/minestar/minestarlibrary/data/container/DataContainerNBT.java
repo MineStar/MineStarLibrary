@@ -6,15 +6,14 @@ import java.io.FileOutputStream;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.minecraft.server.v1_7_R1.NBTBase;
-import net.minecraft.server.v1_7_R1.NBTTagCompound;
-
 import org.bukkit.Location;
 
 import com.bukkit.gemo.utils.BlockUtils;
 
 import de.minestar.minestarlibrary.data.GenericValue;
-import de.minestar.minestarlibrary.data.tools.CompressedStreamTools;
+import de.minestar.minestarlibrary.data.nbt_1_6_2.CompressedStreamTools;
+import de.minestar.minestarlibrary.data.nbt_1_6_2.NBTBase;
+import de.minestar.minestarlibrary.data.nbt_1_6_2.NBTTagCompound;
 
 public class DataContainerNBT extends DataContainerNone {
 
@@ -177,7 +176,6 @@ public class DataContainerNBT extends DataContainerNone {
         }
     }
 
-    // TODO: FUCKED US UP!
     @Override
     public void loadBoolean() {
         String name = "BOOLEAN";
@@ -185,15 +183,13 @@ public class DataContainerNBT extends DataContainerNone {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
             for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
-//                    NBTBase thisTag = (NBTBase) base;
-
-//                    this.setValue(thisTag.getName(), thisCompound.getBoolean(thisTag.getName()));
+                    NBTBase thisTag = (NBTBase) base;
+                    this.setValue(thisTag.getName(), thisCompound.getBoolean(thisTag.getName()));
                 }
             }
         }
     }
 
-    // TODO: FUCKED US UP!
     @Override
     public void loadByte() {
         String name = "BYTE";
@@ -201,8 +197,8 @@ public class DataContainerNBT extends DataContainerNone {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
             for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
-//                    NBTBase thisTag = (NBTBase) base;
-//                    this.setValue(thisTag.getName(), thisCompound.getByte(thisTag.getName()));
+                    NBTBase thisTag = (NBTBase) base;
+                    this.setValue(thisTag.getName(), thisCompound.getByte(thisTag.getName()));
                 }
             }
         }
@@ -222,7 +218,6 @@ public class DataContainerNBT extends DataContainerNone {
         }
     }
 
-    // TODO: FUCKED US UP!
     @Override
     public void loadDouble() {
         String name = "DOUBLE";
@@ -230,14 +225,13 @@ public class DataContainerNBT extends DataContainerNone {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
             for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
-//                    NBTBase thisTag = (NBTBase) base;
-//                    this.setValue(thisTag.getName(), thisCompound.getDouble(thisTag.getName()));
+                    NBTBase thisTag = (NBTBase) base;
+                    this.setValue(thisTag.getName(), thisCompound.getDouble(thisTag.getName()));
                 }
             }
         }
     }
 
-    // TODO: FUCKED US UP!
     @Override
     public void loadFloat() {
         String name = "FLOAT";
@@ -245,14 +239,13 @@ public class DataContainerNBT extends DataContainerNone {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
             for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
-//                    NBTBase thisTag = (NBTBase) base;
-//                    this.setValue(thisTag.getName(), thisCompound.getFloat(thisTag.getName()));
+                    NBTBase thisTag = (NBTBase) base;
+                    this.setValue(thisTag.getName(), thisCompound.getFloat(thisTag.getName()));
                 }
             }
         }
     }
 
-    // TODO: FUCKED US UP!
     @Override
     public void loadInteger() {
         String name = "INTEGER";
@@ -260,14 +253,13 @@ public class DataContainerNBT extends DataContainerNone {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
             for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
-//                    NBTBase thisTag = (NBTBase) base;
-//                    this.setValue(thisTag.getName(), thisCompound.getInt(thisTag.getName()));
+                    NBTBase thisTag = (NBTBase) base;
+                    this.setValue(thisTag.getName(), thisCompound.getInt(thisTag.getName()));
                 }
             }
         }
     }
 
-    // TODO: FUCKED US UP!
     @Override
     public void loadLong() {
         String name = "LONG";
@@ -275,14 +267,13 @@ public class DataContainerNBT extends DataContainerNone {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
             for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
-//                    NBTBase thisTag = (NBTBase) base;
-//                    this.setValue(thisTag.getName(), thisCompound.getLong(thisTag.getName()));
+                    NBTBase thisTag = (NBTBase) base;
+                    this.setValue(thisTag.getName(), thisCompound.getLong(thisTag.getName()));
                 }
             }
         }
     }
 
-    // TODO: FUCKED US UP!
     @Override
     public void loadShort() {
         String name = "SHORT";
@@ -290,14 +281,13 @@ public class DataContainerNBT extends DataContainerNone {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
             for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
-//                    NBTBase thisTag = (NBTBase) base;
-//                    this.setValue(thisTag.getName(), thisCompound.getShort(thisTag.getName()));
+                    NBTBase thisTag = (NBTBase) base;
+                    this.setValue(thisTag.getName(), thisCompound.getShort(thisTag.getName()));
                 }
             }
         }
     }
 
-    // TODO: FUCKED US UP!
     @Override
     public void loadString() {
         String name = "STRING";
@@ -305,14 +295,13 @@ public class DataContainerNBT extends DataContainerNone {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
             for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
-//                    NBTBase thisTag = (NBTBase) base;
-//                    this.setValue(thisTag.getName(), thisCompound.getString(thisTag.getName()));
+                    NBTBase thisTag = (NBTBase) base;
+                    this.setValue(thisTag.getName(), thisCompound.getString(thisTag.getName()));
                 }
             }
         }
     }
 
-    // TODO: FUCKED US UP!
     @Override
     public void loadLocation() {
         String name = "LOCATION";
@@ -320,8 +309,8 @@ public class DataContainerNBT extends DataContainerNone {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
             for (Object base : thisCompound.c()) {
                 if (base instanceof NBTBase) {
-//                    NBTBase thisTag = (NBTBase) base;
-//                    this.setValue(thisTag.getName(), BlockUtils.LocationFromString(thisCompound.getString(thisTag.getName())));
+                    NBTBase thisTag = (NBTBase) base;
+                    this.setValue(thisTag.getName(), BlockUtils.LocationFromString(thisCompound.getString(thisTag.getName())));
                 }
             }
         }

@@ -155,6 +155,8 @@ public abstract class NBTBase {
     public int hashCode() {
         return this.name.hashCode() ^ getTypeId();
     }
+
+    public abstract net.minecraft.server.v1_7_R1.NBTBase toNative();
 }
 
 /*

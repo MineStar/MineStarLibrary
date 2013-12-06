@@ -47,9 +47,9 @@ public class NBTTagLong extends NBTBase {
     public int hashCode() {
         return super.hashCode() ^ (int) (this.data ^ this.data >>> 32);
     }
-}
 
-/*
- * Location: C:\Users\GeMo\Desktop\spigot-1.6.2-R0.2-SNAPSHOT_1094.jar Qualified
- * Name: net.minecraft.server.v1_6_R2.NBTTagLong JD-Core Version: 0.6.0
- */
+    @Override
+    public net.minecraft.server.v1_7_R1.NBTBase toNative() {
+        return new net.minecraft.server.v1_7_R1.NBTTagLong(data);
+    }
+}

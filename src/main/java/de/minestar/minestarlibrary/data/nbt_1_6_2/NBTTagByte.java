@@ -47,9 +47,9 @@ public class NBTTagByte extends NBTBase {
     public int hashCode() {
         return super.hashCode() ^ this.data;
     }
-}
 
-/*
- * Location: C:\Users\GeMo\Desktop\spigot-1.6.2-R0.2-SNAPSHOT_1094.jar Qualified
- * Name: net.minecraft.server.v1_6_R2.NBTTagByte JD-Core Version: 0.6.0
- */
+    @Override
+    public net.minecraft.server.v1_7_R1.NBTBase toNative() {
+        return new net.minecraft.server.v1_7_R1.NBTTagByte(data);
+    }
+}

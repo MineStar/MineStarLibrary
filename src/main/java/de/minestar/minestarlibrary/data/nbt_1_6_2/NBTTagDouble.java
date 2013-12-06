@@ -48,9 +48,9 @@ public class NBTTagDouble extends NBTBase {
         long l = Double.doubleToLongBits(this.data);
         return super.hashCode() ^ (int) (l ^ l >>> 32);
     }
-}
 
-/*
- * Location: C:\Users\GeMo\Desktop\spigot-1.6.2-R0.2-SNAPSHOT_1094.jar Qualified
- * Name: net.minecraft.server.v1_6_R2.NBTTagDouble JD-Core Version: 0.6.0
- */
+    @Override
+    public net.minecraft.server.v1_7_R1.NBTBase toNative() {
+        return new net.minecraft.server.v1_7_R1.NBTTagDouble(data);
+    }
+}

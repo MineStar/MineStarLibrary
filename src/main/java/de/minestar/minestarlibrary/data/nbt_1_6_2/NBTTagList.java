@@ -89,9 +89,13 @@ public class NBTTagList extends NBTBase {
     public int hashCode() {
         return super.hashCode() ^ this.list.hashCode();
     }
-}
 
-/*
- * Location: C:\Users\GeMo\Desktop\spigot-1.6.2-R0.2-SNAPSHOT_1094.jar Qualified
- * Name: net.minecraft.server.v1_6_R2.NBTTagList JD-Core Version: 0.6.0
- */
+    @Override
+    public net.minecraft.server.v1_7_R1.NBTBase toNative() {
+        net.minecraft.server.v1_7_R1.NBTTagList list = new net.minecraft.server.v1_7_R1.NBTTagList();
+        for (NBTBase base : this.list) {
+            list.add(base.toNative());
+        }
+        return list;
+    }
+}

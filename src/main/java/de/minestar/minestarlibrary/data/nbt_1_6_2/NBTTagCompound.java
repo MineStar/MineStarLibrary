@@ -267,9 +267,13 @@ public class NBTTagCompound extends NBTBase {
     public int hashCode() {
         return super.hashCode() ^ this.map.hashCode();
     }
-}
 
-/*
- * Location: C:\Users\GeMo\Desktop\spigot-1.6.2-R0.2-SNAPSHOT_1094.jar Qualified
- * Name: net.minecraft.server.v1_6_R2.NBTTagCompound JD-Core Version: 0.6.0
- */
+    @Override
+    public net.minecraft.server.v1_7_R1.NBTBase toNative() {
+        net.minecraft.server.v1_7_R1.NBTTagCompound compound = new net.minecraft.server.v1_7_R1.NBTTagCompound();
+        for (Map.Entry<String, NBTBase> entry : this.map.entrySet()) {
+            compound.set(entry.getKey(), entry.getValue().toNative());
+        }
+        return compound;
+    }
+}

@@ -52,4 +52,18 @@ public class NBTTagByte extends NBTBase {
     public net.minecraft.server.v1_7_R1.NBTBase toNative() {
         return new net.minecraft.server.v1_7_R1.NBTTagByte(data);
     }
+
+    @Override
+    public NBTBase fromNative(net.minecraft.server.v1_7_R1.NBTBase base) {
+        if (base instanceof net.minecraft.server.v1_7_R1.NBTTagByte) {
+            try {
+                net.minecraft.server.v1_7_R1.NBTTagByte tag = (net.minecraft.server.v1_7_R1.NBTTagByte) base;
+                return new NBTTagByte("", tag.f());
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return null;
+    }
 }

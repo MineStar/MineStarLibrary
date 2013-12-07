@@ -157,9 +157,10 @@ public abstract class NBTBase {
     }
 
     public abstract net.minecraft.server.v1_7_R1.NBTBase toNative();
-}
 
-/*
- * Location: C:\Users\GeMo\Desktop\spigot-1.6.2-R0.2-SNAPSHOT_1094.jar Qualified
- * Name: net.minecraft.server.v1_6_R2.NBTBase JD-Core Version: 0.6.0
- */
+    public abstract NBTBase fromNative(net.minecraft.server.v1_7_R1.NBTBase base);
+
+    public static NBTBase convertFromNative(net.minecraft.server.v1_7_R1.NBTBase base) {
+        return NBTBase.createTag(base.getTypeId(), "").fromNative(base);
+    }
+}

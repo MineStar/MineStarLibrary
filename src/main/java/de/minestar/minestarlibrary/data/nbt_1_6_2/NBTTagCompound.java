@@ -3,8 +3,10 @@ package de.minestar.minestarlibrary.data.nbt_1_6_2;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.minecraft.server.v1_7_R1.CrashReport;
@@ -275,5 +277,32 @@ public class NBTTagCompound extends NBTBase {
             compound.set(entry.getKey(), entry.getValue().toNative());
         }
         return compound;
+    }
+
+    @Override
+    public NBTBase fromNative(net.minecraft.server.v1_7_R1.NBTBase base) {
+        if (base instanceof net.minecraft.server.v1_7_R1.NBTTagCompound) {
+            try {
+                net.minecraft.server.v1_7_R1.NBTTagCompound tag = (net.minecraft.server.v1_7_R1.NBTTagCompound) base;
+                NBTTagCompound newTag = new NBTTagCompound("");
+                Field field = tag.getClass().getDeclaredField("map");
+                field.setAccessible(true);
+
+                Map<String, NBTBase> newData = new HashMap<String, NBTBase>();
+                Map<String, net.minecraft.server.v1_7_R1.NBTBase> oldData = (HashMap<String, net.minecraft.server.v1_7_R1.NBTBase>) (field.get(tag));
+                for (Map.Entry<String, net.minecraft.server.v1_7_R1.NBTBase> baseData : oldData.entrySet()) {
+                    NBTBase newTagBase = NBTBase.convertFromNative(baseData.getValue());
+                    if (newTagBase != null) {
+                        newData.put(baseData.getKey(), newTagBase);
+                    }
+                }
+                newTag.map = newData;
+                return newTag;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return null;
     }
 }

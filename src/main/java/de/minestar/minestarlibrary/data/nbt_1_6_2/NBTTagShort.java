@@ -52,4 +52,18 @@ public class NBTTagShort extends NBTBase {
     public net.minecraft.server.v1_7_R1.NBTBase toNative() {
         return new net.minecraft.server.v1_7_R1.NBTTagShort(data);
     }
+
+    @Override
+    public NBTBase fromNative(net.minecraft.server.v1_7_R1.NBTBase base) {
+        if (base instanceof net.minecraft.server.v1_7_R1.NBTTagShort) {
+            try {
+                net.minecraft.server.v1_7_R1.NBTTagShort tag = (net.minecraft.server.v1_7_R1.NBTTagShort) base;
+                return new NBTTagLong("", tag.e());
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return null;
+    }
 }

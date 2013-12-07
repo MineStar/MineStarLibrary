@@ -3,6 +3,7 @@ package de.minestar.minestarlibrary.data.nbt_1_6_2;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 public class NBTTagString extends NBTBase {
     public String data;
@@ -53,5 +54,24 @@ public class NBTTagString extends NBTBase {
     @Override
     public net.minecraft.server.v1_7_R1.NBTBase toNative() {
         return new net.minecraft.server.v1_7_R1.NBTTagString(data);
+    }
+
+    @Override
+    public NBTBase fromNative(net.minecraft.server.v1_7_R1.NBTBase base) {
+        if (base instanceof net.minecraft.server.v1_7_R1.NBTTagString) {
+            try {
+                net.minecraft.server.v1_7_R1.NBTTagString tag = (net.minecraft.server.v1_7_R1.NBTTagString) base;
+                NBTTagString newTag = new NBTTagString("");
+                Field field = tag.getClass().getDeclaredField("data");
+                field.setAccessible(true);
+                String data = (String) (field.get(tag));
+                newTag.data = data;
+                return newTag;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return null;
     }
 }

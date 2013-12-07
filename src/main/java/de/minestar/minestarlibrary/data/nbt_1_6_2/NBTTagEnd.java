@@ -52,4 +52,9 @@ public class NBTTagEnd extends NBTBase {
         }
         return null;
     }
+
+    @Override
+    public NBTBase fromNative(net.minecraft.server.v1_7_R1.NBTBase base) {
+        return new NBTTagEnd();
+    }
 }

@@ -53,4 +53,18 @@ public class NBTTagDouble extends NBTBase {
     public net.minecraft.server.v1_7_R1.NBTBase toNative() {
         return new net.minecraft.server.v1_7_R1.NBTTagDouble(data);
     }
+
+    @Override
+    public NBTBase fromNative(net.minecraft.server.v1_7_R1.NBTBase base) {
+        if (base instanceof net.minecraft.server.v1_7_R1.NBTTagDouble) {
+            try {
+                net.minecraft.server.v1_7_R1.NBTTagDouble tag = (net.minecraft.server.v1_7_R1.NBTTagDouble) base;
+                return new NBTTagDouble("", tag.g());
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return null;
+    }
 }

@@ -52,4 +52,18 @@ public class NBTTagInt extends NBTBase {
     public net.minecraft.server.v1_7_R1.NBTBase toNative() {
         return new net.minecraft.server.v1_7_R1.NBTTagInt(data);
     }
+
+    @Override
+    public NBTBase fromNative(net.minecraft.server.v1_7_R1.NBTBase base) {
+        if (base instanceof net.minecraft.server.v1_7_R1.NBTTagInt) {
+            try {
+                net.minecraft.server.v1_7_R1.NBTTagInt tag = (net.minecraft.server.v1_7_R1.NBTTagInt) base;
+                return new NBTTagInt("", tag.d());
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return null;
+    }
 }

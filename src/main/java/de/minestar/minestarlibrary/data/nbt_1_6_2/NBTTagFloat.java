@@ -47,23 +47,4 @@ public class NBTTagFloat extends NBTBase {
     public int hashCode() {
         return super.hashCode() ^ Float.floatToIntBits(this.data);
     }
-
-    @Override
-    public net.minecraft.server.v1_7_R1.NBTBase toNative() {
-        return new net.minecraft.server.v1_7_R1.NBTTagFloat(data);
-    }
-
-    @Override
-    public NBTBase fromNative(net.minecraft.server.v1_7_R1.NBTBase base) {
-        if (base instanceof net.minecraft.server.v1_7_R1.NBTTagFloat) {
-            try {
-                net.minecraft.server.v1_7_R1.NBTTagFloat tag = (net.minecraft.server.v1_7_R1.NBTTagFloat) base;
-                return new NBTTagFloat("", tag.h());
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-        return null;
-    }
 }

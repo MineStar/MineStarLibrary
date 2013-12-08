@@ -3,7 +3,6 @@ package de.minestar.minestarlibrary.data.nbt_1_6_2;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.Arrays;
 
 public class NBTTagIntArray extends NBTBase {
@@ -55,29 +54,5 @@ public class NBTTagIntArray extends NBTBase {
 
     public int hashCode() {
         return super.hashCode() ^ Arrays.hashCode(this.data);
-    }
-
-    @Override
-    public net.minecraft.server.v1_7_R1.NBTBase toNative() {
-        return new net.minecraft.server.v1_7_R1.NBTTagIntArray(data);
-    }
-
-    @Override
-    public NBTBase fromNative(net.minecraft.server.v1_7_R1.NBTBase base) {
-        if (base instanceof net.minecraft.server.v1_7_R1.NBTTagIntArray) {
-            try {
-                net.minecraft.server.v1_7_R1.NBTTagIntArray tag = (net.minecraft.server.v1_7_R1.NBTTagIntArray) base;
-                NBTTagIntArray newTag = new NBTTagIntArray("");
-                Field field = tag.getClass().getDeclaredField("data");
-                field.setAccessible(true);
-                int[] data = (int[]) (field.get(tag));
-                newTag.data = data;
-                return newTag;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-        return null;
     }
 }

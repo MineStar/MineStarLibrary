@@ -3,10 +3,8 @@ package de.minestar.minestarlibrary.data.nbt_1_6_2;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import net.minecraft.server.v1_7_R1.CrashReport;
@@ -26,7 +24,7 @@ public class NBTTagCompound extends NBTBase {
 
     void write(DataOutput paramDataOutput) throws IOException {
         for (NBTBase localNBTBase : this.map.values()) {
-            NBTBase.a(localNBTBase, paramDataOutput);
+            NBTBase.write(localNBTBase, paramDataOutput);
         }
         paramDataOutput.writeByte(0);
     }
@@ -37,7 +35,7 @@ public class NBTTagCompound extends NBTBase {
         }
         this.map.clear();
         NBTBase localNBTBase;
-        while ((localNBTBase = NBTBase.b(paramDataInput, paramInt + 1)).getTypeId() != 0)
+        while ((localNBTBase = NBTBase.read(paramDataInput, paramInt + 1)).getTypeId() != 0)
             this.map.put(localNBTBase.getName(), localNBTBase);
     }
 
@@ -268,41 +266,5 @@ public class NBTTagCompound extends NBTBase {
 
     public int hashCode() {
         return super.hashCode() ^ this.map.hashCode();
-    }
-
-    @Override
-    public net.minecraft.server.v1_7_R1.NBTBase toNative() {
-        net.minecraft.server.v1_7_R1.NBTTagCompound compound = new net.minecraft.server.v1_7_R1.NBTTagCompound();
-        for (Map.Entry<String, NBTBase> entry : this.map.entrySet()) {
-            compound.set(entry.getKey(), entry.getValue().toNative());
-        }
-        return compound;
-    }
-
-    @Override
-    public NBTBase fromNative(net.minecraft.server.v1_7_R1.NBTBase base) {
-        if (base instanceof net.minecraft.server.v1_7_R1.NBTTagCompound) {
-            try {
-                net.minecraft.server.v1_7_R1.NBTTagCompound tag = (net.minecraft.server.v1_7_R1.NBTTagCompound) base;
-                NBTTagCompound newTag = new NBTTagCompound("");
-                Field field = tag.getClass().getDeclaredField("map");
-                field.setAccessible(true);
-
-                Map<String, NBTBase> newData = new HashMap<String, NBTBase>();
-                Map<String, net.minecraft.server.v1_7_R1.NBTBase> oldData = (HashMap<String, net.minecraft.server.v1_7_R1.NBTBase>) (field.get(tag));
-                for (Map.Entry<String, net.minecraft.server.v1_7_R1.NBTBase> baseData : oldData.entrySet()) {
-                    NBTBase newTagBase = NBTBase.convertFromNative(baseData.getValue());
-                    if (newTagBase != null) {
-                        newData.put(baseData.getKey(), newTagBase);
-                    }
-                }
-                newTag.map = newData;
-                return newTag;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-        return null;
     }
 }

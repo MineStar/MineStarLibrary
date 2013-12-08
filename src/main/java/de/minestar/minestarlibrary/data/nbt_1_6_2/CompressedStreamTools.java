@@ -56,7 +56,7 @@ public class CompressedStreamTools {
     }
 
     public static NBTTagCompound read(DataInput input) throws IOException {
-        NBTBase nbtbase = NBTBase.a(input);
+        NBTBase nbtbase = NBTBase.read(input);
         if (nbtbase instanceof NBTTagCompound) {
             return (NBTTagCompound) nbtbase;
         } else {
@@ -65,6 +65,6 @@ public class CompressedStreamTools {
     }
 
     public static void writeTo(NBTTagCompound nbttag, DataOutput output) throws IOException {
-        NBTBase.a(nbttag, output);
+        NBTBase.write(nbttag, output);
     }
 }

@@ -40,11 +40,11 @@ public abstract class NBTBase {
         return this.name;
     }
 
-    public static NBTBase a(DataInput paramDataInput) throws IOException {
-        return b(paramDataInput, 0);
+    public static NBTBase read(DataInput paramDataInput) throws IOException {
+        return read(paramDataInput, 0);
     }
 
-    public static NBTBase b(DataInput paramDataInput, int paramInt) throws IOException {
+    public static NBTBase read(DataInput paramDataInput, int paramInt) throws IOException {
         byte b1 = paramDataInput.readByte();
         if (b1 == 0)
             return new NBTTagEnd();
@@ -65,7 +65,7 @@ public abstract class NBTBase {
         return localNBTBase;
     }
 
-    public static void a(NBTBase paramNBTBase, DataOutput paramDataOutput) throws IOException {
+    public static void write(NBTBase paramNBTBase, DataOutput paramDataOutput) throws IOException {
         paramDataOutput.writeByte(paramNBTBase.getTypeId());
         if (paramNBTBase.getTypeId() == 0)
             return;
@@ -154,13 +154,5 @@ public abstract class NBTBase {
 
     public int hashCode() {
         return this.name.hashCode() ^ getTypeId();
-    }
-
-    public abstract net.minecraft.server.v1_7_R1.NBTBase toNative();
-
-    public abstract NBTBase fromNative(net.minecraft.server.v1_7_R1.NBTBase base);
-
-    public static NBTBase convertFromNative(net.minecraft.server.v1_7_R1.NBTBase base) {
-        return NBTBase.createTag(base.getTypeId(), "").fromNative(base);
     }
 }

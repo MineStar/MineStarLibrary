@@ -3,7 +3,6 @@ package de.minestar.minestarlibrary.data.nbt_1_6_2;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,41 +88,5 @@ public class NBTTagList extends NBTBase {
 
     public int hashCode() {
         return super.hashCode() ^ this.list.hashCode();
-    }
-
-    @Override
-    public net.minecraft.server.v1_7_R1.NBTBase toNative() {
-        net.minecraft.server.v1_7_R1.NBTTagList list = new net.minecraft.server.v1_7_R1.NBTTagList();
-        for (NBTBase base : this.list) {
-            list.add(base.toNative());
-        }
-        return list;
-    }
-
-    @Override
-    public NBTBase fromNative(net.minecraft.server.v1_7_R1.NBTBase base) {
-        if (base instanceof net.minecraft.server.v1_7_R1.NBTTagList) {
-            try {
-                net.minecraft.server.v1_7_R1.NBTTagList tag = (net.minecraft.server.v1_7_R1.NBTTagList) base;
-                NBTTagList newTag = new NBTTagList("");
-                Field field = tag.getClass().getDeclaredField("list");
-                field.setAccessible(true);
-
-                List<NBTBase> newData = new ArrayList<NBTBase>();
-                List<net.minecraft.server.v1_7_R1.NBTBase> oldData = (List<net.minecraft.server.v1_7_R1.NBTBase>) (field.get(tag));
-                for (net.minecraft.server.v1_7_R1.NBTBase baseData : oldData) {
-                    NBTBase newTagBase = NBTBase.convertFromNative(baseData);
-                    if (newTagBase != null) {
-                        newData.add(newTagBase);
-                    }
-                }
-                newTag.list = newData;
-                return newTag;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-        return null;
     }
 }

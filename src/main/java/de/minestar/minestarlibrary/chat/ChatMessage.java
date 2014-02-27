@@ -186,6 +186,37 @@ public class ChatMessage {
         }
 
         /**
+         * Append a message to this message.
+         * <p>
+         * The text parts are copied to the new message and the old global
+         * events are now, if not already present, local events of the text
+         * parts. This change has no effects on the message using deep copies
+         * for the appending
+         * 
+         * @param message
+         *            A message to append to this message
+         * @return This builder
+         */
+        public ChatMessageBuilder append(ChatMessage message) {
+
+            for (TextPart newTextPart : message.textParts) {
+                TextPart copy = newTextPart.copy();
+
+                // Apply old global events to text part if it hasn't a local
+                // event
+                if (newTextPart.getClickEvent() == null && message.globalClickEvent != null) {
+                    copy.setClickEvent(message.globalClickEvent.copy());
+                }
+                if (newTextPart.getHoverEvent() == null && message.globalHoverEvent != null) {
+                    copy.setHoverEvent(message.globalHoverEvent.copy());
+                }
+
+                addTextPart(copy);
+            }
+            return this;
+        }
+
+        /**
          * @return Same as <code>build(false)</code> {@link #build(boolean)}
          */
         public ChatMessage build() {

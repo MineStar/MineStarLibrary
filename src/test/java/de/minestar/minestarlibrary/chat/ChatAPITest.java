@@ -18,6 +18,9 @@
 
 package de.minestar.minestarlibrary.chat;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import org.bukkit.ChatColor;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -51,15 +54,13 @@ public class ChatAPITest {
         // Create global click event - every textpart without a click event use
         // this event
         ClickEvent globalClickEvent = new SuggestTextClickEvent("run me");
-        
+
         // build message
         messageBuilder.addTextPart(firstText).addTextPart(secondText).setGlobalClickEvent(globalClickEvent).setGlobalHoverEvent(globalHover);
 
         // Finalize the message
         ChatMessage message = messageBuilder.build();
         String jsonMessage = message.toJSONString();
-        
-        System.out.println(jsonMessage.length());
 
         // Check if the message contains information
         Assert.assertThat(jsonMessage, Matchers.containsString("clickEvent:{action:\"suggest_command\",value:\"run me\"}"));
@@ -94,7 +95,17 @@ public class ChatAPITest {
         messageBuilder.addTextPart(TextPart.create("Test").build()).setGlobalHoverEvent(HoverEvent.create("asd").addLine("\"").build());
         // Create json string
         String jsonMessage = messageBuilder.build().toJSONString();
-        System.out.println("tellraw Meldanor " + jsonMessage);
+        assertNull(jsonMessage);
+    }
+
+    @Test
+    public void appendMessage() {
+
+        ChatMessage message2 = ChatMessage.create().addTextPart(TextPart.create(" World.").build()).build();
+
+        ChatMessage message1 = ChatMessage.create().addTextPart(TextPart.create("Hello").build()).append(message2).build();
+
+        assertEquals("{text:\"\",extra:[{text:\"Hello\"},{text:\" World.\"}]}", message1.toJSONString());
 
     }
 }

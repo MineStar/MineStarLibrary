@@ -82,6 +82,22 @@ public class TextPart {
         return this.text != null && this.text.equals(text);
     }
 
+    protected HoverEvent getHoverEvent() {
+        return this.hoverEvent;
+    }
+
+    protected void setHoverEvent(HoverEvent hoverEvent) {
+        this.hoverEvent = hoverEvent;
+    }
+
+    protected ClickEvent getClickEvent() {
+        return this.clickEvent;
+    }
+
+    protected void setClickEvent(ClickEvent clickEvent) {
+        this.clickEvent = clickEvent;
+    }
+
     /**
      * @return An empty message without any formatting
      */

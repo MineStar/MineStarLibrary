@@ -143,7 +143,7 @@ public class HoverEvent {
      * Custom serializer of the hover event. Used for the automatic json
      * serialization of the object
      */
-    private static class HoverEventSerializer extends JsonSerializer<HoverEvent> {
+    public static class HoverEventSerializer extends JsonSerializer<HoverEvent> {
 
         @Override
         public void serialize(HoverEvent value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {

@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 public class MultiPacket extends NetworkPacket implements Iterable<NetworkPacket> {
 
     private List<NetworkPacket> subPackets;
@@ -33,11 +31,11 @@ public class MultiPacket extends NetworkPacket implements Iterable<NetworkPacket
 
     @Override
     public void onSend(DataOutputStream dataOutputStream) throws IOException {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void onReceive(DataInputStream dataInputStream) throws IOException {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 }

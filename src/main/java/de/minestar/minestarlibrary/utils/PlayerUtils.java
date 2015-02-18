@@ -18,15 +18,98 @@
 
 package de.minestar.minestarlibrary.utils;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.TreeSet;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class PlayerUtils {
+
+    public static String getUUIDFromMojang(String playerName) {
+        JSONObject json = getHTTPGetRequestAsObject("https://api.mojang.com/users/profiles/minecraft/" + playerName);
+        if (json != null) {
+            return (String) json.get("id");
+        }
+        return null;
+    }
+
+    public static JSONArray getExtendedInformationsFromMojang(String uuid) {
+        return getHTTPGetRequestAsArray("https://api.mojang.com/user/profiles/" + uuid + "/names");
+    }
+
+    // HTTP GET request
+    private static String sendHTTPGetRequest(String URL) {
+        try {
+            URL urlObject = new URL(URL);
+            HttpURLConnection httpConnection = (HttpURLConnection) urlObject.openConnection();
+
+            // optional default is GET
+            httpConnection.setRequestMethod("GET");
+
+            // add request header
+            httpConnection.setRequestProperty("User-Agent", "Mozilla/5.0");
+            int responseCode = httpConnection.getResponseCode();
+
+            // the responseCode must be 200, otherwise the answer is incorrect
+            // (i.e. 204 for noContent)
+            if (responseCode == 200) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                // read response
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                // return response as String
+                return response.toString();
+            }
+            return null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    // HTTP GET request
+    private static JSONArray getHTTPGetRequestAsArray(String URL) {
+        try {
+            String response = sendHTTPGetRequest(URL);
+            if (response != null) {
+                // parse response to JSONArray
+                return (JSONArray) new JSONParser().parse(response);
+            }
+            return null;
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    // HTTP GET request
+    private static JSONObject getHTTPGetRequestAsObject(String URL) {
+        try {
+            String response = sendHTTPGetRequest(URL);
+            if (response != null) {
+                // parse response to JSONObject
+                return (JSONObject) new JSONParser().parse(response);
+            }
+            return null;
+        } catch (ParseException e) {
+            return null;
+        }
+    }
 
     /**
      * Check if any player contains the name. At first it will search in online
@@ -109,6 +192,23 @@ public class PlayerUtils {
             return player.getName();
 
         return getOfflinePlayerName(name);
+    }
+
+    /**
+     * Searches for the correct account name of the player by searching in nick-
+     * and accountnames of all online player and accountnames of all offline
+     * players.
+     * 
+     * @param name
+     *            Part of the target nickname
+     * @return The nickname of the player with the lowest difference to
+     *         <code>nick</code>.
+     */
+    public static String getPlayerUUID(String name) {
+        Player player = getOnlinePlayer(name);
+        if (player != null)
+            return player.getUniqueId().toString();
+        return null;
     }
 
     /**

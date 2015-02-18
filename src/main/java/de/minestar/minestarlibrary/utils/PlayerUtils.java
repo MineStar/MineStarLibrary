@@ -44,6 +44,16 @@ public class PlayerUtils {
         return null;
     }
 
+    public static String getCurrentUUIDFromMojang(String oldName) {
+        JSONObject object = getHTTPGetRequestAsObject("https://api.mojang.com/users/profiles/minecraft/" + oldName + "?at=000000");
+        return (String) object.get("id");
+    }
+
+    public static String getCurrentPlayerNameFromMojang(String oldName) {
+        JSONObject object = getHTTPGetRequestAsObject("https://api.mojang.com/users/profiles/minecraft/" + oldName + "?at=000000");
+        return (String) object.get("name");
+    }
+
     public static String getPlayerNameFromMojang(String uuid) {
         JSONArray array = getHTTPGetRequestAsArray("https://api.mojang.com/user/profiles/" + uuid + "/names");
         JSONObject object = (JSONObject) array.get(array.size() - 1);

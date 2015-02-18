@@ -44,6 +44,12 @@ public class PlayerUtils {
         return null;
     }
 
+    public static String getPlayerNameFromMojang(String uuid) {
+        JSONArray array = getHTTPGetRequestAsArray("https://api.mojang.com/user/profiles/" + uuid + "/names");
+        JSONObject object = (JSONObject) array.get(array.size() - 1);
+        return (String) object.get("name");
+    }
+
     public static JSONArray getExtendedInformationsFromMojang(String uuid) {
         return getHTTPGetRequestAsArray("https://api.mojang.com/user/profiles/" + uuid + "/names");
     }

@@ -18,8 +18,12 @@
 
 package de.minestar.minestarlibrary;
 
+import de.minestar.minestarlibrary.commands.CommandList;
+import de.minestar.minestarlibrary.commands.self.cmdChangeNick;
+
 public class Core extends AbstractCore {
 
+    public static String NAME = "MSLibrary";
     public static Core INSTANCE;
 
     public Core() {
@@ -29,5 +33,15 @@ public class Core extends AbstractCore {
 
     public Core(String name) {
         super(name);
+    }
+
+    @Override
+    protected boolean createCommands() {
+        // @formatter:off
+        cmdList = new CommandList(NAME,
+                // HOME COMMANDS
+                new cmdChangeNick("/mschangenick", "<oldName> <newName>", "minestar.library.admin")
+        );
+        return true;
     }
 }

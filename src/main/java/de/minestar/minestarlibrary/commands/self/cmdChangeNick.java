@@ -47,5 +47,12 @@ public class cmdChangeNick extends AbstractCommand {
         // create & call event
         PlayerChangedNameEvent event = new PlayerChangedNameEvent(UUID, args[0], args[1]);
         Bukkit.getServer().getPluginManager().callEvent(event);
+
+        PlayerUtils.sendInfo(player, "----------------------------------------------------");
+        PlayerUtils.sendSuccess(player, Core.NAME, "Spielerdaten werden übertragen!");
+        PlayerUtils.sendInfo(player, "Dieser Vorgang dauert einen Moment...");
+        PlayerUtils.sendInfo(player, "Es gibt KEINE Fertig-Meldung.");
+        PlayerUtils.sendInfo(player, "Fertig ists, wenn der Server wieder antwortet :ugly:");
+        PlayerUtils.sendInfo(player, "----------------------------------------------------");
     }
 }

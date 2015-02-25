@@ -42,12 +42,11 @@ public class cmdChangeNick extends AbstractCommand {
             return;
         }
 
-        // rename Minestar-Player first
-
+        // send some info
         PlayerUtils.sendInfo(player, "----------------------------------------------------");
         PlayerUtils.sendSuccess(player, Core.NAME, "Spielerdaten werden übertragen!");
         PlayerUtils.sendInfo(player, "MinestarCore", "Waiting...");
-        PlayerUtils.sendInfo(player, "Contao", "Waiting...");
+        PlayerUtils.sendInfo(player, "ContaoTwo", "Waiting...");
         PlayerUtils.sendInfo(player, "MoneyPit", "Waiting...");
         PlayerUtils.sendInfo(player, "FifthElement", "Waiting...");
         PlayerUtils.sendInfo(player, "----------------------------------------------------");

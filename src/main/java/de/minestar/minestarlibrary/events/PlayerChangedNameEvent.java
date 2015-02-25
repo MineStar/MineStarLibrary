@@ -27,11 +27,13 @@ public class PlayerChangedNameEvent extends Event {
     private final String UUID;
     private final String oldName;
     private final String newName;
+    private final String commandSender;
 
-    public PlayerChangedNameEvent(String UUID, String oldName, String newName) {
+    public PlayerChangedNameEvent(String UUID, String oldName, String newName, String commandSender) {
         this.UUID = UUID;
         this.oldName = oldName;
         this.newName = newName;
+        this.commandSender = commandSender;
     }
 
     /**
@@ -46,6 +48,10 @@ public class PlayerChangedNameEvent extends Event {
      */
     public String getOldName() {
         return oldName;
+    }
+
+    public String getCommandSender() {
+        return commandSender;
     }
 
     /**

@@ -136,7 +136,7 @@ public class PlayerUtils {
             return null;
         }
     }
-
+    
     /**
      * Check if any player contains the name. At first it will search in online
      * player by testing the display and the account name and when no result is

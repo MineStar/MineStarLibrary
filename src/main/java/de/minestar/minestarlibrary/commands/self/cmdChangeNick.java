@@ -34,9 +34,9 @@ public class cmdChangeNick extends AbstractCommand {
 
     @Override
     public void execute(String[] args, Player player) {
-        String UUID = PlayerUtils.getUUIDFromMojang(args[0]);
+        String UUID = PlayerUtils.getUUIDFromMojang(args[1]);
         if (UUID == null) {
-            PlayerUtils.sendError(player, Core.NAME, "UUID für Spieler '" + args[0] + "' nicht gefunden!");
+            PlayerUtils.sendError(player, Core.NAME, "UUID für Spieler '" + args[1] + "' nicht gefunden!");
             PlayerUtils.sendInfo(player, "Achtung: Die Namen müssen VOLLSTÄNDIG angegeben werden!");
             PlayerUtils.sendInfo(player, "Auf Groß- und Kleinschreibung achten!");
             return;

@@ -1,3 +1,7 @@
 name: MineStarLibrary
 main: de.minestar.minestarlibrary.Core
 version: ${pom.version}
+commands:
+  mschangenick:
+    description: 
+    usage: /mschangenick

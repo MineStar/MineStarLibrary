@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Collection;
 import java.util.TreeSet;
 
 import org.bukkit.Bukkit;
@@ -136,7 +137,7 @@ public class PlayerUtils {
             return null;
         }
     }
-    
+
     /**
      * Check if any player contains the name. At first it will search in online
      * player by testing the display and the account name and when no result is
@@ -276,9 +277,9 @@ public class PlayerUtils {
      */
     public static Player getOnlinePlayer(String name) {
 
-        Player[] onlinePlayer = Bukkit.getOnlinePlayers();
+        Collection<? extends Player> onlinePlayer = Bukkit.getOnlinePlayers();
         // no player online
-        if (onlinePlayer.length == 0)
+        if (onlinePlayer.isEmpty())
             return null;
 
         Player result = null;

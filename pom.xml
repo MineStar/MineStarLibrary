@@ -8,9 +8,25 @@
 	<repositories>
 		<repository>
 			<id>MinestarNexus</id>
-			<url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+			<url>http://jenkins.outi-networks.de:8082/nexus/content/groups/public/</url>
 		</repository>
 	</repositories>
+	
+	
+    <distributionManagement>
+        <!-- use the following if you're not using a snapshot version. -->
+        <repository>
+            <id>minestarDeployment</id>
+            <name>Internal Releases</name>
+            <url>http://jenkins.outi-networks.de:8082/nexus/content/repositories/releases/</url>
+        </repository>
+        <!-- use the following if you ARE using a snapshot version. -->
+        <snapshotRepository>
+            <id>minestarDeployment</id>
+            <name>Internal Releases</name>
+            <url>http://jenkins.outi-networks.de:8082/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 	<dependencies>
 		<dependency>

@@ -36,6 +36,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class HoverEvent {
 
     private int id = 331;
+    private String UUID = "minecraft:redstone";
     private String text;
     private List<String> lines;
 
@@ -149,9 +150,9 @@ public class HoverEvent {
         public void serialize(HoverEvent value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
             jgen.writeStartObject();
 
-            jgen.configure(Feature.QUOTE_FIELD_NAMES, false);
+            jgen.configure(Feature.QUOTE_FIELD_NAMES, true);
             jgen.writeFieldName("action");
-            jgen.writeRawValue("show_item");
+            jgen.writeRawValue("\"show_item\"");
             jgen.writeFieldName("value");
             jgen.writeRawValue(buildValueString(value));
             jgen.writeEndObject();
@@ -163,9 +164,9 @@ public class HoverEvent {
          */
         private String buildValueString(HoverEvent event) {
             StringBuilder sBuilder = new StringBuilder();
-            sBuilder.append("\"{id:");
-            sBuilder.append(event.id);
-            sBuilder.append(",tag:{display:{Name:");
+            sBuilder.append("\"{id:\\\"");
+            sBuilder.append(event.UUID);
+            sBuilder.append("\\\",tag:{display:{Name:");
             sBuilder.append(event.text);
             if (!event.lines.isEmpty()) {
                 sBuilder.append(",Lore:[");

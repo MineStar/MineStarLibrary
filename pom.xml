@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.minestar</groupId>
 	<artifactId>MineStarLibrary</artifactId>
-	<version>1.9.4-R0.1-SNAPSHOT</version>
+	<version>1.10.0-R0.1-SNAPSHOT</version>
 	<repositories>
 		<repository>
 			<id>MinestarNexus</id>
@@ -28,7 +28,7 @@
 		<dependency>
 			<groupId>de.minestar</groupId>
 			<artifactId>FalseBookCore</artifactId>
-			<version>1.9.4.1-SNAPSHOT</version>
+			<version>1.10.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -45,6 +45,11 @@
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-all</artifactId>
 			<version>1.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bukkit</groupId>
+			<artifactId>craftbukkit</artifactId>
+			<version>1.10-R0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<build>

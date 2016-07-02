@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.minestar</groupId>
 	<artifactId>MineStarLibrary</artifactId>
-	<version>1.10.0-R0.1-SNAPSHOT</version>
+	<version>1.10.2-R0.1-SNAPSHOT</version>
 	<repositories>
 		<repository>
 			<id>MinestarNexus</id>
@@ -28,7 +28,7 @@
 		<dependency>
 			<groupId>de.minestar</groupId>
 			<artifactId>FalseBookCore</artifactId>
-			<version>1.10.0.1-SNAPSHOT</version>
+			<version>1.10.2.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -49,7 +49,7 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
-			<version>1.10-R0.1-SNAPSHOT</version>
+			<version>1.10.2-R0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<build>

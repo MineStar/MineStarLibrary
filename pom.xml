@@ -3,64 +3,55 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.minestar</groupId>
 	<artifactId>MineStarLibrary</artifactId>
-	<version>1.8.7-R0.1-SNAPSHOT</version>
-
+	<version>1.10.2-R0.1-SNAPSHOT</version>
 	<repositories>
 		<repository>
 			<id>MinestarNexus</id>
-			<url>http://jenkins.outi-networks.de:8082/nexus/content/groups/public/</url>
+			<url>http://nexus.outi-networks.de/content/groups/public/</url>
 		</repository>
 	</repositories>
-	
-	
-    <distributionManagement>
-        <!-- use the following if you're not using a snapshot version. -->
-        <repository>
-            <id>minestarDeployment</id>
-            <name>Internal Releases</name>
-            <url>http://jenkins.outi-networks.de:8082/nexus/content/repositories/releases/</url>
-        </repository>
-        <!-- use the following if you ARE using a snapshot version. -->
-        <snapshotRepository>
-            <id>minestarDeployment</id>
-            <name>Internal Releases</name>
-            <url>http://jenkins.outi-networks.de:8082/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
+	<distributionManagement>
+		<!-- use the following if you're not using a snapshot version. -->
+		<repository>
+			<id>minestarDeployment</id>
+			<name>Internal Releases</name>
+			<url>http://nexus.outi-networks.de/content/repositories/releases/</url>
+		</repository>
+		<!-- use the following if you ARE using a snapshot version. -->
+		<snapshotRepository>
+			<id>minestarDeployment</id>
+			<name>Internal Releases</name>
+			<url>http://nexus.outi-networks.de/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 	<dependencies>
 		<dependency>
 			<groupId>de.minestar</groupId>
 			<artifactId>FalseBookCore</artifactId>
-			<version>0.99gamma-SNAPSHOT</version>
+			<version>1.10.2.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.3.1</version>
 		</dependency>
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-all</artifactId>
 			<version>1.3</version>
 		</dependency>
-
-
 		<dependency>
-			<groupId>org.bukkit</groupId>
-			<artifactId>craftbukkit</artifactId>
-			<version>1.8.7-R0.1</version>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>spigot</artifactId>
+			<version>1.10.2-R0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<resources>
 			<resource>
@@ -68,7 +59,6 @@
 				<filtering>true</filtering>
 			</resource>
 		</resources>
-
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -90,19 +80,17 @@
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

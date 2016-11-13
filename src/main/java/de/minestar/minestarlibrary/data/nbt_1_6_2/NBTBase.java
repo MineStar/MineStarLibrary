@@ -4,9 +4,9 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-import net.minecraft.server.v1_8_R3.CrashReport;
-import net.minecraft.server.v1_8_R3.CrashReportSystemDetails;
-import net.minecraft.server.v1_8_R3.ReportedException;
+import net.minecraft.server.v1_10_R1.CrashReport;
+import net.minecraft.server.v1_10_R1.CrashReportSystemDetails;
+import net.minecraft.server.v1_10_R1.ReportedException;
 
 public abstract class NBTBase {
     public static final String[] b = {"END", "BYTE", "SHORT", "INT", "LONG", "FLOAT", "DOUBLE", "BYTE[]", "STRING", "LIST", "COMPOUND", "INT[]"};

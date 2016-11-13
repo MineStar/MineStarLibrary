@@ -7,9 +7,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.server.v1_8_R3.CrashReport;
-import net.minecraft.server.v1_8_R3.CrashReportSystemDetails;
-import net.minecraft.server.v1_8_R3.ReportedException;
+import net.minecraft.server.v1_10_R1.CrashReport;
+import net.minecraft.server.v1_10_R1.CrashReportSystemDetails;
+import net.minecraft.server.v1_10_R1.ReportedException;
 
 public class NBTTagCompound extends NBTBase {
     private Map<String, NBTBase> map = new HashMap<String, NBTBase>();

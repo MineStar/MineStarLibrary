@@ -37,7 +37,8 @@ public class ChatMessage {
     private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
 
     static {
-        JSON_MAPPER.configure(Feature.QUOTE_FIELD_NAMES, false);
+        JSON_MAPPER.configure(Feature.QUOTE_FIELD_NAMES, true);
+        JSON_MAPPER.configure(Feature.QUOTE_NON_NUMERIC_NUMBERS, true);
     }
 
     @JsonProperty

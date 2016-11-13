@@ -28,6 +28,8 @@ import java.io.FileOutputStream;
 import java.lang.reflect.Method;
 import java.util.Random;
 
+import net.minecraft.server.v1_10_R1.NBTReadLimiter;
+
 public class NBTConverter {
 
     public static final Random random = new Random();
@@ -48,7 +50,7 @@ public class NBTConverter {
         return fileName;
     }
 
-    private static boolean writeNativeNBT(DataOutput output, net.minecraft.server.v1_8_R3.NBTBase base) {
+    private static boolean writeNativeNBT(DataOutput output, net.minecraft.server.v1_10_R1.NBTBase base) {
         try {
             Method method = base.getClass().getDeclaredMethod("write", DataOutput.class);
             method.setAccessible(true);
@@ -60,11 +62,11 @@ public class NBTConverter {
         }
     }
 
-    private static boolean readNativeNBT(DataInput input, net.minecraft.server.v1_8_R3.NBTBase base) {
+    private static boolean readNativeNBT(DataInput input, net.minecraft.server.v1_10_R1.NBTBase base, long size) {
         try {
-            Method method = base.getClass().getDeclaredMethod("load", DataInput.class, int.class);
+            Method method = base.getClass().getDeclaredMethod("load", DataInput.class, int.class, NBTReadLimiter.class);
             method.setAccessible(true);
-            method.invoke(base, input, 0);
+            method.invoke(base, input, 0, new NBTReadLimiter(size));
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,11 +94,11 @@ public class NBTConverter {
         }
     }
 
-    private static net.minecraft.server.v1_8_R3.NBTBase createNativeTag(byte typeID) {
+    private static net.minecraft.server.v1_10_R1.NBTBase createNativeTag(byte typeID) {
         try {
-            Method method = net.minecraft.server.v1_8_R3.NBTBase.class.getDeclaredMethod("createTag", byte.class);
+            Method method = net.minecraft.server.v1_10_R1.NBTBase.class.getDeclaredMethod("createTag", byte.class);
             method.setAccessible(true);
-            net.minecraft.server.v1_8_R3.NBTBase newTag = (net.minecraft.server.v1_8_R3.NBTBase) method.invoke(null, typeID);
+            net.minecraft.server.v1_10_R1.NBTBase newTag = (net.minecraft.server.v1_10_R1.NBTBase) method.invoke(null, typeID);
             return newTag;
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,9 +106,9 @@ public class NBTConverter {
         }
     }
 
-    public static net.minecraft.server.v1_8_R3.NBTBase toNative(NBTBase base) {
+    public static net.minecraft.server.v1_10_R1.NBTBase toNative(NBTBase base) {
         // create the new NBTTag
-        net.minecraft.server.v1_8_R3.NBTBase newTag = createNativeTag(base.getTypeId());
+        net.minecraft.server.v1_10_R1.NBTBase newTag = createNativeTag(base.getTypeId());
         if (newTag == null) {
             return null;
         }
@@ -127,7 +129,7 @@ public class NBTConverter {
 
                 // try to read the converted tag from the file
                 DataInputStream inputStream = new DataInputStream(new FileInputStream(tempFile));
-                readNativeNBT(inputStream, newTag);
+                readNativeNBT(inputStream, newTag,65536L);
                 inputStream.close();
             } else {
                 outputStream.close();
@@ -143,7 +145,7 @@ public class NBTConverter {
         return newTag;
     }
 
-    public static NBTBase fromNative(net.minecraft.server.v1_8_R3.NBTBase base) {
+    public static NBTBase fromNative(net.minecraft.server.v1_10_R1.NBTBase base) {
         // create the new NBTTag
         NBTBase newTag = NBTBase.createTag(base.getTypeId(), "");
 

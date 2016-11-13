@@ -28,6 +28,8 @@ import java.io.FileOutputStream;
 import java.lang.reflect.Method;
 import java.util.Random;
 
+import net.minecraft.server.v1_10_R1.NBTReadLimiter;
+
 public class NBTConverter {
 
     public static final Random random = new Random();
@@ -60,11 +62,11 @@ public class NBTConverter {
         }
     }
 
-    private static boolean readNativeNBT(DataInput input, net.minecraft.server.v1_10_R1.NBTBase base) {
+    private static boolean readNativeNBT(DataInput input, net.minecraft.server.v1_10_R1.NBTBase base, long size) {
         try {
-            Method method = base.getClass().getDeclaredMethod("load", DataInput.class, int.class);
+            Method method = base.getClass().getDeclaredMethod("load", DataInput.class, int.class, NBTReadLimiter.class);
             method.setAccessible(true);
-            method.invoke(base, input, 0);
+            method.invoke(base, input, 0, new NBTReadLimiter(size));
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -127,7 +129,7 @@ public class NBTConverter {
 
                 // try to read the converted tag from the file
                 DataInputStream inputStream = new DataInputStream(new FileInputStream(tempFile));
-                readNativeNBT(inputStream, newTag);
+                readNativeNBT(inputStream, newTag,65536L);
                 inputStream.close();
             } else {
                 outputStream.close();

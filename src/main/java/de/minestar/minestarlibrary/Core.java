@@ -20,6 +20,7 @@ package de.minestar.minestarlibrary;
 
 import de.minestar.minestarlibrary.commands.CommandList;
 import de.minestar.minestarlibrary.commands.self.cmdChangeNick;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class Core extends AbstractCore {
 
@@ -37,6 +38,7 @@ public class Core extends AbstractCore {
 
     @Override
     protected boolean createCommands() {
+        PlayerUtils.initialize();
         // @formatter:off
         cmdList = new CommandList(NAME,
                 // HOME COMMANDS

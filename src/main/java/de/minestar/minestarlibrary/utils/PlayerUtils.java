@@ -18,14 +18,6 @@
 
 package de.minestar.minestarlibrary.utils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Collection;
-import java.util.TreeSet;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -35,7 +27,36 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.TreeSet;
+
 public class PlayerUtils {
+
+    public final static HashMap<String, String> PLAYERS = new HashMap<>();
+
+    public static void initialize() {
+        PLAYERS.clear();
+        final Collection<? extends Player> onlinePlayers = Bukkit.getServer().getOnlinePlayers();
+        for (final Player player : onlinePlayers) {
+            PLAYERS.put(player.getName().toLowerCase(), player.getName());
+        }
+        final OfflinePlayer[] offlinePlayers = Bukkit.getServer().getOfflinePlayers();
+        if(offlinePlayers != null) {
+            for (final OfflinePlayer player : offlinePlayers) {
+                if(player != null && player.getName() != null) {
+                    PLAYERS.put(player.getName().toLowerCase(), player.getName());
+                }
+            }
+        }
+        ConsoleUtils.printInfo("Players loaded: " + PLAYERS.size());
+    }
 
     public static String getUUIDFromMojang(String playerName) {
         JSONObject json = getHTTPGetRequestAsObject("https://api.mojang.com/users/profiles/minecraft/" + playerName);
@@ -157,9 +178,9 @@ public class PlayerUtils {
             return true;
 
         // looking account name at all player
-        OfflinePlayer[] allPlayers = Bukkit.getServer().getOfflinePlayers();
-        for (OfflinePlayer player : allPlayers)
-            if (player.getName().toLowerCase().contains(name))
+        final ArrayList<String> playerListLowerCase = new ArrayList<>(PLAYERS.keySet());
+        for (String playerName : playerListLowerCase)
+            if (playerName.contains(name))
                 return true;
 
         return false;
@@ -192,13 +213,7 @@ public class PlayerUtils {
      *         the server. The nicknames are all in lowercase!
      */
     public static String[] getAllPlayerNames() {
-
-        TreeSet<String> playerNames = new TreeSet<String>();
-
-        OfflinePlayer[] players = Bukkit.getServer().getOfflinePlayers();
-        for (OfflinePlayer player : players)
-            playerNames.add(player.getName().toLowerCase());
-
+        TreeSet<String> playerNames = new TreeSet<>(PLAYERS.keySet());
         return playerNames.toArray(new String[playerNames.size()]);
     }
 
@@ -248,17 +263,17 @@ public class PlayerUtils {
      */
     public static String getOfflinePlayerName(String name) {
         name = name.toLowerCase();
-        OfflinePlayer[] offlinePlayer = Bukkit.getServer().getOfflinePlayers();
+        final ArrayList<String> playerList = new ArrayList<>(PLAYERS.values());
         String temp = "";
         int delta = Integer.MAX_VALUE;
         int curDelta = Integer.MAX_VALUE;
         String result = null;
-        for (OfflinePlayer player : offlinePlayer) {
-            temp = player.getName().toLowerCase();
+        for (String playerName : playerList) {
+            temp = playerName.toLowerCase();
             curDelta = temp.length() - name.length();
             if (curDelta < delta && temp.contains(name)) {
                 delta = curDelta;
-                result = player.getName();
+                result = playerName;
             }
             if (delta == 0)
                 return result;
